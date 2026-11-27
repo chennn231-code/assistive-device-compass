@@ -249,6 +249,37 @@ select:focus,input:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3
 .ctr a{display:inline-flex;align-items:center;min-height:46px;padding:0 18px;border:1.5px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);font-weight:700;background:var(--pill)}
 .ctr a.sec2{background:var(--card)}
 
+/* 找輔具店 */
+.where{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;max-width:640px}
+.where select,.where input{margin-bottom:12px}
+.shops{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px}
+.shop{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 22px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.shop .lab{font-size:13px;font-weight:700;color:var(--brown);margin-bottom:4px}
+.shop h3{font-size:19px;margin-bottom:6px}.shop p{margin:0 0 14px;color:var(--mute);font-size:var(--sm)}
+.shop .btn{margin-top:auto;align-self:flex-start;min-height:46px;padding:0 20px;font-size:16px}
+.shop-tips{margin-top:18px;background:var(--soft);border-radius:20px;padding:20px 22px}
+.shop-tips h3{font-size:19px;margin-bottom:10px}
+.shop-tips ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.shop-tips li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.shop-tips b{display:block;color:var(--brown);margin-bottom:2px}.shop-tips li span{font-size:var(--sm)}
+/* 圖解 */
+.viz{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);grid-template-rows:auto auto;gap:14px;margin-bottom:22px}
+.viz figure{margin:0}.vz-main{grid-row:1/3}
+.viz figcaption h3{font-size:19px;margin-bottom:4px}.viz figcaption p{margin:0 0 14px}
+.bars{display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:3.6em minmax(0,1fr) 6.2em;gap:10px;align-items:center;font-size:15px}
+.bar .lv{font-weight:700}
+.bar .tr{height:22px;background:var(--soft);border-radius:8px;overflow:hidden}
+.bar .fl{height:100%;background:var(--brown);border-radius:8px;width:0;transition:width .6s ease-out}
+.bar .v{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar.off .lv,.bar.off .v{color:var(--mute)}
+.split-bars{display:grid;gap:12px}
+.sb .t{display:flex;justify-content:space-between;font-size:15px;margin-bottom:4px}.sb .t b{font-weight:700}
+.sb .trk{display:flex;height:26px;border-radius:8px;overflow:hidden;background:var(--soft)}
+.sb .g{background:var(--brown);color:var(--bg);font-size:13px;display:flex;align-items:center;padding-left:8px;white-space:nowrap}
+.sb .s{background:var(--pill);color:var(--ink);font-size:13px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;white-space:nowrap}
+@media(max-width:900px){.viz{grid-template-columns:minmax(0,1fr)}.vz-main{grid-row:auto}.shop-tips ol{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.where{grid-template-columns:minmax(0,1fr)}}
 /* 名詞 */
 .dict{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .dict details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0 18px}
@@ -337,7 +368,7 @@ footer a{color:var(--bg)}
 </div>
 <nav class="card pop" id="tocPop" hidden aria-label="網站目錄">
   <ul class="toc-list">
-    <li><a href="#check">我能申請嗎</a></li><li><a href="#warn">先申請，再購買</a></li><li><a href="#flow">申請四步驟</a></li><li><a href="#calc">能補多少錢</a></li><li><a href="#all">全部輔具查詢</a></li><li><a href="#v3">智慧輔具專區（長照 3.0）</a></li><li><a href="#county">找輔具中心</a></li><li><a href="#dict">公文名詞翻譯</a></li><li><a href="#news">最新消息</a></li><li><a href="#links">官方連結</a></li>
+    <li><a href="#check">我能申請嗎</a></li><li><a href="#warn">先申請，再購買</a></li><li><a href="#flow">申請四步驟</a></li><li><a href="#calc">能補多少錢</a></li><li><a href="#all">全部輔具查詢</a></li><li><a href="#v3">智慧輔具專區（長照 3.0）</a></li><li><a href="#county">找輔具中心和輔具店</a></li><li><a href="#dict">公文名詞翻譯</a></li><li><a href="#news">最新消息</a></li><li><a href="#links">官方連結</a></li>
   </ul>
 </nav>
 </header>
@@ -605,14 +636,50 @@ footer a{color:var(--bg)}
 </div></section>
 
 <section class="sec" id="county"><div class="wrap">
-  <div class="sh"><h2>找你家附近的輔具中心</h2><p>可以免費諮詢、評估、維修，也有二手輔具租借</p></div>
-  <div class="county"><label class="f" for="city">我住在</label><select id="city"><option value="">請選擇縣市</option></select></div>
-  <div class="centers" id="centers" aria-live="polite"></div>
-  <p class="note" style="margin-top:16px">資料來源：衛福部社家署輔具中心聯絡資料表及縣市政府公告　電話、地址或服務時間可能調整，出門前請先打電話確認</p>
+  <div class="sh"><h2>找輔具中心和輔具店</h2><p>輸入你住的地方，看附近的輔具中心，以及怎麼找到長照特約的輔具店</p></div>
+  <div class="where">
+    <div><label class="f" for="city">縣市</label><select id="city"><option value="">請選擇縣市</option></select></div>
+    <div><label class="f" for="dist">行政區（可不填）</label><input id="dist" type="search" placeholder="例如 中山區" autocomplete="off"></div>
+  </div>
+  <div class="tabs" role="radiogroup" aria-label="要找什麼" style="margin-bottom:18px">
+    <label><input type="radio" name="wt" value="ctr" checked>輔具中心</label>
+    <label><input type="radio" name="wt" value="shop">輔具店（長照特約）</label>
+  </div>
+  <div id="ctrPane">
+    <div class="centers" id="centers" aria-live="polite"></div>
+    <p class="note" style="margin-top:16px">資料來源：衛福部社家署輔具中心聯絡資料表及縣市政府公告　電話、地址或服務時間可能調整，出門前請先打電話確認</p>
+  </div>
+  <div id="shopPane" hidden>
+    <div class="shops" id="shops" aria-live="polite"></div>
+    <div class="shop-tips">
+      <h3>怎麼確認是長照特約店家</h3>
+      <ol>
+        <li><b>看標誌</b><span>特約店家依規定要在明顯處張貼「長照特約標誌」</span></li>
+        <li><b>問照管專員</b><span>核定時可以請照管專員或個管員提供當地特約名冊</span></li>
+        <li><b>帶核定公文去</b><span>在特約店家買或租，通常只要付自己負擔的部分，由店家向政府請款</span></li>
+      </ol>
+      <p class="note" style="margin:10px 0 0">本站不推薦任何店家　地圖搜尋結果不一定是特約店家，請以縣市政府名冊或照管專員說明為準</p>
+    </div>
+  </div>
 </div></section>
 
 <section class="sec soft" id="dict"><div class="wrap">
-  <div class="sh"><h2>公文名詞翻譯</h2><p>接到電話或通知單看不懂？點開名詞看白話說明</p></div>
+  <div class="sh"><h2>公文名詞翻譯</h2><p>先看圖解，再點開名詞看白話說明</p></div>
+  <div class="viz">
+    <figure class="card vz-main">
+      <figcaption><h3>失能等級：等級越高，每月額度越多</h3><p class="note">長照需要等級 2 到 8 級，每月「照顧及專業服務」給付額度（第 1 級不列入給付）</p></figcaption>
+      <div class="bars" id="cmsBars"></div>
+      <p class="note" style="margin:12px 0 0">另有喘息服務：2 到 6 級每年 32,340 元、7 到 8 級每年 48,510 元　交通接送依地區每月 1,680 到 2,400 元</p>
+    </figure>
+    <figure class="card">
+      <figcaption><h3>部分負擔：誰出多少</h3><p class="note">深色是政府出，淺色是自己出</p></figcaption>
+      <div class="split-bars" id="payBars"></div>
+    </figure>
+    <figure class="card">
+      <figcaption><h3>給付額度：長照輔具每 3 年</h3><p class="note">第一組、第二組選一組</p></figcaption>
+      <div class="split-bars" id="quotaBars"></div>
+    </figure>
+  </div>
   <div class="dict" id="dictList"></div>
 </div></section>
 
@@ -649,7 +716,7 @@ footer a{color:var(--bg)}
 
 <nav class="callbar" aria-label="找真人幫忙">
   <a class="primary" href="tel:1966">撥打長照專線<small>1966</small></a>
-  <a href="#county">找輔具中心<small>選縣市看電話</small></a>
+  <a href="#county">找輔具中心<small>和附近輔具店</small></a>
 </nav>
 
 <script>
@@ -875,10 +942,36 @@ $('#city').addEventListener('change',()=>{city();if($('#city').value)$('#centers
 {const c=load('city');if(c&&CENTERS[c])$('#city').value=c;}
 
 /* 名詞 */
-const DICT=[['照管專員','照顧管理專員','政府派到家裡了解狀況、安排長照服務的人'],['失能等級','CMS 等級','需要被照顧的程度，分 1 到 8 級，2 級以上才能使用長照'],['評估報告書','','治療師或輔具中心人員寫的證明，說明需要哪種輔具、什麼規格'],['核定','','政府正式同意補助，會有照顧計畫或書面通知'],['特約廠商','','和政府簽約合作的輔具店，走長照要在這類店家買或租'],['部分負擔','自付額','政府補助以外，自己要出的那部分'],['核銷','檢據請款','買好之後拿發票等文件，向政府申請補助款'],['最低使用年限','','同一樣輔具要用滿幾年，才能再申請一次'],['實物給付','','政府直接提供輔具（可能是整理消毒過的二手品），不是給錢'],['給付額度','','一段時間內政府最多幫你出的錢，長照輔具第一組每 3 年 4 萬、第二組 6 萬'],['第一組／第二組','長照 3.0','傳統輔具（4 萬）與智慧輔具（6 萬）兩組，3 年內選一組'],['全租賃','','以租代買，不需要時歸還；長照智慧輔具原則上採租賃'],['甲類輔具評估人員','','政府認可、能評估較複雜輔具的專業人員，多在輔具中心或醫院'],['醫療輔具','','呼吸照護、壓力衣等，要有身障證明，向衛生局申請']];
+const DICT=[['照管專員','照顧管理專員','政府派到家裡了解狀況、安排長照服務的人'],['失能等級','CMS 等級','需要被照顧的程度，分 1 到 8 級，2 級以上才能使用長照，每級額度看上方圖解'],['評估報告書','','治療師或輔具中心人員寫的證明，說明需要哪種輔具、什麼規格'],['核定','','政府正式同意補助，會有照顧計畫或書面通知'],['特約廠商','','和政府簽約合作的輔具店，門口會貼長照特約標誌，可在上方「找輔具店」查詢'],['部分負擔','自付額','政府補助以外，自己要出的那部分，比例看上方圖解'],['核銷','檢據請款','買好之後拿發票等文件，向政府申請補助款'],['最低使用年限','','同一樣輔具要用滿幾年，才能再申請一次'],['實物給付','','政府直接提供輔具（可能是整理消毒過的二手品），不是給錢'],['給付額度','','一段時間內政府最多幫你出的錢，長照輔具第一組每 3 年 4 萬、第二組 6 萬'],['第一組／第二組','長照 3.0','傳統輔具（4 萬）與智慧輔具（6 萬）兩組，3 年內選一組'],['全租賃','','以租代買，不需要時歸還；長照智慧輔具原則上採租賃'],['甲類輔具評估人員','','政府認可、能評估較複雜輔具的專業人員，多在輔具中心或醫院'],['醫療輔具','','呼吸照護、壓力衣等，要有身障證明，向衛生局申請']];
 $('#dictList').innerHTML=DICT.map(([t,a,d])=>`<details><summary><span>${t}${a?`<small>${a}</small>`:''}</span></summary><p>${d}</p></details>`).join('');
 
-cats();find(true);quiz();calc();pick();rent();city();
+
+/* 找輔具店 */
+$$('input[name=wt]').forEach(r=>r.addEventListener('change',()=>{const v=document.querySelector('input[name=wt]:checked').value;$('#ctrPane').hidden=v!=='ctr';$('#shopPane').hidden=v!=='shop';shops()}));
+function shops(){
+  const c=$('#city').value,d=$('#dist').value.trim().replace(/[<>"'&]/g,'');
+  if(!c){$('#shops').innerHTML='<div class="empty" style="grid-column:1/-1">先選縣市，可再填行政區，例如「中山區」</div>';return}
+  const place=c+(d?(d.endsWith('區')||d.endsWith('鄉')||d.endsWith('鎮')||d.endsWith('市')?d:d+'區'):'');
+  const g=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+  const s=q=>'https://www.google.com/search?q='+encodeURIComponent(q);
+  $('#shops').innerHTML=`
+  <article class="shop"><span class="lab">官方查詢</span><h3>長照服務資源地理地圖</h3><p>衛福部的查詢系統，輸入住址或開啟定位，可查附近的長照服務單位與聯絡方式</p><a class="btn" href="https://ltcpap.mohw.gov.tw/public/index.html" rel="noopener">開啟官方地圖</a></article>
+  <article class="shop"><span class="lab">官方名冊</span><h3>${esc(c)}長照輔具特約名單</h3><p>特約名單由各縣市衛生局或長照管理中心公告，也可以撥 1966 請照管專員提供</p><a class="btn" href="${s(c+' 長照 輔具 特約單位 名冊 site:gov.tw')}" rel="noopener">搜尋${esc(c)}政府公告</a></article>
+  <article class="shop"><span class="lab">地圖搜尋</span><h3>${esc(place)}附近的輔具店</h3><p>用地圖看離你最近的輔具店，出發前先打電話問是不是長照特約、有沒有你要的品項</p><a class="btn" href="${g(place+' 輔具')}" rel="noopener">在地圖上查看</a></article>`;
+}
+['#city','#dist'].forEach(s=>$(s).addEventListener(s==='#dist'?'input':'change',()=>{if(!$('#shopPane').hidden)shops()}));
+
+/* 圖解 */
+const CMS=[[1,0],[2,10020],[3,15460],[4,18580],[5,24100],[6,28070],[7,32090],[8,36180]];
+$('#cmsBars').innerHTML=CMS.map(([l,v])=>`<div class="bar${v?'':' off'}"><span class="lv">第 ${l} 級</span><div class="tr"><div class="fl" data-w="${v/36180*100}"></div></div><span class="v">${v?v.toLocaleString('zh-TW')+' 元':'不列入給付'}</span></div>`).join('');
+const sb=(t,g,gl,sl,sv)=>`<div class="sb"><div class="t"><b>${t}</b><span>${sv}</span></div><div class="trk"><span class="g" style="width:${g}%">${gl}</span>${g<100?`<span class="s" style="width:${100-g}%">${sl}</span>`:''}</div></div>`;
+$('#payBars').innerHTML=sb('長照・一般',70,'政府 70%','自付 30%','')+sb('長照・中低收入戶',90,'政府 90%','10%','')+sb('長照・低收入戶',100,'政府全額','','')+sb('身障・一般',50,'政府 50%','自付 50%','')+sb('身障・中低收入戶',75,'政府 75%','25%','');
+$('#quotaBars').innerHTML=sb('第一組・傳統輔具',100,'4 萬元','','買或租')+`<div class="sb"><div class="t"><b>第二組・智慧輔具</b><span>共 6 萬元</span></div><div class="trk"><span class="g" style="width:66.7%">輔具至少 4 萬</span><span class="s" style="width:33.3%">無障礙最多 2 萬</span></div></div>`;
+const growBars=()=>$$('#cmsBars .fl').forEach(f=>f.style.width=f.dataset.w+'%');
+if('IntersectionObserver' in window){const bo=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){growBars();bo.disconnect()}});bo.observe($('#cmsBars'))}else growBars();
+setTimeout(growBars,3000);
+
+cats();find(true);quiz();calc();pick();rent();city();shops();
 }
 </script>
 </body>
