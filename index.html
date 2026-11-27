@@ -280,6 +280,34 @@ select:focus,input:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3
 .sb .s{background:var(--pill);color:var(--ink);font-size:13px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;white-space:nowrap}
 @media(max-width:900px){.viz{grid-template-columns:minmax(0,1fr)}.vz-main{grid-row:auto}.shop-tips ol{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.where{grid-template-columns:minmax(0,1fr)}}
+/* 重點標註 */
+:root{--hl:light-dark(#f6dfa8,#5a4720)}
+:root[data-contrast=on]{--hl:#ffe14d}
+.sec strong,.about strong,.alert strong{font-weight:700;background:linear-gradient(transparent 58%,var(--hl) 0);padding:0 2px;border-radius:2px}
+.alert strong{background:linear-gradient(transparent 58%,rgba(255,255,255,.32) 0)}
+/* 讀到哪裡 */
+.prog{position:absolute;left:0;right:0;bottom:-1px;height:3px;pointer-events:none}
+.prog i{display:block;height:100%;width:0;background:var(--brown);transition:width .1s linear}
+.bn{display:flex;flex-direction:column;line-height:1.2}
+.bn small{font:700 13px "Noto Sans TC",sans-serif;color:var(--brown);min-height:0}
+.bn small:empty{display:none}
+.toc-list a.on{background:var(--soft);box-shadow:inset 4px 0 0 var(--brown)}
+.sh.now h2{position:relative}
+/* 卡片：滑過或點到時浮起來 */
+.card,.it,.flow li,.steps5 li,.cat5 div,.feat div,.fee div,.verify div,.lk,.shop,.ctr,.shop-tips li,.mini-notes div,.news li,.dict details{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+@media(hover:hover){
+ .it:hover,.flow li:hover,.steps5 li:hover,.cat5 div:hover,.feat div:hover,.fee div:hover,.verify div:hover,.lk:hover,.shop:hover,.ctr:hover,.shop-tips li:hover,.mini-notes div:hover,.news li:hover,.duo .card:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(40,30,20,.10);border-color:var(--brown)}
+ .flow li p:not(.off),.steps5 span,.cat5 p,.feat span,.fee span,.verify span,.shop-tips li span,.mini-notes div,.news p{transition:color .25s ease}
+ .flow li:not(:hover) p:not(.off),.steps5 li:not(:hover) span,.cat5 div:not(:hover) p,.fee div:not(:hover) span,.news li:not(:hover) p{color:var(--mute)}
+ .flow li:hover p:not(.off),.steps5 li:hover span,.cat5 div:hover p,.fee div:hover span,.news li:hover p{color:var(--ink)}}
+.dict details[open]{border-color:var(--brown);box-shadow:0 6px 18px rgba(40,30,20,.08)}
+.dict details[open] p{animation:up .35s ease-out}
+.it details[open] ul{animation:up .3s ease-out}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* 捲到時慢慢浮上來 */
+.js .rv{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.js .rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none}}
 /* 名詞 */
 .dict{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .dict details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0 18px}
@@ -347,10 +375,10 @@ footer a{color:var(--bg)}
 <body>
 <a class="skip" href="#check">跳到資格快篩</a>
 
-<header class="top"><div class="wrap">
+<header class="top"><div class="prog" aria-hidden="true"><i id="progBar"></i></div><div class="wrap">
   <a class="brand" href="#top" aria-label="輔具補助指南針 回到頂端">
     <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 5l4 11-4 11-4-11z" fill="var(--brown)"/><circle cx="16" cy="16" r="2" fill="var(--bg)"/></svg>
-    <span>輔具補助指南針</span>
+    <span class="bn"><span id="bnName">輔具補助指南針</span><small id="bnNow" aria-live="polite"></small></span>
   </a>
   <a class="tb" href="#all" id="toSearch" aria-label="搜尋輔具"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg><span class="hide-m">搜尋輔具</span></a>
   <button class="tb" id="setBtn" aria-expanded="false" aria-controls="setPop">Aa<span class="hide-m">閱讀設定</span></button>
@@ -396,7 +424,7 @@ footer a{color:var(--bg)}
   <div class="ph" data-img="portrait" role="img" aria-label="年輕的手握著長輩的手"></div>
   <div>
     <h2>我們是指引，不是審核單位</h2>
-    <p class="lead">這裡是民間整理的衛教資訊，幫你把規定、金額和流程放在同一個地方　能不能申請、補多少，最後都以政府審核為準</p>
+    <p class="lead">這裡是民間整理的衛教資訊，幫你把規定、金額和流程放在同一個地方　能不能申請、補多少，<strong>最後都以政府審核為準</strong></p>
     <p class="note" style="margin-bottom:10px">遇到不確定的地方，請直接問這些單位：</p>
     <div class="verify">
       <div><b>長照問題</b><span>撥長照專線 1966，或縣市長期照顧管理中心</span></div>
@@ -421,7 +449,7 @@ footer a{color:var(--bg)}
 </div></section>
 
 <section class="sec" id="check"><div class="wrap">
-  <div class="sh"><p class="k">第一步</p><h2>我能申請嗎？</h2><p>勾選家人的狀況，看看可能適用哪一種補助　勾選內容只留在這台裝置，不會傳出去</p></div>
+  <div class="sh"><p class="k">第一步</p><h2>我能申請嗎？</h2><p>勾選家人的狀況，看看<strong>可能適用哪一種補助</strong>　勾選內容只留在這台裝置，不會傳出去</p></div>
   <div class="split">
     <form class="card" id="quiz" onsubmit="return false">
       <fieldset>
@@ -447,7 +475,7 @@ footer a{color:var(--bg)}
     <div class="res" aria-live="polite">
       <h3>初步參考結果</h3>
       <div id="out"></div>
-      <div class="check-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg><span>這只是依你勾選的內容做的初步整理，實際資格要由照管中心、區公所或衛生局審核</span></div>
+      <div class="check-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg><span>這只是依你勾選的內容做的初步整理，實際資格要由<strong>照管中心、區公所或衛生局審核</strong></span></div>
     </div>
   </div>
 </div></section>
@@ -459,8 +487,8 @@ footer a{color:var(--bg)}
       <h2>先別急著買</h2>
       <p>先買了再申請，<strong>通常拿不到補助</strong>　請等政府同意之後，再去買或租</p>
       <ul class="al">
-        <li><span class="tg">長照</span><span>照顧計畫核定後，到政府合作的輔具店買或租</span></li>
-        <li><span class="tg">身障</span><span>收到核定通知後 6 個月內買好，再拿發票請款</span></li>
+        <li><span class="tg">長照</span><span>照顧計畫<strong>核定後</strong>，到政府合作的輔具店買或租</span></li>
+        <li><span class="tg">身障</span><span>收到核定通知後 <strong>6 個月內</strong>買好，再拿發票請款</span></li>
         <li><span class="tg">住院中</span><span>請醫院的出院準備小組或社工先幫你聯絡長照</span></li>
       </ul>
     </div>
@@ -468,7 +496,7 @@ footer a{color:var(--bg)}
 </div></section>
 
 <section class="sec" id="flow"><div class="wrap">
-  <div class="sh"><p class="k">第二步</p><h2>申請四步驟</h2><p>先選你要走哪一條路，步驟會跟著換</p></div>
+  <div class="sh"><p class="k">第二步</p><h2>申請四步驟</h2><p>先選你要走<strong>哪一條路</strong>，步驟會跟著換</p></div>
   <div class="tabs" role="radiogroup" aria-label="補助管道">
     <label><input type="radio" name="route" value="L" checked>長照</label>
     <label><input type="radio" name="route" value="D">身障輔具</label>
@@ -495,7 +523,7 @@ footer a{color:var(--bg)}
       <div class="big" id="bigNum">—</div>
       <p id="bigSub" style="margin:0"></p>
       <div class="cmp" id="cmp"></div>
-      <p class="note" style="margin-top:14px">依全國基準估算，不含縣市加碼　實際金額以核定通知為準</p>
+      <p class="note" style="margin-top:14px">依全國基準估算，不含縣市加碼　<strong>實際金額以核定通知為準</strong></p>
     </div>
   </div>
 </div></section>
@@ -562,8 +590,8 @@ footer a{color:var(--bg)}
 
   <h3 class="sm-h" id="s-how">怎麼申請和使用</h3>
   <ol class="steps5">
-    <li><b>確認資格</b><span>符合長照資格，且評估為長照需要等級 2 級以上（撥 1966 申請評估）</span></li>
-    <li><b>專業評估</b><span>由甲類輔具評估人員確認適合，開立「智慧科技輔具評估報告書」</span></li>
+    <li><b>確認資格</b><span>符合長照資格，且評估為<strong>長照需要等級 2 級以上</strong>（撥 1966 申請評估）</span></li>
+    <li><b>專業評估</b><span>由甲類輔具評估人員確認適合，開立<strong>「智慧科技輔具評估報告書」</strong></span></li>
     <li><b>選第二組、核定</b><span>照管中心核定照顧計畫，3 年內使用第二組額度</span></li>
     <li><b>合作單位送到家</b><span>特約輔具單位提供選用建議、使用說明、尺寸調整與運送，使用前請對方示範操作</span></li>
     <li><b>定期追蹤、換租或歸還</b><span>租用期間有定期追蹤、清潔消毒；狀況改變可換租，不需要時由單位回收整備</span></li>
@@ -580,8 +608,8 @@ footer a{color:var(--bg)}
     <div><b>怎麼計費</b><span>依實際租用期間申報，輔具單位會用「租賃服務紀錄表」記錄並請你簽名確認</span></div>
     <div><b>租金由誰訂</b><span>各特約輔具單位自訂，並報地方政府備查，所以不同店家可能不同</span></div>
     <div><b>自己出多少</b><span>和長照一樣：一般 30%、中低收入戶 10%、低收入戶不用出</span></div>
-    <div><b>選了就不能換</b><span>兩組二擇一，選定後 3 年內不能換組；115 年 6 月 30 日前已核定第一組的人，要等第一組 3 年期滿</span></div>
-    <div><b>原民區與離島</b><span>租金可加計 20%，加計的部分不用自付，也不扣額度</span></div>
+    <div><b>選了就不能換</b><span>兩組二擇一，<strong>選定後 3 年內不能換組</strong>；115 年 6 月 30 日前已核定第一組的人，要等第一組 3 年期滿</span></div>
+    <div><b>原民區與離島</b><span>租金可加計 20%，<strong>加計的部分不用自付</strong>，也不扣額度</span></div>
   </div>
 
   <div class="panel" id="s-pick">
@@ -647,16 +675,16 @@ footer a{color:var(--bg)}
   </div>
   <div id="ctrPane">
     <div class="centers" id="centers" aria-live="polite"></div>
-    <p class="note" style="margin-top:16px">資料來源：衛福部社家署輔具中心聯絡資料表及縣市政府公告　電話、地址或服務時間可能調整，出門前請先打電話確認</p>
+    <p class="note" style="margin-top:16px">資料來源：衛福部社家署輔具中心聯絡資料表及縣市政府公告　電話、地址或服務時間可能調整，<strong>出門前請先打電話確認</strong></p>
   </div>
   <div id="shopPane" hidden>
     <div class="shops" id="shops" aria-live="polite"></div>
     <div class="shop-tips">
       <h3>怎麼確認是長照特約店家</h3>
       <ol>
-        <li><b>看標誌</b><span>特約店家依規定要在明顯處張貼「長照特約標誌」</span></li>
+        <li><b>看標誌</b><span>特約店家要在明顯處張貼<strong>「長照特約標誌」</strong></span></li>
         <li><b>問照管專員</b><span>核定時可以請照管專員或個管員提供當地特約名冊</span></li>
-        <li><b>帶核定公文去</b><span>在特約店家買或租，通常只要付自己負擔的部分，由店家向政府請款</span></li>
+        <li><b>帶核定公文去</b><span>在特約店家買或租，通常<strong>只要付自己負擔的部分</strong></span></li>
       </ol>
       <p class="note" style="margin:10px 0 0">本站不推薦任何店家　地圖搜尋結果不一定是特約店家，請以縣市政府名冊或照管專員說明為準</p>
     </div>
@@ -970,6 +998,29 @@ $('#quotaBars').innerHTML=sb('第一組・傳統輔具',100,'4 萬元','','買�
 const growBars=()=>$$('#cmsBars .fl').forEach(f=>f.style.width=f.dataset.w+'%');
 if('IntersectionObserver' in window){const bo=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){growBars();bo.disconnect()}});bo.observe($('#cmsBars'))}else growBars();
 setTimeout(growBars,3000);
+
+/* 讀到哪裡：進度條、目前章節、目錄標示 */
+const SECS=[['check','我能申請嗎'],['warn','先申請再購買'],['flow','申請四步驟'],['calc','能補多少錢'],['all','全部輔具查詢'],['v3','智慧輔具專區'],['county','找輔具中心和店'],['dict','公文名詞翻譯'],['news','最新消息'],['links','官方連結']];
+const secEls=SECS.map(([id])=>document.getElementById(id));
+let ticking=false;
+const onScroll=()=>{
+  const st=scrollY,max=document.documentElement.scrollHeight-innerHeight;
+  $('#progBar').style.width=(max>0?Math.min(100,st/max*100):0)+'%';
+  let cur=-1;secEls.forEach((el,i)=>{if(el&&el.getBoundingClientRect().top<innerHeight*.35)cur=i});
+  $('#bnNow').textContent=cur>=0?`${cur+1}／${SECS.length}・${SECS[cur][1]}`:'';
+  $$('#tocPop a').forEach(a=>a.classList.toggle('on',cur>=0&&a.getAttribute('href')==='#'+SECS[cur][0]));
+  ticking=false;
+};
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});onScroll();
+/* 捲到時浮現 */
+if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  R.classList.add('js');
+  const targets=$$('.sh,.svc>a,.newband,.about>*,.split>*,.alert,.flow li,.calc>*,.finder,.duo>*,.sm-what>*,.cat5>div,.steps5 li,.fee>div,.viz>figure,.where,.mini-notes>div,.news li,.links>a,.shop-tips,.dict>details');
+  targets.forEach(el=>{el.classList.add('rv');const sib=[...el.parentElement.children].indexOf(el);el.style.transitionDelay=Math.min(sib,5)*70+'ms'});
+  const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+  targets.forEach(el=>ro.observe(el));
+  setTimeout(()=>targets.forEach(el=>{if(el.getBoundingClientRect().top<innerHeight)el.classList.add('in')}),50);
+}
 
 cats();find(true);quiz();calc();pick();rent();city();shops();
 }
