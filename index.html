@@ -421,6 +421,34 @@ h1,h2,h3,.sh p{text-wrap:balance}
 .to-home .go{font-weight:700;color:var(--brown);white-space:nowrap}
 @media(max-width:600px){.to-home{grid-template-columns:auto minmax(0,1fr)}.to-home .go{grid-column:2}}
 @media(hover:hover){.to-home:hover{box-shadow:0 0 0 4px var(--line)}}
+
+/* 收納區塊 */
+.folds{display:grid;gap:12px;margin-top:22px}
+.fold{border:1px solid var(--line);border-radius:18px;background:var(--card);margin-top:12px;transition:border-color .2s,box-shadow .2s}
+.fold[open]{border-color:var(--brown);box-shadow:0 8px 24px rgba(40,30,20,.06)}
+.fold>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2px 16px;padding:16px 20px;min-height:68px;border-radius:18px}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary:focus-visible{outline:3px solid var(--brown);outline-offset:2px}
+.fold .ft{font:700 20px/1.3 "Noto Serif TC","Noto Serif CJK TC",serif;color:var(--ink)}
+.fold>summary small{grid-column:1;color:var(--mute);font-size:var(--sm)}
+.fold>summary::after{content:"+";grid-column:2;grid-row:1/3;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--soft);font:400 24px/1 "Noto Sans TC",sans-serif;color:var(--brown)}
+.fold[open]>summary::after{content:"−"}
+.fold-body{padding:4px 20px 22px}
+:not(.fold)+.fold{margin-top:26px}
+.fold-body>:first-child{margin-top:0}
+.fold-body .panel{margin:0;padding:0;border:0;background:none;box-shadow:none}
+@media(hover:hover){.fold>summary:hover{background:var(--soft)}}
+.zone{border-bottom:1px solid var(--line)}
+.zone:last-of-type{border-bottom:0}
+.zone>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;min-height:56px;font-weight:700;font-size:18px}
+.zone>summary::-webkit-details-marker{display:none}
+.zone>summary small{color:var(--mute);font-weight:400;font-size:var(--sm)}
+.zone>summary .zc{margin-left:auto;font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--brown);color:var(--bg)}
+.zone>summary::after{content:"+";width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--brown);font-weight:400;font-size:20px;flex:none}
+.zone>summary .zc+i{display:none}
+.zone[open]>summary::after{content:"−"}
+.zone>summary:not(:has(.zc))::after{margin-left:auto}
+.zone .zb{padding-bottom:10px}
 </style>
 </head>
 <body>
@@ -603,11 +631,13 @@ h1,h2,h3,.sh p{text-wrap:balance}
   <p class="count" id="cnt" aria-live="polite"></p>
   <div class="items" id="items"></div>
   <div class="more"><button class="btn" id="more" type="button" hidden>再顯示更多</button></div>
+  <details class="fold" id="all-tips"><summary><span class="ft">申請前要知道的 3 件事</span><small>不能重複補助、醫療輔具找誰、去哪裡買</small></summary><div class="fold-body">
   <div class="mini-notes">
     <div><b>同一樣只能擇一</b>長照和身障不能重複補助同一項，用滿年限才能再申請</div>
     <div><b>醫療輔具找衛生局</b>和身障輔具合併計算，每人每 2 年以 4 項為原則</div>
     <div><b>向合法店家購買</b>許多輔具屬醫療器材，請向合法醫療器材商買或租，不向個人買二手</div>
   </div>
+  </div></details>
   <p class="note" style="margin-top:14px">清單整理自政府公告的補助基準表，不推薦任何廠牌，也不說明療效　縣市可能另有加碼或增列，適不適合請以專業評估為準</p>
 </div></section>
 
@@ -630,7 +660,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
     </div>
   </div>
 
-  <h3 class="sm-h" id="s-scope">包含範圍：五大類</h3>
+  <details class="fold" id="s-scope"><summary><span class="ft">包含範圍：五大類</span><small>移動、移位、沐浴排泄、照顧床、安全看視</small></summary><div class="fold-body">
   <div class="cat5">
     <div><b>移動類</b><p>可監測使用狀況、異常時通報的電動輪椅或行動設備</p></div>
     <div><b>移位類</b><p>協助從床上起身、移到輪椅或馬桶的設備</p></div>
@@ -639,8 +669,9 @@ h1,h2,h3,.sh p{text-wrap:balance}
     <div><b>安全看視類</b><p>偵測跌倒、離床或生活作息異常，通知家人</p></div>
   </div>
   <div class="check-note" style="margin-top:14px"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg><span>首批通過審查的有 17 件，分屬移動、沐浴排泄、居家照顧床、安全看視四類，之後會陸續增加　只有通過政府審查、登錄在「長期照顧輔具產品資料庫」的產品才能用補助，市面上的智慧產品不一定算</span></div>
+  </div></details>
 
-  <h3 class="sm-h" id="s-how">怎麼申請和使用</h3>
+  <details class="fold" id="s-how"><summary><span class="ft">怎麼申請和使用</span><small>5 個步驟，從評估到換租歸還</small></summary><div class="fold-body">
   <ol class="steps5">
     <li><b>確認資格</b><span>符合長照資格，且評估為<strong>長照需要等級 2 級以上</strong>（撥 1966 申請評估）</span></li>
     <li><b>專業評估</b><span>由甲類輔具評估人員確認適合，開立<strong>「智慧科技輔具評估報告書」</strong></span></li>
@@ -648,8 +679,9 @@ h1,h2,h3,.sh p{text-wrap:balance}
     <li><b>合作單位送到家</b><span>特約輔具單位提供選用建議、使用說明、尺寸調整與運送，使用前請對方示範操作</span></li>
     <li><b>定期追蹤、換租或歸還</b><span>租用期間有定期追蹤、清潔消毒；狀況改變可換租，不需要時由單位回收整備</span></li>
   </ol>
+  </div></details>
 
-  <h3 class="sm-h" id="s-cost">費用怎麼算</h3>
+  <details class="fold" id="s-cost"><summary><span class="ft">費用怎麼算</span><small>第一組 4 萬、第二組 6 萬，兩組選一組</small></summary><div class="fold-body">
   <div class="duo">
     <div class="card"><h3>第一組・傳統輔具</h3><div class="amt">每 3 年 4 萬元</div>
       <ul><li>可以買，也可以租</li><li>輪椅、氣墊床、照顧床、扶手等品項最齊全</li><li>適合需求清楚、想長期使用的家庭</li></ul></div>
@@ -663,9 +695,10 @@ h1,h2,h3,.sh p{text-wrap:balance}
     <div><b>選了就不能換</b><span>兩組二擇一，<strong>選定後 3 年內不能換組</strong>；115 年 6 月 30 日前已核定第一組的人，要等第一組 3 年期滿</span></div>
     <div><b>原民區與離島</b><span>租金可加計 20%，<strong>加計的部分不用自付</strong>，也不扣額度</span></div>
   </div>
+  </div></details>
 
-  <div class="panel" id="s-pick">
-    <h3 class="sm-h" style="margin-top:0">怎麼選：小工具</h3>
+  <details class="fold" id="s-pick"><summary><span class="ft">怎麼選：小工具</span><small>幫我想想選哪組、智慧輔具租金試算</small></summary><div class="fold-body">
+  <div class="panel">
     <div class="tabs" role="radiogroup" aria-label="長照 3.0 小工具">
       <label><input type="radio" name="v3t" value="pick" checked>幫我想想選哪組</label>
       <label><input type="radio" name="v3t" value="rent">智慧輔具租金試算</label>
@@ -700,8 +733,9 @@ h1,h2,h3,.sh p{text-wrap:balance}
       </div>
     </div>
   </div>
+  </div></details>
 
-  <h3 class="sm-h" id="s-faq">常見問題</h3>
+  <details class="fold" id="s-faq"><summary><span class="ft">常見問題</span><small>8 個大家最常問的問題</small></summary><div class="fold-body">
   <div class="dict faq">
     <details><summary><span>市面上買得到的智慧產品都能補助嗎？</span></summary><p>不一定　要通過衛福部審查並登錄在「長期照顧輔具產品資料庫」，審查會確認功能，以及醫療器材許可、商品檢驗、電信認證、App 資安檢測等證明</p></details>
     <details><summary><span>選了第二組，還能買傳統輔具嗎？</span></summary><p>可以買洗澡椅、便盆椅、馬桶增高器、拐杖、助行器這幾樣基本品項；其他傳統輔具屬於第一組</p></details>
@@ -712,6 +746,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
     <details><summary><span>選了第二組覺得不適合，可以改回第一組嗎？</span></summary><p>不行　3 年期間內選定後不能換組，申請前請和評估人員把需求談清楚</p></details>
     <details><summary><span>智慧輔具一定要用租的嗎？</span></summary><p>原則上是　例外是沐浴排泄類中涉及個人衛生、無法清潔消毒的品項，5,000 元以下可以購買，每 3 年購買上限 5,000 元</p></details>
   </div>
+  </div></details>
   <p class="note" style="margin-top:16px">本專區依衛福部公告整理，細節以照管中心與特約單位說明為準　可補助的產品可查<a href="https://ltcat.mohw.gov.tw/" rel="noopener">長期照顧輔具產品資料庫</a>，或撥 1966 詢問</p>
 </div></section>
 
@@ -741,7 +776,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
     <div id="hzOut" aria-live="polite"></div>
   </div>
 
-  <h3 class="sm-h" id="h-how">怎麼申請</h3>
+  <details class="fold" id="h-how"><summary><span class="ft">怎麼申請</span><small>5 個步驟，核定之後才能動工</small></summary><div class="fold-body">
   <ol class="steps5">
     <li><b>提出申請</b><span>長照撥 <strong>1966</strong>；有身障證明也可以找戶籍地區公所或輔具中心</span></li>
     <li><b>到家評估</b><span>評估人員到家裡看環境、量尺寸，寫<strong>評估報告書</strong>，建議要改哪裡</span></li>
@@ -749,8 +784,9 @@ h1,h2,h3,.sh p{text-wrap:balance}
     <li><b>找特約單位施工</b><span>長照到特約單位施工，通常只付自己負擔的部分；身障各縣市請款方式略有不同</span></li>
     <li><b>保留單據</b><span>發票、核定通知等都要留著；有些縣市還要施工前後照片，<strong>開工前先問清楚</strong>要準備哪些文件</span></li>
   </ol>
+  </div></details>
 
-  <h3 class="sm-h" id="h-faq">租屋與公寓常見問題</h3>
+  <details class="fold" id="h-faq"><summary><span class="ft">租屋與公寓常見問題</span><small>屋主同意、公共區域、沒有電梯怎麼辦</small></summary><div class="fold-body">
   <div class="dict faq">
     <details><summary><span>租房子也可以申請嗎？</span></summary><p>可以問看看，但改動房屋需要<strong>屋主同意</strong>　有些縣市會要求附上屋主同意書和租約，例如新北市輔具中心就提供「屋主房屋同意改善書」表單，請先問當地輔具中心或照管專員</p></details>
     <details><summary><span>住在社會住宅或特殊房屋呢？</span></summary><p>社會住宅、古蹟等房屋要先取得管理機關同意才能施工　例如臺中市規定沒有先取得同意就施工，這筆費用不給付</p></details>
@@ -759,13 +795,15 @@ h1,h2,h3,.sh p{text-wrap:balance}
     <details><summary><span>長照和身障可以一起用嗎？</span></summary><p>可以分別申請不同項目，但<strong>同一項不能重複補助</strong>　兩種身分都有的人，可以請輔具中心一起評估、幫你安排怎麼用比較划算</p></details>
     <details><summary><span>改完之後不合用怎麼辦？</span></summary><p>施工前請評估人員和施工單位一起確認位置和高度，完工後當場試用　有問題先聯絡施工單位，補助相關問題問照管專員或輔具中心</p></details>
   </div>
+  </div></details>
 
-  <h3 class="sm-h" id="h-safe">安全提醒</h3>
+  <details class="fold" id="h-safe"><summary><span class="ft">安全提醒</span><small>施工前要知道的 3 件事</small></summary><div class="fold-body">
   <div class="mini-notes">
     <div><b>不要自己拆改</b>牆面、水電、浴室結構請交給專業施工單位，也比較能符合補助規定</div>
     <div><b>扶手要裝得牢</b>扶手要承受全身重量，必須固定在能承重的牆面，位置和高度依評估建議</div>
     <div><b>斜坡不是越短越好</b>坡度太陡反而容易翻倒或滑下，長度和坡度請評估人員建議</div>
   </div>
+  </div></details>
   <p class="note" style="margin-top:16px">本專區整理自《長期照顧服務申請及給付辦法》附表四、《身心障礙者輔具費用補助辦法》補助基準表與衛福部公告　各縣市作法不同，<strong>申請前請向 1966、區公所或輔具中心確認</strong>　完整項目可到<a href="#all" id="hzAll">全部輔具查詢的「居家無障礙」分類</a></p>
 </div></section>
 
@@ -826,7 +864,9 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <div class="split-bars" id="quotaBars"></div>
     </figure>
   </div>
+  <details class="fold" id="d-terms"><summary><span class="ft">名詞白話說明</span><small>14 個常見公文用語，點開看意思</small></summary><div class="fold-body">
   <div class="dict" id="dictList"></div>
+  </div></details>
 </div></section>
 
 <section class="sec soft" id="news"><div class="wrap">
@@ -972,7 +1012,7 @@ const norm=s=>s.toLowerCase().replace(/\s+/g,'').replace(/臺/g,'台');
 for(const o of ALL)o.hay=norm(o.n+o.g+o.c+SYS[o.s]);
 const cnt=k=>ALL.filter(o=>!k||o.s===k).length;
 $('#nAll').textContent=cnt('');$('#nTotal').textContent=cnt('');['L','D','M'].forEach(k=>$('#n'+k).textContent=cnt(k));
-let shown=12;
+let shown=6;
 const yrs=y=>y===-1?'終身一次':y===0.5?'6 個月':y>0?`${y} 年`:'';
 const money=(o,inc)=>o.s==='M'?(inc==='low'?o.cap:inc==='mid'?o.mid:o.gen):o.f?o.cap:Math.round(o.cap*(o.s==='L'?LTC[inc]:DIS[inc]));
 function card(o,inc,terms){
@@ -1013,7 +1053,7 @@ function cats(){
   $('#cat').innerHTML='<option value="">所有分類</option>'+list.map(g=>`<option${g===cur?' selected':''}>${g}</option>`).join('');
 }
 function find(reset){
-  if(reset)shown=12;
+  if(reset)shown=6;
   const raw=$('#q').value.trim(),s=document.querySelector('input[name=sys]:checked').value,g=$('#cat').value,inc=$('#inc4').value;
   $('#qClear').hidden=!raw;
   const words=raw.split(/\s+/).filter(Boolean),groups=words.map(w=>[norm(w),...(SYN[w]||[]).map(norm)]);
@@ -1022,7 +1062,7 @@ function find(reset){
   $('#cnt').textContent=res.length?`找到 ${res.length} 項${raw?`「${raw}」相關的`:''}輔具`:'';
   if(!res.length){$('#items').innerHTML=`<div class="empty" style="grid-column:1/-1">找不到「${esc(raw)}」　試試「洗澡」「走路」「呼吸」，或撥 1966 詢問</div>`;$('#more').hidden=true;return}
   $('#items').innerHTML=res.slice(0,shown).map(o=>card(o,inc,terms)).join('');
-  $('#more').hidden=res.length<=shown;$('#more').textContent=`再顯示 12 項（還有 ${res.length-shown} 項）`;
+  $('#more').hidden=res.length<=shown;$('#more').textContent=`再顯示 ${Math.min(12,res.length-shown)} 項（還有 ${res.length-shown} 項）`;
 }
 let qt;$('#q').addEventListener('input',()=>{clearTimeout(qt);qt=setTimeout(()=>find(true),150)});
 $('#qClear').addEventListener('click',()=>{$('#q').value='';find(true);$('#q').focus()});
@@ -1171,7 +1211,8 @@ const HZ=[
   ['住樓上沒有電梯，上下樓困難',['L:EH04','L:EH05','D:132','D:133','D:134']]]]
 ];
 const byKey=k=>{const [s,c]=k.split(':');return ALL.find(o=>o.s===s&&o.c===c)};
-$('#hzForm').innerHTML=HZ.map(([z,list],zi)=>`<fieldset><legend>${z}</legend>${list.map(([t],i)=>`<label class="opt"><input type="checkbox" value="${zi}-${i}"><span>${t}</span></label>`).join('')}</fieldset>`).join('');
+$('#hzForm').innerHTML='<p class="f" style="margin:0 0 4px">點開家裡的區域，勾選遇到的困難</p>'+HZ.map(([z,list],zi)=>`<details class="zone"${zi===1?' open':''}><summary>${z}<small>${list.length} 種狀況</small></summary><div class="zb">${list.map(([t],i)=>`<label class="opt"><input type="checkbox" value="${zi}-${i}"><span>${t}</span></label>`).join('')}</div></details>`).join('');
+const zoneCount=()=>$$('#hzForm .zone').forEach(d=>{const n=d.querySelectorAll('input:checked').length,s=d.querySelector('summary');let c=s.querySelector('.zc');if(n){if(!c){c=document.createElement('span');c.className='zc';s.appendChild(c)}c.textContent=`已勾 ${n}`}else if(c)c.remove()});
 const hzName=n=>n.replace(/^居家無障礙(修繕|輔具)?-/,'');
 function hz(){
   const v=$$('#hzForm input:checked').map(x=>x.value);
@@ -1184,9 +1225,14 @@ function hz(){
 }
 $('#hzForm').insertAdjacentHTML('beforeend','<button type="button" class="btn hz-go" id="hzGo" hidden>看可能的補助項目</button>');
 $('#hzGo').addEventListener('click',()=>$('#hzOut').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}));
-$('#hzForm').addEventListener('change',()=>{hz();const n=$$('#hzForm input:checked').length;$('#hzGo').hidden=!n;$('#hzGo').textContent=`已勾 ${n} 項，看可能的補助項目 ↓`});hz();
+$('#hzForm').addEventListener('change',()=>{hz();zoneCount();const n=$$('#hzForm input:checked').length;$('#hzGo').hidden=!n;$('#hzGo').textContent=`已勾 ${n} 項，看可能的補助項目 ↓`});hz();
 $('#hzAll').addEventListener('click',()=>{const r=document.querySelector('input[name=sys][value=""]');r.checked=true;cats();$('#cat').value='居家無障礙';$('#q').value='';find(true)});
 
+
+/* 收納區塊：連到收起來的區塊時自動展開 */
+const openTo=id=>{const el=document.getElementById(id);if(!el)return;let d=el.closest('details.fold');if(el.matches('details.fold'))d=el;if(d&&!d.open)d.open=true};
+document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(a&&a.getAttribute('href').length>1)openTo(a.getAttribute('href').slice(1))});
+if(location.hash)openTo(location.hash.slice(1));
 /* 名詞 */
 const DICT=[['照管專員','照顧管理專員','政府派到家裡了解狀況、安排長照服務的人'],['失能等級','CMS 等級','需要被照顧的程度，分 1 到 8 級，2 級以上才能使用長照，每級額度看上方圖解'],['評估報告書','','治療師或輔具中心人員寫的證明，說明需要哪種輔具、什麼規格'],['核定','','政府正式同意補助，會有照顧計畫或書面通知'],['特約廠商','','和政府簽約合作的輔具店，門口會貼長照特約標誌，可在上方「找輔具店」查詢'],['部分負擔','自付額','政府補助以外，自己要出的那部分，比例看上方圖解'],['核銷','檢據請款','買好之後拿發票等文件，向政府申請補助款'],['最低使用年限','','同一樣輔具要用滿幾年，才能再申請一次'],['實物給付','','政府直接提供輔具（可能是整理消毒過的二手品），不是給錢'],['給付額度','','一段時間內政府最多幫你出的錢，長照輔具第一組每 3 年 4 萬、第二組 6 萬'],['第一組／第二組','長照 3.0','傳統輔具（4 萬）與智慧輔具（6 萬）兩組，3 年內選一組'],['全租賃','','以租代買，不需要時歸還；長照智慧輔具原則上採租賃'],['甲類輔具評估人員','','政府認可、能評估較複雜輔具的專業人員，多在輔具中心或醫院'],['醫療輔具','','呼吸照護、壓力衣等，要有身障證明，向衛生局申請']];
 $('#dictList').innerHTML=DICT.map(([t,a,d])=>`<details><summary><span>${t}${a?`<small>${a}</small>`:''}</span></summary><p>${d}</p></details>`).join('');
