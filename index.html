@@ -135,7 +135,7 @@ fieldset{border:0;margin:0 0 18px;padding:0}legend{font-weight:700;margin-bottom
 .seg label:has(input:focus-visible),.tabs label:has(input:focus-visible),.opt:has(input:focus-visible){outline:3px solid var(--brown);outline-offset:2px}
 .tabs small{font-weight:400;font-size:13px;opacity:.8}
 label.f{display:block;font-weight:700;margin:0 0 8px}
-select,input[type=number],input[type=search]{width:100%;font:inherit;font-size:18px;padding:12px 16px;border:1.5px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);min-height:54px;margin-bottom:18px}
+select,input[type=number],input[type=search],input[type=text]{width:100%;font:inherit;font-size:18px;padding:12px 16px;border:1.5px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);min-height:54px;margin-bottom:18px}
 select:focus,input:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3px var(--pill)}
 
 /* 快篩 */
@@ -515,6 +515,27 @@ h1,h2,h3,.sh p{text-wrap:balance}
 .pb-leg .dg{background:var(--brown)}.pb-leg .ds{background:light-dark(#e6ddd2,#3a332c)}
 .cmp-d{margin-top:12px}.cmp-d>summary{cursor:pointer;color:var(--brown);font-weight:700;min-height:44px;display:flex;align-items:center}
 /* 額度條 */
+.q-why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:8px}
+.q-why div{background:var(--soft);border-radius:16px;padding:14px 16px;font-size:var(--sm)}
+.q-why b{display:block;font-size:17px;color:var(--brown);margin:6px 0 2px}
+.qi{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--brown);color:#fff;font-weight:700;font-size:15px}
+.q-step{font-weight:700;font-size:18px;margin:22px 0 10px}
+.q-list{display:grid;gap:8px}
+.q-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 48px;gap:8px;align-items:center}
+.q-row input{margin:0}
+.q-del{width:48px;height:48px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--mute);font-size:20px;cursor:pointer}
+.q-add{min-height:46px;padding:0 18px;border-radius:999px;border:1.5px dashed var(--brown);background:transparent;color:var(--brown);font-weight:700;font-size:16px;cursor:pointer;margin-top:8px}
+.q-chk{display:flex;gap:10px;align-items:center;margin-top:14px;font-weight:700;cursor:pointer}.q-chk input{width:22px;height:22px}
+.q-res{margin-top:22px;padding:18px 20px;border-radius:18px;border:1.5px solid var(--line);background:var(--card)}
+.q-big{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.q-big b{font-size:clamp(30px,6vw,40px);line-height:1.1}
+.q-pill{font-size:14px;font-weight:700;padding:3px 12px;border-radius:999px}
+.q-pill.ok{background:light-dark(#e3eadb,#2f3a2a);color:light-dark(#3d5a2c,#c9dcb8)}
+.q-pill.low{background:var(--hl);color:var(--ink)}
+.q-pill.over{background:light-dark(#f3d9d2,#4a2a24);color:light-dark(#8a2f1d,#f2c3b6)}
+.q-scale{display:flex;justify-content:space-between;font-size:14px;color:var(--mute);margin-top:4px}
+.qbar .qo{background:repeating-linear-gradient(45deg,light-dark(#c0533a,#d77a62) 0 6px,transparent 6px 12px)}
+@media(max-width:700px){.q-why{grid-template-columns:minmax(0,1fr)}.q-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 48px}}
 .q-in{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:600px){.q-in{grid-template-columns:1fr}}
 .qbar{display:flex;height:34px;border-radius:10px;overflow:hidden;background:light-dark(#e6ddd2,#3a332c);margin-top:6px}
@@ -717,18 +738,44 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <p class="note" style="margin-top:14px">依全國基準估算，不含縣市加碼　<strong>實際金額以核定通知為準</strong></p>
     </div>
   </div>
-  <details class="fold" id="quota"><summary><span class="ft">我的 3 年額度還剩多少</span><small>輸入已經用掉的金額，看看還剩多少可以用</small></summary><div class="fold-body">
-    <div class="tabs" role="radiogroup" aria-label="長照輔具組別" style="margin-bottom:14px">
+  <details class="fold" id="quota"><summary><span class="ft">長照輔具額度：3 年能用多少錢</span><small>第一次用也看得懂　算算還剩多少、這次要自己付多少</small></summary><div class="fold-body">
+    <div class="q-why">
+      <div><span class="qi" aria-hidden="true">1</span><b>額度是什麼</b><span>長照把輔具和居家無障礙改善的補助，放進一個<strong>3 年用的錢包</strong>　第一組 4 萬元、第二組 6 萬元，兩組選一組</span></div>
+      <div><span class="qi" aria-hidden="true">2</span><b>怎麼扣</b><span>扣的是<strong>政府核定的價格</strong>，自己付的那部分也算在裡面　例如核定 1 萬元，一般戶自己付 3,000 元，額度一樣扣 1 萬</span></div>
+      <div><span class="qi" aria-hidden="true">3</span><b>不夠用怎麼辦</b><span>超過額度的部分要自己付　有身障證明的，可以問身障輔具補助（同一項不能重複申請）</span></div>
+    </div>
+
+    <p class="q-step">① 你是哪一組</p>
+    <div class="tabs" role="radiogroup" aria-label="長照輔具組別">
       <label><input type="radio" name="qg" value="40000" checked>第一組・4 萬</label>
       <label><input type="radio" name="qg" value="60000">第二組・6 萬</label>
     </div>
+    <p class="note" style="margin:8px 0 0">不確定的話，看照顧計畫或問個管員　沒有選智慧輔具的，一般是第一組；115 年 6 月 30 日前已用過第一組的人，要滿 3 年才能改選第二組</p>
+
+    <p class="q-step">② 這 3 年已經用掉的</p>
+    <div id="qList" class="q-list"></div>
+    <button type="button" class="q-add" id="qAdd">＋ 再加一筆</button>
+    <p class="note" style="margin:6px 0 0">一筆一筆填，會自動加總　不知道用了多少，可以問個管員或撥 1966</p>
+
+    <p class="q-step">③ 這次打算用的</p>
     <div class="q-in">
-      <div><label class="f" for="qUsed">這 3 年已經用掉（元）</label><input id="qUsed" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 12000"></div>
-      <div><label class="f" for="qNow">這次預計要用（元）</label><input id="qNow" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 3500"></div>
+      <div><label class="f" for="qNow">這次核定或報價金額（元）</label><input id="qNow" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 3500"></div>
+      <div><label class="f" for="qInc">家裡的經濟身分</label><select id="qInc"><option value="gen">一般</option><option value="sub">領半額中低老人津貼或身障生活補助</option><option value="mid">中低收入戶</option><option value="low">低收入戶</option></select></div>
     </div>
-    <div class="qbar" id="qBar" aria-hidden="true"></div>
-    <p id="qTxt" style="margin:10px 0 0" aria-live="polite"></p>
-    <p class="note" style="margin-top:8px">已經用掉多少、3 年從哪一天開始算，都可以問個管員或照管專員，實際以照顧計畫為準</p>
+    <div id="qHzBox" hidden>
+      <label class="q-chk"><input type="checkbox" id="qHz">這次是居家無障礙改善（第二組最多 2 萬元）</label>
+      <div class="q-in" style="margin-top:8px"><div><label class="f" for="qHzUsed">之前用在居家無障礙的（元）</label><input id="qHzUsed" type="number" inputmode="numeric" min="0" step="100" placeholder="沒有就留空"></div></div>
+    </div>
+
+    <div class="q-res" aria-live="polite">
+      <div class="q-big"><span id="qLeftLab">目前還剩</span><b id="qLeft">—</b><span id="qPill" class="q-pill"></span></div>
+      <div class="qbar" id="qBar" aria-hidden="true"></div>
+      <div class="q-scale" aria-hidden="true"><span>0</span><span id="qTot"></span></div>
+      <p id="qTxt" style="margin:10px 0 0"></p>
+      <p id="qPay" style="margin:6px 0 0"></p>
+    </div>
+    <div class="hf-act" style="margin-top:12px"><button type="button" class="q-add" id="qReset">清除重填</button><a href="#calc">不知道這次能補多少？先試算 →</a></div>
+    <p class="note" style="margin-top:12px">只是估算，填的內容只存在你這台裝置　已用多少、3 年從哪一天起算、價格上限，<strong>以照顧計畫和核定通知為準</strong>　超過價格上限的部分不扣額度，但要全部自己付</p>
   </div></details>
 </div></section>
 
@@ -1168,13 +1215,44 @@ function payBars(p,rows){
     const gw=p?Math.round(g/p*100):0;return `<div class="pb${on?' on':''}"><div class="pb-h"><b>${t}</b>${on?'<span class="pb-best">比較划算</span>':''}</div><div class="pb-bar" role="img" aria-label="${t}：政府出 ${fmt(g)}，自己出 ${fmt(pay)}"><span class="pg" style="width:${gw}%">${gw>=22?'政府 '+fmt(g):''}</span><span class="ps">${100-gw>=22?'自己 '+fmt(pay):''}</span></div><div class="pb-leg"><span><i class="dg"></i>政府出 ${fmt(g)}</span><span><i class="ds"></i>自己出 ${fmt(pay)}</span></div></div>`}).join('');
 }
 /* 3 年額度 */
+const QK='quota_v2';
+function qRow(n='',v=''){const d=document.createElement('div');d.className='q-row';
+  d.innerHTML=`<input type="text" placeholder="項目（可不填）" aria-label="已用項目名稱" value="${esc(n)}"><input type="number" inputmode="numeric" min="0" step="100" placeholder="金額，例如 12000" aria-label="已用金額" value="${esc(String(v))}"><button type="button" class="q-del" aria-label="刪除這一筆">×</button>`;
+  d.querySelector('.q-del').addEventListener('click',()=>{d.remove();if(!$('#qList').children.length)qRow();quota()});
+  d.querySelectorAll('input').forEach(i=>i.addEventListener('input',quota));$('#qList').appendChild(d)}
+function qSave(){const rows=[...$$('#qList .q-row')].map(r=>[r.children[0].value,r.children[1].value]);
+  save(QK,JSON.stringify({g:document.querySelector('input[name=qg]:checked').value,rows,now:$('#qNow').value,inc:$('#qInc').value,hz:$('#qHz').checked,hzu:$('#qHzUsed').value}))}
 function quota(){
-  const tot=+document.querySelector('input[name=qg]:checked').value,u=Math.max(0,+$('#qUsed').value||0),n=Math.max(0,+$('#qNow').value||0);
-  const uw=Math.min(100,u/tot*100),nw=Math.min(100-uw,n/tot*100),left=tot-u-n;
-  $('#qBar').innerHTML=`<span class="qu" style="width:${uw}%"></span><span class="qn" style="width:${nw}%"></span><span class="ql"></span>`;
-  $('#qTxt').innerHTML=!u&&!n?`總額度 <strong>${fmt(tot)}</strong>，輸入金額後會畫出已用和剩下的部分`:left>=0?`<span class="qleg"><i class="qu"></i>已用 ${fmt(u)}</span><span class="qleg"><i class="qn"></i>這次 ${fmt(n)}</span><span class="qleg"><i class="ql"></i>剩下 <strong>${fmt(left)}</strong></span>`:`<strong>會超過額度 ${fmt(-left)}</strong>　超過的部分要自己付，請先和個管員或照管專員討論`;
+  const tot=+document.querySelector('input[name=qg]:checked').value,g2=tot===60000;
+  const u=[...$$('#qList .q-row')].reduce((a,r)=>a+Math.max(0,+r.children[1].value||0),0);
+  let n=Math.max(0,+$('#qNow').value||0);const inc=$('#qInc').value;
+  $('#qHzBox').hidden=!g2;
+  const before=Math.max(0,tot-u),hzLeft=Math.max(0,20000-Math.max(0,+$('#qHzUsed').value||0));
+  let cap=before,why='';
+  if(g2&&$('#qHz').checked&&hzLeft<cap){cap=hzLeft;why='hz'}
+  const inQ=Math.min(n,cap),over=n-inQ,left=before-inQ;
+  const uw=Math.min(100,u/tot*100),nw=Math.min(100-uw,inQ/tot*100),ow=n?Math.min(100-uw-nw,over/tot*100):0;
+  $('#qBar').innerHTML=`<span class="qu" style="width:${uw}%"></span><span class="qn" style="width:${nw}%"></span><span class="qo" style="width:${ow}%"></span><span class="ql"></span>`;
+  $('#qTot').textContent='總額度 '+fmt(tot);
+  $('#qLeftLab').textContent=n?'這次用完後還剩':'目前還剩';$('#qLeft').textContent=fmt(n?left:before);
+  const r=(n?left:before)/tot,pill=$('#qPill');
+  if(u>=tot){pill.className='q-pill over';pill.textContent='已經用完'}
+  else if(over>0){pill.className='q-pill over';pill.textContent=why==='hz'?'超過無障礙上限':'這次會超過'}
+  else if(r<.2){pill.className='q-pill low';pill.textContent='快用完了'}
+  else{pill.className='q-pill ok';pill.textContent='還夠用'}
+  $('#qTxt').innerHTML=!u&&!n?'填入已經用掉的金額，長條會畫出用了多少、還剩多少':`<span class="qleg"><i class="qu"></i>已用 ${fmt(u)}</span><span class="qleg"><i class="qn"></i>這次 ${fmt(inQ)}</span><span class="qleg"><i class="ql"></i>剩下 <strong>${fmt(n?left:before)}</strong></span>`;
+  if(!n){$('#qPay').innerHTML='';}else{
+    const gov=Math.round(inQ*LTC[inc]),self=inQ-gov;
+    $('#qPay').innerHTML=`這次大約<strong>政府出 ${fmt(gov)}</strong>、自己付 ${fmt(self+over)}`+(over?`<br><strong>其中 ${fmt(over)} 超過${why==='hz'?'居家無障礙 2 萬元上限':'額度'}，要全部自己付</strong>　請先和個管員或照管專員討論`:'');
+  }
+  qSave();
 }
-$$('input[name=qg]').forEach(r=>r.addEventListener('change',quota));['qUsed','qNow'].forEach(id=>$('#'+id).addEventListener('input',quota));quota();
+{let sv=null;try{sv=JSON.parse(load(QK)||'null')}catch(e){}
+  if(sv){const r=document.querySelector(`input[name=qg][value="${sv.g}"]`);if(r)r.checked=true;(sv.rows&&sv.rows.length?sv.rows:[['','']]).forEach(([a,b])=>qRow(a,b));$('#qNow').value=sv.now||'';if(LTC[sv.inc])$('#qInc').value=sv.inc;$('#qHz').checked=!!sv.hz;$('#qHzUsed').value=sv.hzu||''}
+  else qRow()}
+$('#qAdd').addEventListener('click',()=>{qRow();$('#qList').lastElementChild.children[0].focus();quota()});
+$('#qReset').addEventListener('click',()=>{$('#qList').innerHTML='';qRow();$('#qNow').value='';$('#qHz').checked=false;$('#qHzUsed').value='';quota()});
+$$('input[name=qg]').forEach(r=>r.addEventListener('change',quota));['qNow','qHzUsed'].forEach(id=>$('#'+id).addEventListener('input',quota));['qInc','qHz'].forEach(id=>$('#'+id).addEventListener('change',quota));quota();
 ['item','inc2'].forEach(id=>$('#'+id).addEventListener('change',calc));$('#price').addEventListener('input',calc);
 
 /* 全部輔具 */
