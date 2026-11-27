@@ -555,7 +555,15 @@ h1,h2,h3,.sh p{text-wrap:balance}
   </div>
   <h3>顏色</h3>
   <div class="row"><button id="hc" aria-pressed="false">高對比（黑白）</button></div>
-  <p class="note" style="margin:0">設定會記在這台裝置上</p>
+  <div id="voiceSet" hidden>
+    <h3>朗讀的聲音</h3>
+    <select id="voiceSel" aria-label="朗讀的聲音" style="margin-bottom:10px"></select>
+    <div class="row" role="group" aria-label="朗讀速度">
+      <button data-rate=".75" aria-pressed="false">慢慢說</button><button data-rate=".85" aria-pressed="true">溫和</button><button data-rate="1" aria-pressed="false">一般</button>
+    </div>
+    <div class="row"><button id="voiceTry" type="button">試聽</button></div>
+  </div>
+  <p class="note" style="margin:0">設定會記在這台裝置上　可選的聲音由你的手機或電腦提供</p>
 </div>
 <nav class="card pop" id="tocPop" hidden aria-label="網站目錄">
   <ul class="toc-list">
@@ -1515,10 +1523,25 @@ if('speechSynthesis' in window){
   const $$=s=>[...document.querySelectorAll(s)];
   const SPK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>';
   let cur=null;
+  /* 聲音：優先挑比較柔和自然的中文女聲 */
+  const PREF=[/HsiaoChen.*(Natural|Online)/i,/HsiaoYu.*(Natural|Online)/i,/Xiaoxiao.*(Natural|Online)/i,/美佳|Meijia/i,/HsiaoChen/i,/HsiaoYu/i,/Hanhan/i,/Google.*(國語|臺灣|台灣|Taiwan)/i,/Ting-?Ting|婷婷/i];
+  const zhV=()=>speechSynthesis.getVoices().filter(v=>/^zh/i.test(v.lang)).sort((a,b)=>(/TW|Hant/i.test(b.lang)-/TW|Hant/i.test(a.lang)));
+  const best=()=>{const vs=zhV();for(const r of PREF){const v=vs.find(v=>r.test(v.name));if(v)return v}return vs[0]};
+  const ld=k=>{try{return localStorage.getItem(k)}catch(e){return null}},sv=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+  let rate=+(ld('ttsRate')||.85);
+  const pickV=()=>{const n=ld('ttsVoice');return zhV().find(v=>v.name===n)||best()};
+  const setVoice=u=>{const v=pickV();if(v){u.voice=v;u.lang=v.lang}else u.lang='zh-TW';u.rate=rate;u.pitch=1.05;u.volume=1};
+  const VN=[[/HsiaoChen/i,'曉臻・女聲，溫和'],[/HsiaoYu/i,'曉雨・女聲'],[/Hanhan/i,'涵涵・女聲'],[/Xiaoxiao/i,'曉曉・女聲'],[/Meijia|美佳/i,'美佳・女聲'],[/Zhiwei|YunJhe/i,'雲哲・男聲'],[/Google/i,'Google 國語']];
+  const vLabel=v=>{const m=VN.find(([r])=>r.test(v.name));const base=m?m[1]:v.name.replace(/Microsoft\s*/,'').split(/\s+-|\(/)[0].trim();return base+(/Natural/i.test(v.name)?'（自然語音）':'')+(/TW|Hant/i.test(v.lang)?'':'・'+v.lang)};
+  const fillV=()=>{const vs=zhV(),sel=document.getElementById('voiceSel');if(!sel)return;if(!vs.length){document.getElementById('voiceSet').hidden=true;return}document.getElementById('voiceSet').hidden=false;const cur=pickV();sel.innerHTML=vs.map(v=>`<option${v===cur?' selected':''}>${vLabel(v)}</option>`).join('');[...sel.options].forEach((o,i)=>o.value=vs[i].name)};
+  fillV();speechSynthesis.addEventListener?.('voiceschanged',fillV);
+  document.getElementById('voiceSel').addEventListener('change',e=>sv('ttsVoice',e.target.value));
+  $$('#voiceSet [data-rate]').forEach(b=>{b.setAttribute('aria-pressed',+b.dataset.rate===rate);b.addEventListener('click',()=>{rate=+b.dataset.rate;sv('ttsRate',rate);$$('#voiceSet [data-rate]').forEach(x=>x.setAttribute('aria-pressed',x===b))})});
+  document.getElementById('voiceTry').addEventListener('click',()=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance('你好，我會用這個聲音，慢慢唸給你聽');setVoice(u);speechSynthesis.speak(u)});
   const textOf=sec=>{const out=[];const walk=el=>{for(const n of el.childNodes){if(n.nodeType===3){out.push(n.textContent)}else if(n.nodeType===1){if(n.hidden||n.matches('script,style,select,input,svg,button.speak,.items,nav,.tiles,option,[aria-hidden=true]'))continue;if(n.tagName==='DETAILS'&&!n.open){const s=n.querySelector('summary');if(s)out.push(s.textContent+'　');continue}walk(n);if(/^(P|LI|H\d|DIV|DT|DD|SUMMARY)$/.test(n.tagName))out.push('　')}}};walk(sec);return out.join('').replace(/\s+/g,' ').replace(/　+/g,'，').slice(0,1800)};
   const stop=()=>{speechSynthesis.cancel();if(cur){cur.classList.remove('on');cur.setAttribute('aria-label','朗讀這一區');cur.querySelector('b').textContent='朗讀'};cur=null};
   $$('section.sec .sh h2').forEach(h=>{const b=document.createElement('button');b.type='button';b.className='speak';b.setAttribute('aria-label','朗讀這一區');b.innerHTML=SPK+'<b>朗讀</b>';h.after(b);
-    b.addEventListener('click',()=>{if(cur===b){stop();return}stop();const sec=b.closest('section');const u=new SpeechSynthesisUtterance(textOf(sec));u.lang='zh-TW';u.rate=.9;const v=speechSynthesis.getVoices().find(v=>/zh[-_]TW/i.test(v.lang));if(v)u.voice=v;u.onend=u.onerror=()=>{if(cur===b)stop()};cur=b;b.classList.add('on');b.setAttribute('aria-label','停止朗讀');b.querySelector('b').textContent='停止';speechSynthesis.speak(u)})});
+    b.addEventListener('click',()=>{if(cur===b){stop();return}stop();const sec=b.closest('section');const u=new SpeechSynthesisUtterance(textOf(sec));setVoice(u);u.onend=u.onerror=()=>{if(cur===b)stop()};cur=b;b.classList.add('on');b.setAttribute('aria-label','停止朗讀');b.querySelector('b').textContent='停止';speechSynthesis.speak(u)})});
   addEventListener('pagehide',stop);
 }
 </script>
