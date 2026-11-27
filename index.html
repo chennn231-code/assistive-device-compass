@@ -181,6 +181,10 @@ td.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .legal{margin-top:24px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px}
 .legal h3{font-size:18px;margin-bottom:8px}.legal ul{margin:0;padding-left:22px}.legal li{margin-bottom:6px}
 @media(max-width:600px){.frow{grid-template-columns:minmax(0,1fr)}.finder{position:static}}
+/* 照片位置與標題可讀性 */
+.hero .ph{background-position:center 40%}
+.hero .ph.has::after{display:block;content:"";inset:0;top:auto;height:55%;background:linear-gradient(to bottom,rgba(40,28,18,0),rgba(40,28,18,.38))}
+@media(max-width:600px){.hero .ph{background-position:86% 40%}}
 /* 目錄 */
 .toc{display:flex;gap:8px;overflow-x:auto;margin-top:40px;padding:4px 2px 10px;justify-content:center;flex-wrap:wrap}
 .toc a{flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;font-size:16px}
