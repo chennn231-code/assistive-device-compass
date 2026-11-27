@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>輔具補助指南針</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
 <style>
 /* VOICE: 安靜、留白多、溫暖；介面本身就是輔具——字大、好按、說人話
    IDEA: 照顧生活誌封面：滿版照片＋壓在照片下緣的超大標題
@@ -181,6 +181,32 @@ td.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .legal{margin-top:24px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px}
 .legal h3{font-size:18px;margin-bottom:8px}.legal ul{margin:0;padding-left:22px}.legal li{margin-bottom:6px}
 @media(max-width:600px){.frow{grid-template-columns:minmax(0,1fr)}.finder{position:static}}
+/* 目錄 */
+.toc{display:flex;gap:8px;overflow-x:auto;margin-top:40px;padding:4px 2px 10px;justify-content:center;flex-wrap:wrap}
+.toc a{flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;font-size:16px}
+/* 互動回饋 */
+.pill,.tb,.acts a,.tabs label,.seg label,.opt,.hint button,.links a,.toc a,.callbar a,.more,select{transition:background-color .15s,border-color .15s,transform .1s,box-shadow .15s}
+@media(hover:hover){
+ .pill:hover,.acts a:hover,.hint button:hover,.toc a:hover{box-shadow:0 0 0 3px var(--line)}
+ .tb:hover,.tabs label:hover,.seg label:hover,.opt:hover{border-color:var(--ink)}
+ .links a:hover,.ctr:hover{border-color:var(--ink)}}
+.pill:active,.tb:active,.acts a:active,.tabs label:active,.seg label:active,.opt:active,.hint button:active,.toc a:active,.callbar a:active,.links a:active{transform:scale(.97)}
+@keyframes pulse{0%{background:var(--pill)}100%{background:transparent}}
+.pulse{animation:pulse .7s ease-out;border-radius:10px}
+@media(prefers-reduced-motion:reduce){.pulse{animation:none}*{transition:none!important}}
+/* 手機優先 */
+@media(max-width:600px){
+ .hero{height:44vh;min-height:280px}
+ .intro{padding:40px 0 28px}.portrait{width:96px;margin-bottom:22px}.intro p.body{font-size:17px}
+ .svc{gap:12px;margin-top:20px}
+ .svc article{display:grid;grid-template-columns:96px minmax(0,1fr);grid-template-rows:auto auto auto;column-gap:14px;text-align:left;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:12px}
+ .svc .ph{grid-row:1/4;aspect-ratio:1;border-radius:16px;margin:0}
+ .svc .ph::after{font-size:11px;inset:auto 4px 4px 4px}
+ .svc h3{margin:2px 0 2px}.svc p{margin:0 0 8px;max-width:none;font-size:15px}
+ .svc .pill{min-height:44px;padding:0 18px;justify-self:start}
+ .toc{justify-content:flex-start;flex-wrap:nowrap;margin-top:24px}
+ .band{padding:44px 0}
+ .sec-title{margin-bottom:8px}}
 /* 名詞翻譯 */
 .dict{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:30px 0 0;text-align:left}
 .dict div{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
@@ -250,6 +276,100 @@ footer{font-size:15px;color:var(--mute);border-top:1px solid var(--line);padding
     <article><div class="ph" data-img="svc3" data-label="圖片 5｜申請流程"></div>
       <h3>要怎麼辦？</h3><p>四個步驟，每一步該找誰、要帶什麼</p><a class="pill" href="#flow">看步驟</a></article>
   </div>
+  <nav class="toc" aria-label="網站目錄">
+    <a href="#check">我能申請嗎</a><a href="#warn">先申請再購買</a><a href="#flow">申請四步驟</a><a href="#calc">能補多少</a><a href="#all">全部輔具</a><a href="#v3">長照 3.0</a><a href="#county">找輔具中心</a><a href="#dict">名詞翻譯</a><a href="#news">最新消息</a>
+  </nav>
+</div></section>
+
+<section class="band soft" id="check"><div class="wrap center">
+  <h2 class="sec-title">我能申請嗎？</h2>
+  <p class="lede">勾選家人的狀況，旁邊會馬上顯示結果　你勾的內容只留在這台裝置上，不會傳出去，也不會被記錄</p>
+  <div class="top">
+    <form class="card" id="quiz" onsubmit="return false">
+      <fieldset>
+        <legend>家人的狀況（可以勾很多個）</legend>
+        <label class="opt"><input type="checkbox" name="q" value="dis"><span>有身心障礙證明（以前叫身障手冊）</span></label>
+        <label class="opt"><input type="checkbox" name="q" value="65"><span>65 歲以上</span></label>
+        <label class="opt"><input type="checkbox" name="q" value="ind"><span>55 到 64 歲的原住民</span></label>
+        <label class="opt"><input type="checkbox" name="q" value="dem"><span>50 歲以上，醫生說有失智症</span></label>
+        <label class="opt"><input type="checkbox" name="q" value="adl"><span>生活上需要別人幫忙<small>例如洗澡、穿衣服、上廁所、從床上起來</small></span></label>
+        <label class="opt"><input type="checkbox" name="q" value="inst"><span>現在住在安養中心、護理之家</span></label>
+      </fieldset>
+      <fieldset>
+        <legend>家裡的經濟身分</legend>
+        <div class="seg" role="radiogroup" aria-label="家裡的經濟身分">
+          <label><input type="radio" name="inc" value="gen" checked>一般</label>
+          <label><input type="radio" name="inc" value="mid">中低收入戶</label>
+          <label><input type="radio" name="inc" value="low">低收入戶</label>
+        </div>
+        <p class="note" style="margin-top:8px">沒有公所發的低收或中低收證明，就選「一般」</p>
+      </fieldset>
+    </form>
+    <section class="res" aria-live="polite">
+      <h3>你可能可以申請</h3>
+      <div id="out"></div>
+    </section>
+  </div>
+</div></section>
+
+<section class="band" id="warn"><div class="wrap">
+  <div class="alert" role="note">
+    <div class="stamp">先申請<br>再購買</div>
+    <h2>千萬不要先買！</h2>
+    <p>先買了再來申請，<strong>通常就拿不到補助</strong>　一定要等政府同意之後，才去買或租</p>
+    <ul>
+      <li>走長照：等政府派來的人幫你排好照顧安排，再到<strong>政府合作的輔具店</strong>買</li>
+      <li>走身障：收到政府同意的通知後，<strong>6 個月內</strong>要買好，拿發票去申請補助款</li>
+      <li>還在住院？請醫院的出院準備小組或社工先幫你聯絡長照</li>
+    </ul>
+  </div>
+</div></section>
+
+<section class="band soft" id="flow"><div class="wrap center">
+  <h2 class="sec-title">要怎麼辦？四個步驟</h2>
+  <ol class="flow">
+    <li><h3>先請人來看</h3><p class="off">公文寫法：評估</p>
+      <p><b>長照：</b>打 1966　政府會派人到家裡，看家人需要多少照顧　要申請氣墊床、照顧床的話，還會有治療師來確認需要什麼樣的</p>
+      <p><b>身障：</b>洗澡椅、一般輪椅不用評估；其他品項先打電話給輔具中心約時間</p></li>
+    <li><h3>等政府同意</h3><p class="off">公文寫法：核定</p>
+      <p><b>長照：</b>政府派來的人會幫你排好照顧安排，裡面寫著可以買哪些輔具</p>
+      <p><b>身障：</b>上網或到區公所申請，會收到一張書面通知，寫著補哪一項、補多少</p>
+      <p class="note">收到之前，先不要付錢</p></li>
+    <li><h3>再去買</h3><p class="off">公文寫法：購買</p>
+      <p><b>長照：</b>到政府合作的輔具店買或租，記得拿發票和保固書</p>
+      <p><b>身障：</b>收到通知後 6 個月內買好</p>
+      <p class="note">同一樣東西，要用滿規定的年數才能再申請</p></li>
+    <li><h3>拿回補助款</h3><p class="off">公文寫法：核銷</p>
+      <p><b>長照：</b>通常輔具店會直接跟政府拿錢，你只要付自己那一部分</p>
+      <p><b>身障：</b>把發票等文件交給政府，大約 1 個月內補助款會匯給你　在合作的輔具店買，也可以請店家幫你辦</p></li>
+  </ol>
+</div></section>
+
+<section class="band" id="calc"><div class="wrap center">
+  <h2 class="sec-title">能補多少錢？</h2>
+  <p class="lede">這裡是全國統一的基本金額，有些縣市會多補一些　實際金額以政府通知為準</p>
+  <div class="calc">
+    <div class="card">
+      <label class="f" for="item">要買什麼輔具</label>
+      <select id="item"></select>
+      <label class="f" for="inc2">家裡的經濟身分</label>
+      <select id="inc2"><option value="gen">一般</option><option value="mid">中低收入戶</option><option value="low">低收入戶</option></select>
+      <label class="f" for="price">店家報價多少錢</label>
+      <input id="price" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 5000">
+      <p class="note" id="itemNote"></p>
+    </div>
+    <div>
+      <p class="note" style="margin-bottom:4px">選比較划算的那一邊，大約可拿回</p>
+      <div class="big" id="bigNum">—</div>
+      <p id="bigSub" style="margin:8px 0 14px"></p>
+      <div class="cmp" id="cmp"></div>
+    </div>
+  </div>
+  <div class="scroll"><table class="stack" id="tbl">
+    <thead><tr><th>輔具</th><th>長照最多補</th><th>長照自己出</th><th>身障最多補</th><th>身障政府出</th><th>多久能再申請</th><th>要先請人評估嗎</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <p class="note" style="margin-top:10px;text-align:left">長照自己出的比例：一般 30%、中低收入戶 10%、低收入戶不用出；寫「不用出錢」的品項，任何人都全額補助　身障補助：一般補一半、中低收入戶補 75%、低收入戶全額；寫「全額」的品項任何人都全額補助</p>
 </div></section>
 
 <section class="band soft" id="all"><div class="wrap center">
@@ -287,88 +407,6 @@ footer{font-size:15px;color:var(--mute);border-top:1px solid var(--line);padding
       <li>本清單只列政府公告的補助品項，不代表推薦任何廠牌或產品，也不說明療效；適不適合請以專業評估為準</li>
     </ul>
   </div>
-</div></section>
-
-<section class="band soft" id="check"><div class="wrap center">
-  <h2 class="sec-title">我能申請嗎？</h2>
-  <p class="lede">勾選家人的狀況，旁邊會馬上顯示結果　你勾的內容只留在這台裝置上，不會傳出去，也不會被記錄</p>
-  <div class="top">
-    <form class="card" id="quiz" onsubmit="return false">
-      <fieldset>
-        <legend>家人的狀況（可以勾很多個）</legend>
-        <label class="opt"><input type="checkbox" name="q" value="dis"><span>有身心障礙證明（以前叫身障手冊）</span></label>
-        <label class="opt"><input type="checkbox" name="q" value="65"><span>65 歲以上</span></label>
-        <label class="opt"><input type="checkbox" name="q" value="ind"><span>55 到 64 歲的原住民</span></label>
-        <label class="opt"><input type="checkbox" name="q" value="dem"><span>50 歲以上，醫生說有失智症</span></label>
-        <label class="opt"><input type="checkbox" name="q" value="adl"><span>生活上需要別人幫忙<small>例如洗澡、穿衣服、上廁所、從床上起來</small></span></label>
-        <label class="opt"><input type="checkbox" name="q" value="inst"><span>現在住在安養中心、護理之家</span></label>
-      </fieldset>
-      <fieldset>
-        <legend>家裡的經濟身分</legend>
-        <div class="seg" role="radiogroup" aria-label="家裡的經濟身分">
-          <label><input type="radio" name="inc" value="gen" checked>一般</label>
-          <label><input type="radio" name="inc" value="mid">中低收入戶</label>
-          <label><input type="radio" name="inc" value="low">低收入戶</label>
-        </div>
-        <p class="note" style="margin-top:8px">沒有公所發的低收或中低收證明，就選「一般」</p>
-      </fieldset>
-    </form>
-    <section class="res" aria-live="polite">
-      <h3>你可能可以申請</h3>
-      <div id="out"></div>
-    </section>
-  </div>
-</div></section>
-
-<section class="band" id="county"><div class="wrap center">
-  <h2 class="sec-title">找你家附近的輔具中心</h2>
-  <p class="lede">選擇你住的縣市，就會看到當地輔具資源中心的電話、地址和地圖　輔具中心可以免費諮詢、評估、維修，也有二手輔具可以租借</p>
-  <div class="county">
-    <label class="f" for="city">我住在</label>
-    <select id="city"><option value="">請選擇縣市</option></select>
-  </div>
-  <div class="centers" id="centers" aria-live="polite"></div>
-  <p class="note" style="margin-top:14px">資料來源：衛生福利部社會及家庭署輔具中心聯絡資料表，部分縣市已再對照縣市政府公告　服務時間或地址可能調整，出門前請先打電話確認</p>
-</div></section>
-
-<section class="band" id="warn"><div class="wrap">
-  <div class="alert" role="note">
-    <div class="stamp">先申請<br>再購買</div>
-    <h2>千萬不要先買！</h2>
-    <p>先買了再來申請，<strong>通常就拿不到補助</strong>　一定要等政府同意之後，才去買或租</p>
-    <ul>
-      <li>走長照：等政府派來的人幫你排好照顧安排，再到<strong>政府合作的輔具店</strong>買</li>
-      <li>走身障：收到政府同意的通知後，<strong>6 個月內</strong>要買好，拿發票去申請補助款</li>
-      <li>還在住院？請醫院的出院準備小組或社工先幫你聯絡長照</li>
-    </ul>
-  </div>
-</div></section>
-
-<section class="band soft" id="calc"><div class="wrap center">
-  <h2 class="sec-title">能補多少錢？</h2>
-  <p class="lede">這裡是全國統一的基本金額，有些縣市會多補一些　實際金額以政府通知為準</p>
-  <div class="calc">
-    <div class="card">
-      <label class="f" for="item">要買什麼輔具</label>
-      <select id="item"></select>
-      <label class="f" for="inc2">家裡的經濟身分</label>
-      <select id="inc2"><option value="gen">一般</option><option value="mid">中低收入戶</option><option value="low">低收入戶</option></select>
-      <label class="f" for="price">店家報價多少錢</label>
-      <input id="price" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 5000">
-      <p class="note" id="itemNote"></p>
-    </div>
-    <div>
-      <p class="note" style="margin-bottom:4px">選比較划算的那一邊，大約可拿回</p>
-      <div class="big" id="bigNum">—</div>
-      <p id="bigSub" style="margin:8px 0 14px"></p>
-      <div class="cmp" id="cmp"></div>
-    </div>
-  </div>
-  <div class="scroll"><table class="stack" id="tbl">
-    <thead><tr><th>輔具</th><th>長照最多補</th><th>長照自己出</th><th>身障最多補</th><th>身障政府出</th><th>多久能再申請</th><th>要先請人評估嗎</th></tr></thead>
-    <tbody></tbody>
-  </table></div>
-  <p class="note" style="margin-top:10px;text-align:left">長照自己出的比例：一般 30%、中低收入戶 10%、低收入戶不用出；寫「不用出錢」的品項，任何人都全額補助　身障補助：一般補一半、中低收入戶補 75%、低收入戶全額；寫「全額」的品項任何人都全額補助</p>
 </div></section>
 
 <section class="band" id="v3"><div class="wrap center">
@@ -426,27 +464,18 @@ footer{font-size:15px;color:var(--mute);border-top:1px solid var(--line);padding
   </div>
 </div></section>
 
-<section class="band" id="flow"><div class="wrap center">
-  <h2 class="sec-title">要怎麼辦？四個步驟</h2>
-  <ol class="flow">
-    <li><h3>先請人來看</h3><p class="off">公文寫法：評估</p>
-      <p><b>長照：</b>打 1966　政府會派人到家裡，看家人需要多少照顧　要申請氣墊床、照顧床的話，還會有治療師來確認需要什麼樣的</p>
-      <p><b>身障：</b>洗澡椅、一般輪椅不用評估；其他品項先打電話給輔具中心約時間</p></li>
-    <li><h3>等政府同意</h3><p class="off">公文寫法：核定</p>
-      <p><b>長照：</b>政府派來的人會幫你排好照顧安排，裡面寫著可以買哪些輔具</p>
-      <p><b>身障：</b>上網或到區公所申請，會收到一張書面通知，寫著補哪一項、補多少</p>
-      <p class="note">收到之前，先不要付錢</p></li>
-    <li><h3>再去買</h3><p class="off">公文寫法：購買</p>
-      <p><b>長照：</b>到政府合作的輔具店買或租，記得拿發票和保固書</p>
-      <p><b>身障：</b>收到通知後 6 個月內買好</p>
-      <p class="note">同一樣東西，要用滿規定的年數才能再申請</p></li>
-    <li><h3>拿回補助款</h3><p class="off">公文寫法：核銷</p>
-      <p><b>長照：</b>通常輔具店會直接跟政府拿錢，你只要付自己那一部分</p>
-      <p><b>身障：</b>把發票等文件交給政府，大約 1 個月內補助款會匯給你　在合作的輔具店買，也可以請店家幫你辦</p></li>
-  </ol>
+<section class="band soft" id="county"><div class="wrap center">
+  <h2 class="sec-title">找你家附近的輔具中心</h2>
+  <p class="lede">選擇你住的縣市，就會看到當地輔具資源中心的電話、地址和地圖　輔具中心可以免費諮詢、評估、維修，也有二手輔具可以租借</p>
+  <div class="county">
+    <label class="f" for="city">我住在</label>
+    <select id="city"><option value="">請選擇縣市</option></select>
+  </div>
+  <div class="centers" id="centers" aria-live="polite"></div>
+  <p class="note" style="margin-top:14px">資料來源：衛生福利部社會及家庭署輔具中心聯絡資料表，部分縣市已再對照縣市政府公告　服務時間或地址可能調整，出門前請先打電話確認</p>
 </div></section>
 
-<section class="band soft" id="dict"><div class="wrap center">
+<section class="band" id="dict"><div class="wrap center">
   <h2 class="sec-title">公文看不懂？名詞翻譯</h2>
   <p class="lede">接到電話或通知單時，常會看到這些詞</p>
   <dl class="dict">
@@ -466,7 +495,7 @@ footer{font-size:15px;color:var(--mute);border-top:1px solid var(--line);padding
   </dl>
 </div></section>
 
-<section class="band" id="news"><div class="wrap center">
+<section class="band soft" id="news"><div class="wrap center">
   <h2 class="sec-title">最新消息與政府公告</h2>
   <p class="lede">每週整理一次和輔具、長照有關的新制度與公告，最新的在最上面</p>
   <ul class="news" id="newsList"></ul>
@@ -507,10 +536,10 @@ $('#hc').addEventListener('click',()=>setC(!R.hasAttribute('data-contrast')));
 setZ(load('fz')||'1');setC(load('hc')==='1');
 
 /* 圖片 */
-for(const el of document.querySelectorAll('.ph[data-img]')){
-  const src='img/'+el.dataset.img+'.jpg',im=new Image();
-  im.onload=()=>{el.style.backgroundImage=`url(${src})`;el.classList.add('has')};im.src=src;
-}
+const loadImg=el=>{const src='img/'+el.dataset.img+'.jpg',im=new Image();im.onload=()=>{el.style.backgroundImage=`url(${src})`;el.classList.add('has')};im.src=src};
+if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){io.unobserve(e.target);loadImg(e.target)}}),{rootMargin:'300px'});document.querySelectorAll('.ph[data-img]').forEach(el=>io.observe(el))}
+else document.querySelectorAll('.ph[data-img]').forEach(loadImg);
+const pulse=el=>{el.classList.remove('pulse');void el.offsetWidth;el.classList.add('pulse')};
 
 const fmt=n=>n==null?'—':n.toLocaleString('zh-TW')+' 元';
 const LTC={gen:.7,mid:.9,low:1},DIS={gen:.5,mid:.75,low:1},INC={gen:'一般',mid:'中低收入戶',low:'低收入戶'};
@@ -548,7 +577,7 @@ function quiz(){
   else dis={k:'no',t:'不適用',b:['要有身心障礙證明才能申請　如果還在辦證明，可以先走長照']};
   const card=(h,o)=>`<div class="path ${o.k}"><span class="tag">${o.t}</span><h3>${h}</h3><ul>${o.b.map(x=>`<li>${x}</li>`).join('')}</ul></div>`;
   const tip=(ltc.k!=='no'&&dis.k==='yes')?'<p class="note"><strong>兩邊都可以：</strong>選比較划算的那一邊就好，但同一樣東西不能兩邊都拿　可以用下面的試算比比看</p>':'';
-  $('#out').innerHTML=card('長照補助',ltc)+card('身障輔具補助',dis)+tip;
+  $('#out').innerHTML=card('長照補助',ltc)+card('身障輔具補助',dis)+tip;pulse($('#out'));
   $('#inc2').value=inc;calc();
 }
 
@@ -560,7 +589,7 @@ function calc(){
   const lr=it.lf?1:LTC[inc],lg=Math.round(Math.min(p,it.ltc)*lr),lpay=p-lg;
   const dg=it.dis==null?null:Math.min(p,Math.round(it.dis*(it.df?1:DIS[inc]))),dpay=dg==null?null:p-dg;
   const best=dg==null||lg>=dg?'l':'d';
-  $('#bigNum').textContent=fmt(Math.max(lg,dg||0));
+  $('#bigNum').textContent=fmt(Math.max(lg,dg||0));pulse($('#bigNum'));
   $('#bigSub').innerHTML=`報價 ${fmt(p)}，${best==='l'?'走長照':'走身障'}，自己大約出 <strong style="white-space:nowrap">${fmt(best==='l'?lpay:dpay)}</strong>`;
   const box=(t,cap,rate,g,pay,on)=>`<div class="card ${on?'best':''}"><strong>${t}${on?'（較划算）':''}</strong><dl><dt>政府最多補</dt><dd>${fmt(cap)}</dd><dt>政府出幾成</dt><dd>${rate}</dd><dt>大約拿回</dt><dd>${fmt(g)}</dd><dt>自己要出</dt><dd>${fmt(pay)}</dd></dl></div>`;
   $('#cmp').innerHTML=box('長照',it.ltc,it.lf?'全額':Math.round(lr*100)+'%',lg,lpay,best==='l')+
@@ -588,7 +617,7 @@ function rent(){
   const r=+$('#rent').value,m=Math.min(20000,Math.max(0,+$('#mod').value||0)),inc=$('#inc3').value;
   if(!(r>0)){$('#rentBig').textContent='—';$('#rentSub').textContent='先輸入輔具店給你的每月租金';return}
   const self=Math.round(r*(1-LTC[inc])),left=60000-m,mon=Math.min(36,Math.floor(left/r));
-  $('#rentBig').textContent=fmt(self);
+  $('#rentBig').textContent=fmt(self);pulse($('#rentBig'));
   $('#rentSub').innerHTML=`政府每個月出 ${fmt(r-self)}　扣掉無障礙改善 ${fmt(m)} 後，額度還有 ${fmt(left)}，大約可以租 <strong style="white-space:nowrap">${mon} 個月</strong>${mon<36?'，不到 3 年，超過的月份要自己付或跟評估人員討論':'，可以撐滿 3 年'}`;
 }
 $('#pickForm').addEventListener('change',pick);
@@ -713,7 +742,7 @@ function city(){
     <div class="acts"><a href="tel:${dial}">撥打電話</a><a class="sec" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}" rel="noopener">看地圖</a></div></article>`}).join('')+
     `<article class="ctr"><h3>${c}的長照申請</h3><p>要申請長照評估、問補助進度，打長照專線</p><p><span class="k">電話</span><span class="tel">1966</span></p><div class="acts"><a href="tel:1966">撥打 1966</a><a class="sec" href="https://newrepat.sfaa.gov.tw/" rel="noopener">輔具資源入口網</a></div></article>`;
 }
-$('#city').addEventListener('change',city);
+$('#city').addEventListener('change',()=>{city();if($('#city').value)$('#centers').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})});
 {const c=load('city');if(c&&CENTERS[c])$('#city').value=c;}
 city();
 quiz();calc();pick();rent();
