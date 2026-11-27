@@ -372,7 +372,7 @@ footer a{color:var(--bg)}
 @media(max-width:600px){
  body{font-size:17px}
  .hero{min-height:72vh}.hero .wrap{padding-top:90px}
- .hero .acts .btn{flex:1 1 100%}
+ .hero .acts .btn{flex:1 1 100%}.hero .acts .btn.ghost{flex:1 1 40%;padding:0 12px;font-size:16px}
  .svc{grid-template-columns:minmax(0,1fr);gap:12px}
  .svc a{display:grid;grid-template-columns:104px minmax(0,1fr);align-items:center}
  .svc .ph{aspect-ratio:auto;width:104px;height:100%;min-height:120px}
@@ -411,6 +411,16 @@ h1,h2,h3,.sh p{text-wrap:balance}
 #hzForm fieldset{margin-bottom:12px}
 .hz-go{width:100%;justify-content:center;margin-top:4px}@media(min-width:901px){.hz-go{display:none!important}}
 #hzOut{scroll-margin-top:90px}
+
+.hero .sub .nb{display:inline-block}
+.hero .acts{flex-wrap:wrap}
+.to-home{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;margin:0 0 16px;padding:14px 20px;border:1.5px solid var(--brown);border-radius:18px;background:var(--card);color:var(--ink);text-decoration:none}
+.to-home .ic{width:44px;height:44px;border-radius:50%;background:var(--soft);display:grid;place-items:center}
+.to-home svg{width:24px;height:24px;fill:none;stroke:var(--brown);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.to-home b{display:block;font-size:17px}.to-home small{color:var(--mute);font-size:var(--sm)}
+.to-home .go{font-weight:700;color:var(--brown);white-space:nowrap}
+@media(max-width:600px){.to-home{grid-template-columns:auto minmax(0,1fr)}.to-home .go{grid-column:2}}
+@media(hover:hover){.to-home:hover{box-shadow:0 0 0 4px var(--line)}}
 </style>
 </head>
 <body>
@@ -454,8 +464,8 @@ h1,h2,h3,.sh p{text-wrap:balance}
   <div class="wrap">
     <p class="kick">長照 3.0・身障輔具・醫療輔具</p>
     <h1>輔具補助指南針</h1>
-    <p class="sub">把分散的補助資訊整理成一條路，陪你找到下一步該問誰、該準備什麼</p>
-    <div class="acts"><a class="btn" href="#check">開始檢查資格</a><a class="btn ghost" href="#all">查全部輔具</a></div>
+    <p class="sub"><span class="nb">把分散的補助資訊整理成一條路，</span><span class="nb">陪你找到下一步該問誰、該準備什麼</span></p>
+    <div class="acts"><a class="btn" href="#check">開始檢查資格</a><a class="btn ghost" href="#all">查全部輔具</a><a class="btn ghost" href="#home">家裡無障礙改善</a></div>
     <a class="new-link" href="#v3">新制｜長照 3.0 智慧輔具怎麼租 →</a>
     <p class="stamp-date">資料整理至 <span class="dateTxt">2026 年 11 月 27 日</span></p>
   </div>
@@ -571,6 +581,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
 
 <section class="sec" id="all"><div class="wrap">
   <div class="sh"><h2>全部輔具查詢</h2><p>長照、身障、醫療輔具共 <span id="nTotal"></span> 項，打字或篩選就能找到</p></div>
+  <a class="to-home" href="#home"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg></span><span><b>家裡要裝扶手、消除門檻、改浴室？</b><small>居家無障礙改善有自己的專區，可以逐區檢查家裡、看怎麼申請</small></span><span class="go">前往專區 →</span></a>
   <div class="finder">
     <div class="sbox">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
