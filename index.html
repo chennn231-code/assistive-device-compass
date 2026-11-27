@@ -7,383 +7,440 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
 <style>
-/* VOICE: 安靜、留白多、溫暖；介面本身就是輔具——字大、好按、說人話
-   IDEA: 照顧生活誌封面：滿版照片＋壓在照片下緣的超大標題
-   PICTURE: 主視覺照片（待補）、小圓角照片、三張圓角服務卡照片
-   COLOUR and TYPE: 米白底、深可可棕字、淺灰藍膠囊按鈕；高對比模式為純黑白；思源宋體大標＋思源黑體 17px 內文
-   LAYOUT: 置中單欄；頂部固定工具列（字級／高對比）；手機底部固定撥號列 */
+/* VOICE: 溫和、可信、不誇大——像一位熟悉制度的社工陪你整理，不替政府做最終決定
+   IDEA: 一本安靜的照顧生活手冊：照片封面、清楚章節、每頁只講一件事
+   PICTURE: 封面照片配完整可讀的標題；其他照片只在服務入口出現
+   COLOUR and TYPE: 米白底、深可可棕、淺灰藍按鈕；思源宋體標題（三種尺寸）、思源黑體 17px 內文
+   LAYOUT: 左對齊章節標題＋一行導言；長內容收進可展開區塊；手機單欄、底部固定撥號列 */
 :root{color-scheme:light dark;--z:1;
---bg:light-dark(#fbfaf3,#16140f);--card:light-dark(#ffffff,#201d17);--ink:light-dark(#1f1b16,#f3eee6);
---mute:light-dark(#574f46,#c9c0b4);--line:light-dark(#cfc6b8,#4a4237);--brown:light-dark(#5b4230,#e3c4a5);
---soft:light-dark(#f1ebe1,#2a241c);--pill:light-dark(#dcebf7,#24313b);--red:light-dark(#9e231b,#8f2a22);--ok:light-dark(#2f5d3b,#9fd0ad)}
+--bg:light-dark(#faf8f3,#15130f);--card:light-dark(#ffffff,#1f1c17);--ink:light-dark(#221d18,#f2ede5);
+--mute:light-dark(#5b534a,#c4bbaf);--line:light-dark(#e2dace,#3b342b);--brown:light-dark(#6b4a33,#e0c2a3);
+--soft:light-dark(#f3eee5,#24201a);--pill:light-dark(#e1ebf3,#26323c);--red:light-dark(#9e231b,#8a2a22);--ok:light-dark(#2f5d3b,#9fd0ad);
+--shadow:0 1px 2px rgba(40,30,20,.05),0 4px 16px rgba(40,30,20,.04);
+--h1:clamp(40px,7vw,72px);--h2:clamp(26px,3.2vw,34px);--h3:20px;--sm:15px}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
-:root[data-contrast=on]{color-scheme:light;--bg:#fff;--card:#fff;--ink:#000;--mute:#111;--line:#000;--brown:#000;--soft:#fff;--pill:#ffe14d;--red:#7a0000;--ok:#004d1a}
-:root[data-contrast=on] .card,:root[data-contrast=on] .path,:root[data-contrast=on] .opt,:root[data-contrast=on] .flow li,:root[data-contrast=on] .links a{border-width:2px}
+:root[data-contrast=on]{color-scheme:light;--bg:#fff;--card:#fff;--ink:#000;--mute:#111;--line:#000;--brown:#000;--soft:#fff;--pill:#ffe14d;--red:#7a0000;--ok:#004d1a;--shadow:none}
 :root[data-contrast=on] a{text-decoration:underline}
+:root[data-contrast=on] .card,:root[data-contrast=on] .it,:root[data-contrast=on] .opt{border-width:2px}
 *{box-sizing:border-box;min-width:0}
-body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.75 "Noto Sans TC",system-ui,sans-serif;overflow-x:clip}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.75 "Noto Sans TC","Noto Sans CJK TC",system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
 #main{zoom:var(--z)}
-h1,h2,h3{font-family:"Noto Serif TC",serif;line-height:1.2;text-wrap:balance;margin:0}
+h1,h2,h3{font-family:"Noto Serif TC","Noto Serif CJK TC",serif;line-height:1.25;text-wrap:balance;margin:0;font-weight:700}
+h2{font-size:var(--h2)}h3{font-size:var(--h3)}
 p{margin:0 0 10px}a{color:var(--brown)}
-:focus-visible{outline:3px solid var(--brown);outline-offset:3px}
-.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--bg);padding:10px 16px;z-index:30;border-radius:8px}.skip:focus{left:8px}
-.wrap{max-width:1080px;margin:0 auto;padding:0 max(5vw,16px)}
-.center{text-align:center}
-/* 工具列 */
-.tools{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
-.tools .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding-block:8px}
-.tools .name{font:700 17px "Noto Serif TC",serif;margin-right:auto}
-.grp{display:flex;align-items:center;gap:6px}.grp>span{font-size:15px;color:var(--mute)}
-.tb{min-height:44px;min-width:44px;padding:0 14px;border:1.5px solid var(--ink);border-radius:999px;background:var(--card);color:var(--ink);font:500 16px "Noto Sans TC",sans-serif;cursor:pointer}
-.tb[aria-pressed=true]{background:var(--ink);color:var(--bg)}
-.tb.lg{font-size:19px}.tb.xl{font-size:22px}
-.call-top{text-decoration:none;font-weight:700;display:inline-flex;align-items:center}
-/* 圖片位 */
-.ph{position:relative;background-size:cover;background-position:center;background-color:var(--soft)}
-.ph::after{content:attr(data-label);position:absolute;inset:auto 12px 12px 12px;font-size:14px;color:var(--mute);text-align:center;line-height:1.4}
-.ph.has::after{display:none}
-.hero{position:relative;height:min(86vh,720px);overflow:hidden}
-.hero .ph{position:absolute;inset:0;background-image:linear-gradient(160deg,#cfc3b2,#a89580 60%,#8e7a64)}
-.hero .ph::after{top:28%;bottom:auto;color:#fff;font-size:16px}
-.hero h1{position:absolute;left:50%;bottom:-.14em;transform:translateX(-50%);white-space:nowrap;font-weight:900;font-size:clamp(64px,17vw,230px);letter-spacing:-.02em;color:var(--bg);line-height:1}
-.intro{padding:clamp(56px,8vw,110px) 0 clamp(40px,6vw,80px)}
-.portrait{width:130px;aspect-ratio:3/4;border-radius:22px;margin:0 auto 34px;overflow:hidden}
-.eyebrow{font-size:15px;font-weight:700;margin-bottom:20px;color:var(--brown)}
-.intro h2{font-size:clamp(30px,4.6vw,46px);font-weight:700;margin-bottom:22px}
-.intro p.body{max-width:42ch;margin:0 auto;font-size:18px}
-.sec-title{font-size:clamp(26px,3.2vw,34px);font-weight:700;margin-bottom:12px}
-.svc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:30px}
-.svc article{text-align:center}
-.svc .ph{aspect-ratio:4/5;border-radius:28px;margin-bottom:20px;overflow:hidden}
-.svc h3{font-family:"Noto Sans TC",sans-serif;font-size:19px;font-weight:700;margin-bottom:6px}
-.svc p{color:var(--mute);max-width:30ch;margin:0 auto 18px}
-.pill{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 34px;border:1.5px solid var(--ink);border-radius:999px;background:var(--pill);color:var(--ink);text-decoration:none;font-weight:700}
-.band{padding:clamp(56px,8vw,100px) 0}.band.soft{background:var(--soft)}
-.lede{color:var(--mute);max-width:52ch;margin:0 auto 28px}
+:focus-visible{outline:3px solid var(--brown);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--bg);padding:10px 16px;z-index:60;border-radius:8px}.skip:focus{left:8px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 max(5vw,20px)}
+.note{font-size:var(--sm);color:var(--mute)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 26px;border-radius:999px;border:1.5px solid var(--ink);background:var(--pill);color:var(--ink);font:700 17px "Noto Sans TC",sans-serif;text-decoration:none;cursor:pointer}
+.btn.dark{background:var(--ink);color:var(--bg)}
+.btn.ghost{background:transparent}
+.btn,.chip,.opt,.seg label,.tabs label,.it,.lk,.ctr a{transition:background-color .15s,border-color .15s,transform .12s,box-shadow .15s}
+.btn:active,.chip:active,.seg label:active,.tabs label:active{transform:scale(.97)}
+@media(hover:hover){.btn:hover{box-shadow:0 0 0 4px var(--line)}.lk:hover,.it:hover{border-color:var(--brown)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:var(--shadow)}
+
+/* 頂部列 */
+.top{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:10px;min-height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font:700 18px "Noto Serif TC",serif;margin-right:auto;white-space:nowrap}
+.brand svg{width:28px;height:28px;flex:none}
+.tb{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;min-width:44px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:700 15px "Noto Sans TC",sans-serif;text-decoration:none;cursor:pointer;white-space:nowrap}
+.tb svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+.tb[aria-expanded=true]{border-color:var(--ink)}
+.tb.call{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pop{position:absolute;right:max(5vw,20px);top:68px;width:min(340px,calc(100vw - 32px));z-index:50;padding:20px}
+.pop[hidden]{display:none}
+.pop h3{font-size:17px;margin-bottom:10px;font-family:"Noto Sans TC",sans-serif}
+.pop .row{display:flex;gap:8px;margin-bottom:16px}
+.pop .row button{flex:1;min-height:48px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:700 16px "Noto Sans TC",sans-serif;cursor:pointer}
+.pop .row button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.toc-list{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.toc-list a{display:flex;align-items:center;min-height:46px;padding:0 14px;border-radius:12px;text-decoration:none;color:var(--ink);font-weight:700}
+.toc-list a:hover,.toc-list a:focus-visible{background:var(--soft)}
+
+/* 公告輪播 */
+.notice{background:var(--soft);border-bottom:1px solid var(--line)}
+.notice .wrap{display:flex;align-items:center;gap:12px;min-height:50px}
+.notice .lb{flex:none;font-size:14px;font-weight:700;padding:2px 12px;border-radius:999px;background:var(--brown);color:var(--bg)}
+.notice .msg{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:var(--ink);text-decoration:none;font-size:16px;transition:opacity .3s}
+.notice .msg b{margin-right:10px;color:var(--brown)}
+.notice .ctl{display:flex;gap:4px;flex:none}
+.notice .ctl button{min-width:44px;min-height:44px;border:0;background:transparent;color:var(--ink);font:700 15px "Noto Sans TC",sans-serif;cursor:pointer;border-radius:10px}
+.notice .ctl button:hover{background:var(--card)}
+
+/* 封面 */
+.hero{position:relative;min-height:min(78vh,680px);display:flex;align-items:flex-end;overflow:hidden;color:#fff}
+.hero .ph{position:absolute;inset:0;background:#8e7a64 center 40%/cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(30,20,12,.78) 0%,rgba(30,20,12,.35) 45%,rgba(30,20,12,0) 75%)}
+.hero .wrap{position:relative;z-index:1;width:100%;padding-bottom:clamp(36px,6vw,72px);padding-top:120px}
+.hero .kick{font-size:16px;font-weight:700;opacity:.92;margin-bottom:12px}
+.hero h1{font-size:var(--h1);font-weight:900;line-height:1.08;letter-spacing:.01em;margin-bottom:16px}
+.hero p.sub{font-size:clamp(18px,2vw,21px);max-width:30ch;margin-bottom:26px;opacity:.95}
+.hero .acts{display:flex;flex-wrap:wrap;gap:12px}
+.hero .btn{border-color:#fff}.hero .btn.ghost{color:#fff}
+.hero .stamp-date{margin-top:18px;font-size:14px;opacity:.85}
+
+/* 章節 */
+.sec{padding:clamp(56px,8vw,104px) 0}
+.sec.soft{background:var(--soft)}
+.sh{max-width:680px;margin-bottom:clamp(24px,3vw,36px)}
+.sh .k{font-size:15px;font-weight:700;color:var(--brown);margin-bottom:8px}
+.sh h2{margin-bottom:10px}
+.sh p{color:var(--mute);font-size:18px;margin:0}
+
+/* 定位說明 */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(24px,5vw,64px);align-items:center}
+.about .ph{aspect-ratio:4/5;border-radius:28px;background:var(--soft) center/cover;max-height:520px}
+.about h2{margin-bottom:16px}
+.about .lead{font-size:19px;margin-bottom:22px}
+.verify{display:grid;gap:10px;margin-top:8px}
+.verify div{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:4px 14px;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:16px}
+.verify b{color:var(--brown)}
+
+/* 服務入口 */
+.svc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.svc a{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:var(--shadow)}
+.svc .ph{aspect-ratio:5/4;background:var(--soft) center/cover}
+.svc .t{padding:20px 22px 24px}
+.svc h3{margin-bottom:6px}.svc p{color:var(--mute);margin:0 0 14px}
+.svc .go{font-weight:700;color:var(--brown)}
+@media(hover:hover){.svc a:hover{transform:translateY(-3px);border-color:var(--brown)}}
+.svc a{transition:transform .2s,border-color .2s}
+
+/* 表單元件 */
+fieldset{border:0;margin:0 0 18px;padding:0}legend{font-weight:700;margin-bottom:10px;font-size:18px}
+.opt{display:flex;gap:14px;align-items:flex-start;padding:13px 16px;border:1.5px solid var(--line);border-radius:16px;margin-bottom:8px;cursor:pointer;background:var(--card)}
+.opt:has(input:checked){border-color:var(--ink);background:var(--soft)}
+.opt input{width:22px;height:22px;margin-top:4px;accent-color:var(--brown);flex:none}
+.opt small{display:block;color:var(--mute);font-size:var(--sm)}
+.seg,.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.seg label,.tabs label{display:inline-flex;align-items:center;gap:6px;min-height:48px;padding:0 20px;border:1.5px solid var(--line);border-radius:999px;cursor:pointer;background:var(--card);font-weight:700}
+.seg input,.tabs input{position:absolute;opacity:0;pointer-events:none}
+.seg label:has(input:checked),.tabs label:has(input:checked){background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.seg label:has(input:focus-visible),.tabs label:has(input:focus-visible),.opt:has(input:focus-visible){outline:3px solid var(--brown);outline-offset:2px}
+.tabs small{font-weight:400;font-size:13px;opacity:.8}
+label.f{display:block;font-weight:700;margin:0 0 8px}
+select,input[type=number],input[type=search]{width:100%;font:inherit;font-size:18px;padding:12px 16px;border:1.5px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);min-height:54px;margin-bottom:18px}
+select:focus,input:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3px var(--pill)}
+
 /* 快篩 */
-.top{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:24px;align-items:start;text-align:left}
-.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px}
-fieldset{border:0;margin:0 0 14px;padding:0}legend{font-weight:700;margin-bottom:8px;font-size:18px}
-.opt{display:flex;gap:14px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:14px;margin-bottom:8px;cursor:pointer;min-height:52px}
-.opt:has(input:checked){border-color:var(--ink);background:var(--soft);box-shadow:inset 0 0 0 1px var(--ink)}
-.opt input{width:24px;height:24px;margin-top:3px;accent-color:var(--brown);flex:none}
-.opt small{display:block;color:var(--mute);font-size:15px}
-.seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-.seg label{text-align:center;padding:11px 4px;border:1.5px solid var(--line);border-radius:999px;cursor:pointer;min-height:50px}
-.seg input{position:absolute;opacity:0}.seg label:has(input:checked){background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.seg label:has(input:focus-visible),.opt:has(input:focus-visible){outline:3px solid var(--brown);outline-offset:2px}
-.res h3{margin-bottom:12px;font-size:21px}
-.path{border-radius:18px;padding:16px 18px;margin-bottom:12px;border:1px solid var(--line);background:var(--card)}
-.path.yes{border:2px solid var(--ok)}.path.no{color:var(--mute)}
-.path h3{font-size:19px;margin:6px 0}
-.tag{display:inline-block;font-size:15px;padding:2px 12px;border-radius:999px;font-weight:700}
-.yes .tag{background:var(--ok);color:var(--bg)}.no .tag{background:var(--soft);color:var(--ink);border:1px solid var(--line)}.maybe .tag{background:var(--brown);color:var(--bg)}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start}
+.res{position:sticky;top:96px}
+.res h3{margin-bottom:12px}
+.path{border-radius:18px;padding:18px 20px;margin-bottom:12px;border:1.5px solid var(--line);background:var(--card)}
+.path.yes{border-color:var(--ok)}.path.no{color:var(--mute)}
+.path h3{font-size:19px;margin:8px 0 4px}
 .path ul{margin:6px 0 0;padding-left:22px}.path li{margin-bottom:6px}
-.empty{color:var(--mute);border:1.5px dashed var(--line);border-radius:18px;padding:22px;text-align:center}
+.tag{display:inline-block;font-size:14px;padding:2px 12px;border-radius:999px;font-weight:700}
+.yes .tag{background:var(--ok);color:var(--bg)}.no .tag{background:var(--soft);border:1px solid var(--line)}.maybe .tag{background:var(--brown);color:var(--bg)}
+.empty{color:var(--mute);border:1.5px dashed var(--line);border-radius:18px;padding:28px 22px;text-align:center}
+.check-note{display:flex;gap:10px;align-items:flex-start;padding:14px 16px;border-radius:14px;background:var(--soft);font-size:var(--sm)}
+.check-note svg{flex:none;width:20px;height:20px;margin-top:3px;stroke:var(--brown);fill:none;stroke-width:2}
+
 /* 警示 */
-.alert{background:var(--red);color:#fff;border-radius:32px;padding:clamp(28px,5vw,56px);text-align:center}
-.stamp{width:116px;aspect-ratio:1;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;margin:0 auto 20px;font:700 21px/1.15 "Noto Serif TC",serif;transform:rotate(-8deg)}
-.alert h2{font-size:clamp(32px,5.6vw,54px);margin-bottom:16px}
-.alert p{font-size:19px;max-width:44ch;margin:0 auto 12px}
-.alert ul{display:inline-block;text-align:left;margin:4px 0 0;padding-left:22px;max-width:48ch;font-size:18px}.alert li{margin-bottom:6px}
-/* 試算 */
-.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;text-align:left}
-label.f{display:block;font-weight:700;margin:0 0 6px}
-select,input[type=number]{width:100%;font:inherit;font-size:18px;padding:11px 14px;border:1.5px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);min-height:52px;margin-bottom:16px}
-.big{font:700 clamp(38px,6vw,60px)/1 "Noto Serif TC",serif;color:var(--brown);white-space:nowrap}
-.cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.cmp .card{padding:16px;border-radius:18px}.cmp dl{margin:10px 0 0;display:grid;grid-template-columns:auto auto;gap:4px 10px}
-.cmp dt{color:var(--mute)}.cmp dd{margin:0;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-.best{outline:3px solid var(--ok)}
-.note{font-size:15px;color:var(--mute)}
-table{width:100%;border-collapse:collapse;font-size:16px;background:var(--card);text-align:left}
-th,td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-weight:700;background:var(--soft)}
-td.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:18px;margin-top:22px}
+.alert{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(20px,4vw,44px);align-items:center;background:var(--red);color:#fff;border-radius:28px;padding:clamp(26px,4vw,44px)}
+.stamp{width:clamp(96px,12vw,124px);aspect-ratio:1;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;text-align:center;font:900 clamp(18px,2vw,21px)/1.2 "Noto Serif TC",serif;transform:rotate(-8deg)}
+.alert h2{color:#fff;margin-bottom:10px}
+.alert p{font-size:18px;margin:0 0 12px;max-width:46ch}
+.alert ul{margin:0;padding-left:22px;max-width:52ch}.alert li{margin-bottom:6px}
+
 /* 流程 */
-.flow{list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:s;text-align:left}
-.flow li{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px 20px}
-.flow li::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--pill);border:1.5px solid var(--ink);font:700 19px "Noto Serif TC",serif;margin-bottom:12px}
-.flow h3{font-size:21px}.flow .off{font-size:14px;color:var(--mute);margin-bottom:10px}
-.flow p{font-size:16px;margin-bottom:8px}.flow b{color:var(--brown)}
-/* 長照 3.0 */
-.new{display:inline-block;font-size:14px;font-weight:700;padding:2px 12px;border-radius:999px;background:var(--pill);border:1.5px solid var(--ink);margin-bottom:12px}
-.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:30px;text-align:left}
-.duo .card h3{font-size:22px;margin-bottom:4px}.duo .amt{font:700 clamp(30px,4vw,40px)/1.1 "Noto Serif TC",serif;color:var(--brown);margin:6px 0 12px;white-space:nowrap}
-.duo ul{margin:0;padding-left:22px}.duo li{margin-bottom:6px}
-.or{text-align:center;font-weight:700;margin:16px 0 0}
-.cats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:30px;text-align:left}
-.cats div{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px}
-.cats b{display:block;font-size:18px;margin-bottom:4px}.cats span{font-size:15px;color:var(--mute)}
-.pick{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:24px;margin-top:30px;text-align:left;align-items:start}
-.verdict{border:2px solid var(--ok);border-radius:24px;padding:22px;background:var(--card)}
-.verdict h3{font-size:24px;margin:6px 0 8px}
-@media(max-width:900px){.cats{grid-template-columns:repeat(2,minmax(0,1fr))}.pick{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:600px){.duo,.cats{grid-template-columns:minmax(0,1fr)}}
-/* 跑馬燈 */
-.ticker{display:flex;align-items:stretch;background:var(--ink);color:var(--bg);font-size:16px}
-.ticker .lb{flex:none;display:flex;align-items:center;padding:0 16px;font-weight:700;background:var(--brown);color:var(--bg)}
-.ticker .track{flex:1;overflow:hidden;display:flex;align-items:center;min-height:48px}
-.ticker .run{display:flex;gap:56px;white-space:nowrap;padding-left:24px;animation:tick 60s linear infinite}
-.ticker a{color:var(--bg);text-decoration:none}.ticker a:hover,.ticker a:focus-visible{text-decoration:underline}
-.ticker a b{margin-right:8px;font-weight:700}
-.ticker:hover .run,.ticker:focus-within .run,.ticker.paused .run{animation-play-state:paused}
-.ticker button{flex:none;min-width:88px;min-height:48px;border:0;border-left:1px solid var(--bg);background:transparent;color:var(--bg);font:500 15px "Noto Sans TC",sans-serif;cursor:pointer}
-@keyframes tick{to{transform:translateX(-50%)}}
-@media(prefers-reduced-motion:reduce){.ticker .run{animation:none}.ticker .track{overflow-x:auto}.ticker button{display:none}}
-:root[data-contrast=on] .ticker .lb{background:#000;color:#fff}
-/* 縣市 */
-.county{max-width:420px;margin:0 auto 24px;text-align:left}
-.centers{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px;text-align:left}
-.ctr{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:20px 22px}
-.ctr h3{font-size:20px;margin-bottom:10px}
-.ctr p{margin:0 0 6px}.ctr .k{color:var(--mute);font-size:15px;margin-right:8px}
-.ctr .tel{font-size:20px;font-weight:700;white-space:nowrap}
-.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.acts a{display:inline-flex;align-items:center;min-height:46px;padding:0 18px;border:1.5px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);font-weight:500;background:var(--pill)}
-.acts a.sec{background:var(--card)}
-/* 最新消息 */
-.news{list-style:none;margin:30px 0 0;padding:0;text-align:left;display:grid;gap:12px}
-.news li{display:grid;grid-template-columns:8.5em minmax(0,1fr);gap:6px 18px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px}
-.news time{font-weight:700;color:var(--brown);white-space:nowrap}
-.news .nt{display:inline-block;font-size:13px;font-weight:700;padding:1px 10px;border-radius:999px;border:1px solid var(--ink);margin-left:8px;vertical-align:2px}
-.news h3{font-size:19px;margin-bottom:4px}.news p{margin:0 0 6px}.news .src{font-size:15px;color:var(--mute)}
-@media(max-width:600px){.news li{grid-template-columns:minmax(0,1fr)}.ticker .lb{padding:0 10px}}
-/* 輔具總覽 */
-.finder{position:sticky;top:var(--tbh,62px);z-index:5;background:var(--bg);padding:14px 0 10px;border-bottom:1px solid var(--line);text-align:left}
+.flow{list-style:none;margin:24px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:s}
+.flow li{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px 22px;box-shadow:var(--shadow)}
+.flow li::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--pill);border:1.5px solid var(--ink);font:700 19px "Noto Serif TC",serif;margin-bottom:14px}
+.flow h3{margin-bottom:2px}.flow .off{font-size:14px;color:var(--mute);margin-bottom:10px}
+.flow p{margin:0}
+
+/* 試算 */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px;align-items:start}
+.big{font:900 clamp(40px,6vw,60px)/1.05 "Noto Serif TC",serif;color:var(--brown);white-space:nowrap;margin:4px 0 8px}
+.cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.cmp .card{padding:18px;border-radius:18px}
+.cmp dl{margin:10px 0 0;display:grid;grid-template-columns:auto auto;gap:6px 10px;font-size:16px}
+.cmp dt{color:var(--mute)}.cmp dd{margin:0;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.best{border:2px solid var(--ok)!important}
+.est{display:inline-block;font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--soft);border:1px solid var(--line);margin-left:8px;vertical-align:4px}
+
+/* 全部輔具 */
+.finder{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:var(--shadow)}
 .sbox{position:relative}
-.sbox input{width:100%;font:inherit;font-size:19px;padding:14px 18px 14px 48px;border:2px solid var(--ink);border-radius:999px;background:var(--card);color:var(--ink);min-height:56px}
-.sbox svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:2.2}
-.sbox button{position:absolute;right:8px;top:50%;transform:translateY(-50%);min-height:44px;min-width:44px;border:0;background:transparent;color:var(--mute);font-size:15px;cursor:pointer}
-.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.tabs label{display:inline-flex;align-items:center;gap:6px;min-height:46px;padding:0 18px;border:1.5px solid var(--line);border-radius:999px;cursor:pointer;background:var(--card);font-weight:500}
-.tabs input{position:absolute;opacity:0}.tabs label:has(input:checked){background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.tabs label:has(input:focus-visible){outline:3px solid var(--brown);outline-offset:2px}
-.tabs small{font-size:13px;opacity:.8}
-.frow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-top:10px}
+.sbox input{padding-left:50px;font-size:19px;min-height:58px;border-radius:999px;border-color:var(--ink);margin-bottom:14px}
+.sbox svg{position:absolute;left:20px;top:29px;transform:translateY(-50%);width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:2.2}
+.sbox button{position:absolute;right:8px;top:29px;transform:translateY(-50%);min-height:44px;min-width:56px;border:0;background:transparent;color:var(--mute);font:inherit;font-size:15px;cursor:pointer}
+.frow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-top:14px}
 .frow select{margin:0}
-.hint{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center;font-size:15px;color:var(--mute)}
-.hint button{min-height:38px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font:inherit;font-size:15px;cursor:pointer}
-.count{margin:16px 0 10px;text-align:left;font-weight:700}
-.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px;text-align:left}
-.it{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
-.it .top2{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
-.it h3{font:700 18px/1.4 "Noto Sans TC",sans-serif}
-.sys{flex:none;font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;border:1.5px solid var(--ink);white-space:nowrap}
+.hint{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
+.chip{min-height:42px;padding:0 16px;border:1px solid var(--line);border-radius:999px;background:var(--soft);color:var(--ink);font:inherit;font-size:15px;cursor:pointer}
+.count{margin:22px 0 12px;font-weight:700}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:14px}
+.it{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px;display:flex;flex-direction:column}
+.it .hd{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.sys{font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;border:1.5px solid var(--ink);white-space:nowrap}
 .sys.L{background:var(--pill)}.sys.D{background:var(--soft)}.sys.M{background:var(--ink);color:var(--bg)}
-.it .amt2{font:700 24px/1.2 "Noto Serif TC",serif;color:var(--brown)}
-.it .amt2 small{font:400 14px "Noto Sans TC",sans-serif;color:var(--mute);margin-left:4px}
-.it ul{list-style:none;margin:2px 0 0;padding:0;font-size:15px}.it li{padding:2px 0}
-.it .meta{font-size:13px;color:var(--mute)}
+.it .code{font-size:13px;color:var(--mute)}
+.it h3{font:700 18px/1.45 "Noto Sans TC",sans-serif;margin-bottom:8px}
+.it .amt{font:900 26px/1.1 "Noto Serif TC",serif;color:var(--brown)}
+.it .amt small{display:block;font:400 14px "Noto Sans TC",sans-serif;color:var(--mute);margin-top:4px}
+.it .facts{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px}
+.it .facts span{font-size:14px;padding:3px 10px;border-radius:8px;background:var(--soft)}
+.it .facts .g{background:color-mix(in srgb,var(--ok) 14%,var(--card));color:var(--ok);font-weight:700}
+.it details{margin-top:auto;padding-top:8px}
+.it summary{cursor:pointer;font-size:15px;color:var(--brown);font-weight:700;min-height:40px;display:flex;align-items:center;list-style:none}
+.it summary::-webkit-details-marker{display:none}
+.it summary::after{content:"＋";margin-left:6px}.it details[open] summary::after{content:"－"}
+.it details ul{margin:4px 0 0;padding-left:20px;font-size:15px}.it details li{margin-bottom:4px}
 .it mark{background:var(--pill);color:inherit;border-radius:3px}
-.more{margin-top:18px}
-.legal{margin-top:24px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px}
-.legal h3{font-size:18px;margin-bottom:8px}.legal ul{margin:0;padding-left:22px}.legal li{margin-bottom:6px}
-@media(max-width:600px){.frow{grid-template-columns:minmax(0,1fr)}.finder{position:static}}
-/* 照片位置與標題可讀性 */
-.hero .ph{background-position:center 40%}
-.hero .ph.has::after{display:block;content:"";inset:0;top:auto;height:55%;background:linear-gradient(to bottom,rgba(40,28,18,0),rgba(40,28,18,.38))}
-@media(max-width:600px){.hero .ph{background-position:86% 40%}}
-/* 目錄 */
-.toc{display:flex;gap:8px;overflow-x:auto;margin-top:40px;padding:4px 2px 10px;justify-content:center;flex-wrap:wrap}
-.toc a{flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;font-size:16px}
-/* 互動回饋 */
-.pill,.tb,.acts a,.tabs label,.seg label,.opt,.hint button,.links a,.toc a,.callbar a,.more,select{transition:background-color .15s,border-color .15s,transform .1s,box-shadow .15s}
-@media(hover:hover){
- .pill:hover,.acts a:hover,.hint button:hover,.toc a:hover{box-shadow:0 0 0 3px var(--line)}
- .tb:hover,.tabs label:hover,.seg label:hover,.opt:hover{border-color:var(--ink)}
- .links a:hover,.ctr:hover{border-color:var(--ink)}}
-.pill:active,.tb:active,.acts a:active,.tabs label:active,.seg label:active,.opt:active,.hint button:active,.toc a:active,.callbar a:active,.links a:active{transform:scale(.97)}
-@keyframes pulse{0%{background:var(--pill)}100%{background:transparent}}
-.pulse{animation:pulse .7s ease-out;border-radius:10px}
-@media(prefers-reduced-motion:reduce){.pulse{animation:none}*{transition:none!important}}
-/* 手機優先 */
-@media(max-width:600px){
- .hero{height:44vh;min-height:280px}
- .intro{padding:40px 0 28px}.portrait{width:96px;margin-bottom:22px}.intro p.body{font-size:17px}
- .svc{gap:12px;margin-top:20px}
- .svc article{display:grid;grid-template-columns:96px minmax(0,1fr);grid-template-rows:auto auto auto;column-gap:14px;text-align:left;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:12px}
- .svc .ph{grid-row:1/4;aspect-ratio:1;border-radius:16px;margin:0}
- .svc .ph::after{font-size:11px;inset:auto 4px 4px 4px}
- .svc h3{margin:2px 0 2px}.svc p{margin:0 0 8px;max-width:none;font-size:15px}
- .svc .pill{min-height:44px;padding:0 18px;justify-self:start}
- .toc{justify-content:flex-start;flex-wrap:nowrap;margin-top:24px}
- .band{padding:44px 0}
- .sec-title{margin-bottom:8px}}
-/* 名詞翻譯 */
-.dict{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:30px 0 0;text-align:left}
-.dict div{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
-.dict dt{font-weight:700;font-size:18px}.dict dt small{font-weight:400;color:var(--mute);font-size:14px;margin-left:6px}
-.dict dd{margin:4px 0 0}
-.links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;text-align:left;margin-top:30px}
-.links a{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
-.links a strong{display:block;color:var(--brown)}.links a span{font-size:15px;color:var(--mute)}
-footer{font-size:15px;color:var(--mute);border-top:1px solid var(--line);padding:28px 0 40px;margin-top:40px}footer p{max-width:72ch}
+.more{display:flex;justify-content:center;margin-top:22px}
+.mini-notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+.mini-notes div{padding:16px 18px;border-radius:16px;background:var(--card);border:1px solid var(--line);font-size:var(--sm)}
+.mini-notes b{display:block;font-size:16px;margin-bottom:4px}
+
+/* 長照 3.0 */
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.duo .amt{font:900 clamp(30px,4vw,40px)/1.1 "Noto Serif TC",serif;color:var(--brown);margin:8px 0 14px;white-space:nowrap}
+.duo ul{margin:0;padding-left:22px}.duo li{margin-bottom:6px}
+.cats{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 8px}
+.cats span{padding:8px 16px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:16px}
+.cats b{margin-right:6px}
+.panel{margin-top:30px}
+.panel .tabs{margin-bottom:18px}
+.verdict{border:2px solid var(--ok);border-radius:20px;padding:22px;background:var(--card)}
+.verdict h3{font-size:22px;margin:8px 0}
+
+/* 縣市 */
+.county{max-width:420px}
+.centers{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px;margin-top:6px}
+.ctr{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 22px;box-shadow:var(--shadow)}
+.ctr h3{font-size:19px;margin-bottom:10px}
+.ctr p{margin:0 0 4px}.ctr .k{color:var(--mute);font-size:var(--sm);margin-right:8px}
+.ctr .tel{font-size:20px;font-weight:700;white-space:nowrap}
+.ctr .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.ctr a{display:inline-flex;align-items:center;min-height:46px;padding:0 18px;border:1.5px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);font-weight:700;background:var(--pill)}
+.ctr a.sec2{background:var(--card)}
+
+/* 名詞 */
+.dict{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.dict details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0 18px}
+.dict summary{cursor:pointer;min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:700;font-size:18px;list-style:none}
+.dict summary::-webkit-details-marker{display:none}
+.dict summary small{font-weight:400;color:var(--mute);font-size:14px;margin-left:8px}
+.dict summary::after{content:"＋";color:var(--brown);flex:none}.dict details[open] summary::after{content:"－"}
+.dict details p{margin:0 0 16px;color:var(--ink)}
+
+/* 消息 */
+.news{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.news li{display:grid;grid-template-columns:9em minmax(0,1fr);gap:4px 20px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 22px}
+.news time{font-weight:700;color:var(--brown);white-space:nowrap}
+.news .nt{display:inline-block;font-size:13px;font-weight:700;padding:1px 10px;border-radius:999px;border:1px solid var(--ink);margin-left:8px;vertical-align:3px;font-family:"Noto Sans TC",sans-serif}
+.news h3{font-size:19px;margin-bottom:4px}.news p{margin:0 0 6px;color:var(--mute)}
+.news .src{font-size:var(--sm)}
+
+/* 連結與頁尾 */
+.links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.lk{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.lk strong{display:block;color:var(--brown);font-size:18px}.lk span{font-size:var(--sm);color:var(--mute)}
+footer{background:var(--ink);color:var(--bg);padding:clamp(44px,6vw,72px) 0 clamp(110px,10vw,72px)}
+footer h2{color:var(--bg);font-size:24px;margin-bottom:14px}
+footer ul{margin:0 0 20px;padding-left:22px;max-width:70ch}footer li{margin-bottom:8px}
+footer .small{font-size:14px;opacity:.8;max-width:80ch}
+footer a{color:var(--bg)}
+
 /* 手機底部撥號列 */
 .callbar{display:none}
-@media(max-width:900px){.top,.calc{grid-template-columns:minmax(0,1fr)}.flow,.svc{grid-template-columns:repeat(2,minmax(0,1fr))}.links{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+@keyframes pulse{0%{background:var(--pill)}100%{background:transparent}}
+.pulse{animation:pulse .7s ease-out;border-radius:10px}
+
+@media(max-width:900px){
+ .split,.calc,.about{grid-template-columns:minmax(0,1fr)}
+ .res{position:static}
+ .flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .links,.mini-notes{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .about .ph{aspect-ratio:16/10;max-height:none}}
 @media(max-width:760px){
- .call-top{display:none}.tools .name{display:none}.tools .wrap{justify-content:space-between}
- .callbar{display:grid;grid-template-columns:1.3fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:25;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:var(--bg);border-top:1.5px solid var(--ink)}
- .callbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:58px;border-radius:16px;text-decoration:none;font-weight:700;font-size:17px;line-height:1.25;border:1.5px solid var(--ink);color:var(--ink);background:var(--card)}
+ .top .hide-m{display:none}
+ .callbar{display:grid;grid-template-columns:1.3fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:45;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:var(--bg);border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(0,0,0,.06)}
+ .callbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:56px;border-radius:16px;text-decoration:none;font-weight:700;font-size:17px;line-height:1.25;border:1.5px solid var(--ink);color:var(--ink);background:var(--card)}
  .callbar a.primary{background:var(--ink);color:var(--bg)}
  .callbar small{font-weight:400;font-size:13px}
- body{padding-bottom:96px}}
-@media(max-width:600px){.hero{height:62vh}.flow,.links,.cmp,.svc,.dict{grid-template-columns:minmax(0,1fr)}.svc .ph{aspect-ratio:4/3}table{font-size:15px}
-.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 10px;padding-inline-start:8.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:8em;margin-inline-start:-8.5em;color:var(--mute)}.stack td:empty{display:none}}
-@media(prefers-reduced-motion:no-preference){.hero h1{animation:rise 1s ease-out both}@keyframes rise{from{opacity:0;transform:translate(-50%,24px)}}}
+ body{padding-bottom:84px}}
+@media(max-width:600px){
+ body{font-size:17px}
+ .hero{min-height:72vh}.hero .wrap{padding-top:90px}
+ .hero .acts .btn{flex:1 1 100%}
+ .svc{grid-template-columns:minmax(0,1fr);gap:12px}
+ .svc a{display:grid;grid-template-columns:104px minmax(0,1fr);align-items:center}
+ .svc .ph{aspect-ratio:auto;width:104px;height:100%;min-height:120px}
+ .hero .ph{background-position:82% 40%}
+ .seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.seg label{padding:0 8px;justify-content:center;font-size:16px}
+ .svc .t{padding:14px 16px}.svc p{font-size:15px;margin-bottom:6px}
+ .flow,.links,.mini-notes,.duo,.dict,.cmp,.frow{grid-template-columns:minmax(0,1fr)}
+ .alert{grid-template-columns:minmax(0,1fr);justify-items:start}
+ .news li{grid-template-columns:minmax(0,1fr)}
+ .verify div{grid-template-columns:minmax(0,1fr)}
+ .notice .ctl .pv{display:none}
+ .brand span{font-size:17px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 </style>
-<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
 </head>
 <body>
 <a class="skip" href="#check">跳到資格快篩</a>
 
-<div class="tools" role="region" aria-label="閱讀設定"><div class="wrap">
-  <span class="name">輔具補助指南針</span>
-  <div class="grp" role="group" aria-label="字體大小"><span>字級</span>
-    <button class="tb" data-z="1" aria-pressed="true">標準</button>
-    <button class="tb lg" data-z="1.2" aria-pressed="false">大</button>
-    <button class="tb xl" data-z="1.4" aria-pressed="false">特大</button>
-  </div>
-  <button class="tb" id="hc" aria-pressed="false">高對比</button>
-  <a class="tb call-top" href="#all" id="toSearch">搜尋輔具</a>
-  <a class="tb call-top" href="tel:1966">長照專線 1966</a>
-</div></div>
-
-<div id="main">
-<div class="ticker" id="ticker" role="region" aria-label="最新公告">
-  <span class="lb">最新公告</span>
-  <div class="track"><div class="run" id="run"></div></div>
-  <button id="tkBtn" aria-pressed="false">暫停</button>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#top" aria-label="輔具補助指南針 回到頂端">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 5l4 11-4 11-4-11z" fill="var(--brown)"/><circle cx="16" cy="16" r="2" fill="var(--bg)"/></svg>
+    <span>輔具補助指南針</span>
+  </a>
+  <a class="tb" href="#all" id="toSearch" aria-label="搜尋輔具"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg><span class="hide-m">搜尋輔具</span></a>
+  <button class="tb" id="setBtn" aria-expanded="false" aria-controls="setPop">Aa<span class="hide-m">閱讀設定</span></button>
+  <button class="tb" id="tocBtn" aria-expanded="false" aria-controls="tocPop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="hide-m">目錄</span></button>
+  <a class="tb call hide-m" href="tel:1966">長照專線 1966</a>
 </div>
-<header class="hero">
-  <div class="ph" data-img="hero" data-label="圖片 1｜主視覺（橫式滿版）"></div>
-  <h1>輔具補助指南針</h1>
+<div class="card pop" id="setPop" hidden>
+  <h3>字的大小</h3>
+  <div class="row" role="group" aria-label="字的大小">
+    <button data-z="1" aria-pressed="true">標準</button><button data-z="1.15" aria-pressed="false" style="font-size:18px">大</button><button data-z="1.3" aria-pressed="false" style="font-size:20px">特大</button>
+  </div>
+  <h3>顏色</h3>
+  <div class="row"><button id="hc" aria-pressed="false">高對比（黑白）</button></div>
+  <p class="note" style="margin:0">設定會記在這台裝置上</p>
+</div>
+<nav class="card pop" id="tocPop" hidden aria-label="網站目錄">
+  <ul class="toc-list">
+    <li><a href="#check">我能申請嗎</a></li><li><a href="#warn">先申請，再購買</a></li><li><a href="#flow">申請四步驟</a></li><li><a href="#calc">能補多少錢</a></li><li><a href="#all">全部輔具查詢</a></li><li><a href="#v3">長照 3.0 兩組怎麼選</a></li><li><a href="#county">找輔具中心</a></li><li><a href="#dict">公文名詞翻譯</a></li><li><a href="#news">最新消息</a></li><li><a href="#links">官方連結</a></li>
+  </ul>
+</nav>
 </header>
 
-<section class="intro center"><div class="wrap">
-  <div class="ph portrait" data-img="portrait" data-label="圖片 2"></div>
-  <p class="eyebrow">長照 3.0 ・ 身障輔具補助</p>
-  <p class="note" style="margin:-10px 0 20px">補助資料最後確認：2026 年 11 月 27 日</p>
-  <h2>照顧來得突然，<br>補助不該錯過</h2>
-  <p class="body">家人突然需要輪椅、氣墊床或洗澡椅時，最怕多花錢，或是因為先買了，結果拿不到補助　這裡用三個步驟陪你弄清楚：能申請哪一種、大概能補多少、要照什麼順序辦</p>
-</div></section>
+<div id="main">
+<div class="notice" role="region" aria-label="最新公告"><div class="wrap">
+  <span class="lb">最新公告</span>
+  <a class="msg" id="msg" href="#news"></a>
+  <div class="ctl"><button class="pv" id="nPrev" aria-label="上一則">‹</button><button id="nNext" aria-label="下一則">›</button><button id="nPause" aria-pressed="false">暫停</button></div>
+</div></div>
 
-<section class="center" style="padding-bottom:clamp(56px,8vw,100px)"><div class="wrap">
-  <h2 class="sec-title">我們可以幫你</h2>
-  <div class="svc">
-    <article><div class="ph" data-img="svc1" data-label="圖片 3｜資格快篩"></div>
-      <h3>我能申請嗎？</h3><p>回答幾個問題，馬上知道可以走長照，還是身障補助</p><a class="pill" href="#check">開始檢查</a></article>
-    <article><div class="ph" data-img="svc2" data-label="圖片 4｜補助試算"></div>
-      <h3>能補多少錢？</h3><p>輸入店家報價，看政府出多少、自己要出多少</p><a class="pill" href="#calc">算算看</a></article>
-    <article><div class="ph" data-img="svc3" data-label="圖片 5｜申請流程"></div>
-      <h3>要怎麼辦？</h3><p>四個步驟，每一步該找誰、要帶什麼</p><a class="pill" href="#flow">看步驟</a></article>
+<section class="hero" id="top">
+  <div class="ph" data-img="hero" role="img" aria-label="灑滿陽光的客廳，窗邊停著一台輪椅"></div>
+  <div class="wrap">
+    <p class="kick">長照 3.0・身障輔具・醫療輔具</p>
+    <h1>輔具補助指南針</h1>
+    <p class="sub">把分散的補助資訊整理成一條路，陪你找到下一步該問誰、該準備什麼</p>
+    <div class="acts"><a class="btn" href="#check">開始檢查資格</a><a class="btn ghost" href="#all">查全部輔具</a></div>
+    <p class="stamp-date">資料整理至 <span class="dateTxt">2026 年 11 月 27 日</span></p>
   </div>
-  <nav class="toc" aria-label="網站目錄">
-    <a href="#check">我能申請嗎</a><a href="#warn">先申請再購買</a><a href="#flow">申請四步驟</a><a href="#calc">能補多少</a><a href="#all">全部輔具</a><a href="#v3">長照 3.0</a><a href="#county">找輔具中心</a><a href="#dict">名詞翻譯</a><a href="#news">最新消息</a>
-  </nav>
+</section>
+
+<section class="sec" id="about"><div class="wrap about">
+  <div class="ph" data-img="portrait" role="img" aria-label="年輕的手握著長輩的手"></div>
+  <div>
+    <h2>我們是指引，不是審核單位</h2>
+    <p class="lead">這裡是民間整理的衛教資訊，幫你把規定、金額和流程放在同一個地方　能不能申請、補多少，最後都以政府審核為準</p>
+    <p class="note" style="margin-bottom:10px">遇到不確定的地方，請直接問這些單位：</p>
+    <div class="verify">
+      <div><b>長照問題</b><span>撥長照專線 1966，或縣市長期照顧管理中心</span></div>
+      <div><b>身障輔具</b><span>戶籍地區公所、縣市輔具資源中心</span></div>
+      <div><b>醫療輔具</b><span>縣市政府衛生局</span></div>
+    </div>
+  </div>
 </div></section>
 
-<section class="band soft" id="check"><div class="wrap center">
-  <h2 class="sec-title">我能申請嗎？</h2>
-  <p class="lede">勾選家人的狀況，旁邊會馬上顯示結果　你勾的內容只留在這台裝置上，不會傳出去，也不會被記錄</p>
-  <div class="top">
+<section class="sec soft" style="padding-top:clamp(48px,6vw,80px)"><div class="wrap">
+  <div class="sh"><h2>從這裡開始</h2><p>依照你現在的狀況，選一個入口</p></div>
+  <div class="svc">
+    <a href="#check"><div class="ph" data-img="svc1" role="img" aria-label="長輩在表單上打勾"></div><div class="t"><h3>我能申請嗎？</h3><p>回答幾個問題，看看可能適用哪種補助</p><span class="go">開始檢查 →</span></div></a>
+    <a href="#calc"><div class="ph" data-img="svc2" role="img" aria-label="浴室裡的沐浴椅"></div><div class="t"><h3>能補多少錢？</h3><p>輸入報價，估算政府出多少、自己出多少</p><span class="go">試算看看 →</span></div></a>
+    <a href="#flow"><div class="ph" data-img="svc3" role="img" aria-label="家人陪長輩用助行器走路"></div><div class="t"><h3>要怎麼申請？</h3><p>四個步驟，每一步該找誰</p><span class="go">看步驟 →</span></div></a>
+  </div>
+</div></section>
+
+<section class="sec" id="check"><div class="wrap">
+  <div class="sh"><p class="k">第一步</p><h2>我能申請嗎？</h2><p>勾選家人的狀況，看看可能適用哪一種補助　勾選內容只留在這台裝置，不會傳出去</p></div>
+  <div class="split">
     <form class="card" id="quiz" onsubmit="return false">
       <fieldset>
-        <legend>家人的狀況（可以勾很多個）</legend>
-        <label class="opt"><input type="checkbox" name="q" value="dis"><span>有身心障礙證明（以前叫身障手冊）</span></label>
+        <legend>家人的狀況（可以複選）</legend>
+        <label class="opt"><input type="checkbox" name="q" value="dis"><span>有身心障礙證明<small>以前叫身障手冊</small></span></label>
         <label class="opt"><input type="checkbox" name="q" value="65"><span>65 歲以上</span></label>
         <label class="opt"><input type="checkbox" name="q" value="ind"><span>55 到 64 歲的原住民</span></label>
-        <label class="opt"><input type="checkbox" name="q" value="dem"><span>50 歲以上，醫生說有失智症</span></label>
-        <label class="opt"><input type="checkbox" name="q" value="adl"><span>生活上需要別人幫忙<small>例如洗澡、穿衣服、上廁所、從床上起來</small></span></label>
-        <label class="opt"><input type="checkbox" name="q" value="inst"><span>現在住在安養中心、護理之家</span></label>
+        <label class="opt"><input type="checkbox" name="q" value="dem"><span>50 歲以上，醫師診斷有失智症</span></label>
+        <label class="opt"><input type="checkbox" name="q" value="adl"><span>生活上需要別人幫忙<small>例如洗澡、穿衣、上廁所、下床</small></span></label>
+        <label class="opt"><input type="checkbox" name="q" value="inst"><span>目前住在安養中心或護理之家</span></label>
       </fieldset>
-      <fieldset>
+      <fieldset style="margin:0">
         <legend>家裡的經濟身分</legend>
         <div class="seg" role="radiogroup" aria-label="家裡的經濟身分">
           <label><input type="radio" name="inc" value="gen" checked>一般</label>
           <label><input type="radio" name="inc" value="mid">中低收入戶</label>
           <label><input type="radio" name="inc" value="low">低收入戶</label>
         </div>
-        <p class="note" style="margin-top:8px">沒有公所發的低收或中低收證明，就選「一般」</p>
+        <p class="note" style="margin:10px 0 0">沒有公所核發的低收或中低收證明，請選「一般」</p>
       </fieldset>
     </form>
-    <section class="res" aria-live="polite">
-      <h3>你可能可以申請</h3>
+    <div class="res" aria-live="polite">
+      <h3>初步參考結果</h3>
       <div id="out"></div>
-    </section>
+      <div class="check-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg><span>這只是依你勾選的內容做的初步整理，實際資格要由照管中心、區公所或衛生局審核</span></div>
+    </div>
   </div>
 </div></section>
 
-<section class="band" id="warn"><div class="wrap">
+<section class="sec soft" id="warn"><div class="wrap">
   <div class="alert" role="note">
     <div class="stamp">先申請<br>再購買</div>
-    <h2>千萬不要先買！</h2>
-    <p>先買了再來申請，<strong>通常就拿不到補助</strong>　一定要等政府同意之後，才去買或租</p>
-    <ul>
-      <li>走長照：等政府派來的人幫你排好照顧安排，再到<strong>政府合作的輔具店</strong>買</li>
-      <li>走身障：收到政府同意的通知後，<strong>6 個月內</strong>要買好，拿發票去申請補助款</li>
-      <li>還在住院？請醫院的出院準備小組或社工先幫你聯絡長照</li>
-    </ul>
+    <div>
+      <h2>先別急著買</h2>
+      <p>先買了再申請，<strong>通常拿不到補助</strong>　請等政府同意之後，再去買或租</p>
+      <ul>
+        <li>長照：照顧計畫核定後，到政府合作的輔具店買或租</li>
+        <li>身障：收到核定通知後 6 個月內買好，再拿發票請款</li>
+        <li>還在住院？請醫院的出院準備小組或社工先幫你聯絡長照</li>
+      </ul>
+    </div>
   </div>
 </div></section>
 
-<section class="band soft" id="flow"><div class="wrap center">
-  <h2 class="sec-title">要怎麼辦？四個步驟</h2>
-  <ol class="flow">
-    <li><h3>先請人來看</h3><p class="off">公文寫法：評估</p>
-      <p><b>長照：</b>打 1966　政府會派人到家裡，看家人需要多少照顧　要申請氣墊床、照顧床的話，還會有治療師來確認需要什麼樣的</p>
-      <p><b>身障：</b>洗澡椅、一般輪椅不用評估；其他品項先打電話給輔具中心約時間</p></li>
-    <li><h3>等政府同意</h3><p class="off">公文寫法：核定</p>
-      <p><b>長照：</b>政府派來的人會幫你排好照顧安排，裡面寫著可以買哪些輔具</p>
-      <p><b>身障：</b>上網或到區公所申請，會收到一張書面通知，寫著補哪一項、補多少</p>
-      <p class="note">收到之前，先不要付錢</p></li>
-    <li><h3>再去買</h3><p class="off">公文寫法：購買</p>
-      <p><b>長照：</b>到政府合作的輔具店買或租，記得拿發票和保固書</p>
-      <p><b>身障：</b>收到通知後 6 個月內買好</p>
-      <p class="note">同一樣東西，要用滿規定的年數才能再申請</p></li>
-    <li><h3>拿回補助款</h3><p class="off">公文寫法：核銷</p>
-      <p><b>長照：</b>通常輔具店會直接跟政府拿錢，你只要付自己那一部分</p>
-      <p><b>身障：</b>把發票等文件交給政府，大約 1 個月內補助款會匯給你　在合作的輔具店買，也可以請店家幫你辦</p></li>
-  </ol>
+<section class="sec" id="flow"><div class="wrap">
+  <div class="sh"><p class="k">第二步</p><h2>申請四步驟</h2><p>先選你要走哪一條路，步驟會跟著換</p></div>
+  <div class="tabs" role="radiogroup" aria-label="補助管道">
+    <label><input type="radio" name="route" value="L" checked>長照</label>
+    <label><input type="radio" name="route" value="D">身障輔具</label>
+    <label><input type="radio" name="route" value="M">醫療輔具</label>
+  </div>
+  <ol class="flow" id="flowList" aria-live="polite"></ol>
+  <p class="note" style="margin-top:16px">各縣市作業方式可能略有不同，送件前請先打電話確認要帶的文件</p>
 </div></section>
 
-<section class="band" id="calc"><div class="wrap center">
-  <h2 class="sec-title">能補多少錢？</h2>
-  <p class="lede">這裡是全國統一的基本金額，有些縣市會多補一些　實際金額以政府通知為準</p>
+<section class="sec soft" id="calc"><div class="wrap">
+  <div class="sh"><p class="k">第三步</p><h2>能補多少錢？</h2><p>選擇輔具、輸入店家報價，估算兩種管道的差別</p></div>
   <div class="calc">
     <div class="card">
       <label class="f" for="item">要買什麼輔具</label>
       <select id="item"></select>
       <label class="f" for="inc2">家裡的經濟身分</label>
       <select id="inc2"><option value="gen">一般</option><option value="mid">中低收入戶</option><option value="low">低收入戶</option></select>
-      <label class="f" for="price">店家報價多少錢</label>
-      <input id="price" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 5000">
-      <p class="note" id="itemNote"></p>
+      <label class="f" for="price">店家報價（元）</label>
+      <input id="price" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 5000" style="margin-bottom:10px">
+      <p class="note" id="itemNote" style="margin:0"></p>
     </div>
     <div>
-      <p class="note" style="margin-bottom:4px">選比較划算的那一邊，大約可拿回</p>
+      <p class="note" style="margin:0">金額較高的那一邊，大約可補助<span class="est">估算</span></p>
       <div class="big" id="bigNum">—</div>
-      <p id="bigSub" style="margin:8px 0 14px"></p>
+      <p id="bigSub" style="margin:0"></p>
       <div class="cmp" id="cmp"></div>
+      <p class="note" style="margin-top:14px">依全國基準估算，不含縣市加碼　實際金額以核定通知為準</p>
     </div>
   </div>
-  <div class="scroll"><table class="stack" id="tbl">
-    <thead><tr><th>輔具</th><th>長照最多補</th><th>長照自己出</th><th>身障最多補</th><th>身障政府出</th><th>多久能再申請</th><th>要先請人評估嗎</th></tr></thead>
-    <tbody></tbody>
-  </table></div>
-  <p class="note" style="margin-top:10px;text-align:left">長照自己出的比例：一般 30%、中低收入戶 10%、低收入戶不用出；寫「不用出錢」的品項，任何人都全額補助　身障補助：一般補一半、中低收入戶補 75%、低收入戶全額；寫「全額」的品項任何人都全額補助</p>
 </div></section>
 
-<section class="band soft" id="all"><div class="wrap center">
-  <h2 class="sec-title">可以申請的輔具，全部列給你看</h2>
-  <p class="lede" style="margin-bottom:8px">整理長照、身障、醫療輔具三種補助的所有品項，打字搜尋或用分類篩選　金額是全國統一的基本標準，縣市可能另外加碼</p>
-  <div class="finder" id="finder">
+<section class="sec" id="all"><div class="wrap">
+  <div class="sh"><h2>全部輔具查詢</h2><p>長照、身障、醫療輔具共 <span id="nTotal"></span> 項，打字或篩選就能找到</p></div>
+  <div class="finder">
     <div class="sbox">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
-      <input id="q" type="search" placeholder="搜尋輔具，例如 輪椅、洗澡、扶手、助聽器" aria-label="搜尋輔具" autocomplete="off">
-      <button id="qClear" type="button" aria-label="清除搜尋" hidden>清除</button>
+      <input id="q" type="search" placeholder="例如 輪椅、洗澡、扶手、助聽器" aria-label="搜尋輔具" autocomplete="off">
+      <button id="qClear" type="button" hidden>清除</button>
     </div>
     <div class="tabs" role="radiogroup" aria-label="補助類別">
       <label><input type="radio" name="sys" value="" checked>全部<small id="nAll"></small></label>
@@ -393,160 +450,189 @@ footer{font-size:15px;color:var(--mute);border-top:1px solid var(--line);padding
     </div>
     <div class="frow">
       <select id="cat" aria-label="分類"><option value="">所有分類</option></select>
-      <select id="inc4" aria-label="家裡的經濟身分"><option value="gen">金額顯示：一般</option><option value="mid">金額顯示：中低收入戶</option><option value="low">金額顯示：低收入戶</option></select>
+      <select id="inc4" aria-label="金額依哪種身分顯示"><option value="gen">金額以一般戶顯示</option><option value="mid">金額以中低收入戶顯示</option><option value="low">金額以低收入戶顯示</option></select>
     </div>
-    <div class="hint">常用：<button type="button">輪椅</button><button type="button">氣墊床</button><button type="button">洗澡</button><button type="button">扶手</button><button type="button">照顧床</button><button type="button">呼吸</button><button type="button">助聽器</button></div>
+    <div class="hint"><span class="note">常用：</span><button class="chip" type="button">輪椅</button><button class="chip" type="button">氣墊床</button><button class="chip" type="button">洗澡</button><button class="chip" type="button">扶手</button><button class="chip" type="button">照顧床</button><button class="chip" type="button">呼吸</button><button class="chip" type="button">助聽器</button></div>
   </div>
   <p class="count" id="cnt" aria-live="polite"></p>
   <div class="items" id="items"></div>
-  <button class="pill more" id="more" type="button" hidden>再顯示更多</button>
-
-  <div class="legal">
-    <h3>申請前要知道</h3>
-    <ul>
-      <li><b>醫療輔具</b>（呼吸、抽痰、壓力衣等）要有身障證明，向縣市<b>衛生局</b>申請，和身障輔具合併計算，每人每 2 年以補助 4 項為原則</li>
-      <li>同一樣輔具，長照和身障只能擇一，用滿年限前不能重複申請</li>
-      <li>寫「要先評估」的品項，要由醫師或輔具評估人員確認需要才會補助；評估人員的類別（例如甲類）由輔具中心安排，不用自己找</li>
-      <li>氣墊床、呼吸器等很多輔具屬於醫療器材，請向合法的醫療器材商購買或租用；一般民眾私下轉賣醫療器材可能違法，也不要向個人購買</li>
-      <li>本清單只列政府公告的補助品項，不代表推薦任何廠牌或產品，也不說明療效；適不適合請以專業評估為準</li>
-    </ul>
+  <div class="more"><button class="btn" id="more" type="button" hidden>再顯示更多</button></div>
+  <div class="mini-notes">
+    <div><b>同一樣只能擇一</b>長照和身障不能重複補助同一項，用滿年限才能再申請</div>
+    <div><b>醫療輔具找衛生局</b>和身障輔具合併計算，每人每 2 年以 4 項為原則</div>
+    <div><b>向合法店家購買</b>許多輔具屬醫療器材，請向合法醫療器材商買或租，不向個人買二手</div>
   </div>
+  <p class="note" style="margin-top:14px">清單整理自政府公告的補助基準表，不推薦任何廠牌，也不說明療效　縣市可能另有加碼或增列，適不適合請以專業評估為準</p>
 </div></section>
 
-<section class="band" id="v3"><div class="wrap center">
-  <span class="new">長照 3.0 新制・115 年 7 月 1 日上路</span>
-  <h2 class="sec-title">傳統輔具還是智慧輔具？兩組選一組</h2>
-  <p class="lede">走長照的人，現在可以從兩組裡挑一組用，3 年內不能兩組一起用　智慧輔具會自動偵測、提醒或通報，全部用租的</p>
+<section class="sec soft" id="v3"><div class="wrap">
+  <div class="sh"><p class="k">115 年 7 月 1 日上路</p><h2>長照 3.0：兩組選一組</h2><p>走長照的家庭，3 年內從兩組裡選一組使用</p></div>
   <div class="duo">
-    <div class="card"><h3>第一組：傳統輔具</h3><div class="amt">每 3 年 4 萬元</div>
-      <ul><li>可以買，也可以租</li><li>輪椅、氣墊床、照顧床、洗澡椅、扶手等品項最齊全</li><li>適合需要的東西很清楚、想買下來長期用的家庭</li></ul></div>
-    <div class="card"><h3>第二組：智慧輔具</h3><div class="amt">每 3 年 6 萬元</div>
-      <ul><li>智慧輔具只能租，用完要還</li><li>身體狀況變了，可以換租別的品項</li><li>6 萬元裡，家裡裝扶手、斜坡等無障礙改善最多用 2 萬元</li><li>還是可以買洗澡椅、便盆椅、拐杖、助行器這幾樣基本輔具</li><li>要先經長照評估達 2 級以上，再由有資格的輔具評估人員確認適合</li></ul></div>
+    <div class="card"><h3>第一組・傳統輔具</h3><div class="amt">每 3 年 4 萬元</div>
+      <ul><li>可以買，也可以租</li><li>輪椅、氣墊床、照顧床、扶手等品項最齊全</li><li>適合需求清楚、想長期使用的家庭</li></ul></div>
+    <div class="card"><h3>第二組・智慧輔具</h3><div class="amt">每 3 年 6 萬元</div>
+      <ul><li>只能租，狀況改變可以換租</li><li>其中無障礙改善最多用 2 萬元</li><li>仍可購買洗澡椅、拐杖、助行器等基本品項</li></ul></div>
   </div>
-  <p class="or">自己要出的比例兩組一樣：一般 30%、中低收入戶 10%、低收入戶不用出</p>
-
-  <h3 style="margin-top:44px;font-size:22px">智慧輔具有哪五類？</h3>
-  <div class="cats">
-    <div><b>移位</b><span>幫忙從床上站起來、坐到輪椅上的設備</span></div>
-    <div><b>移動</b><span>會監測活動、遇到異常會通報的電動輪椅或步行輔助設備</span></div>
-    <div><b>洗澡上廁所</b><span>協助洗澡或自動清理大小便，有異常會提醒</span></div>
-    <div><b>照顧床</b><span>離床會警示、躺太久會提醒翻身的床或床墊</span></div>
-    <div><b>安全看視</b><span>偵測跌倒、離床或生活異常，通知家人或照顧者</span></div>
-  </div>
-  <p class="note" style="margin-top:12px">只有通過政府審查的型號才能補助，市面上的智慧產品不一定算　可上「長期照顧輔具產品資料庫」查詢</p>
-
-  <div class="pick">
-    <form class="card" id="pickForm" onsubmit="return false">
-      <fieldset style="margin:0"><legend>幫我想想選哪一組（可以勾很多個）</legend>
-        <label class="opt"><input type="checkbox" name="pk" value="2"><span>晚上會自己下床，很怕跌倒</span></label>
-        <label class="opt"><input type="checkbox" name="pk" value="2"><span>家人白天要上班，需要有東西幫忙看著、出事會通知</span></label>
-        <label class="opt"><input type="checkbox" name="pk" value="2"><span>剛出院或正在復健，身體狀況可能還會變</span></label>
-        <label class="opt"><input type="checkbox" name="pk" value="1"><span>需要量身訂做的輪椅、氣墊床或照顧床，想買下來</span></label>
-        <label class="opt"><input type="checkbox" name="pk" value="1"><span>只需要幾樣基本輔具，例如輪椅加洗澡椅</span></label>
-        <label class="opt"><input type="checkbox" name="pk" value="1"><span>家裡要大幅改裝，例如浴室、門檻、斜坡都要做</span></label>
-      </fieldset>
-    </form>
-    <div id="pickOut" aria-live="polite"></div>
-  </div>
-
-  <h3 style="margin-top:44px;font-size:22px">智慧輔具租金試算</h3>
-  <p class="lede" style="margin-bottom:18px">智慧輔具的月租金由各家合作輔具店自己訂，所以要先問到報價　輸入後可以看到每個月自己出多少、額度大約能用幾個月</p>
-  <div class="calc">
-    <div class="card">
-      <label class="f" for="rent">每個月租金報價</label>
-      <input id="rent" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 2000">
-      <label class="f" for="mod">打算用在無障礙改善的錢（最多 2 萬元）</label>
-      <input id="mod" type="number" inputmode="numeric" min="0" max="20000" step="1000" placeholder="例如 0">
-      <label class="f" for="inc3">家裡的經濟身分</label>
-      <select id="inc3"><option value="gen">一般</option><option value="mid">中低收入戶</option><option value="low">低收入戶</option></select>
+  <div class="cats"><span><b>移位</b>協助起身、上輪椅</span><span><b>移動</b>可監測異常的行動設備</span><span><b>洗澡上廁所</b>協助清潔</span><span><b>照顧床</b>離床警示、翻身提醒</span><span><b>安全看視</b>偵測跌倒或異常</span></div>
+  <p class="note">申請第二組要長照評估 2 級以上，並由輔具評估人員確認適合　115 年 6 月 30 日前已用第一組的人，要滿 3 年才能改第二組　可補助的型號可查「長期照顧輔具產品資料庫」</p>
+  <div class="panel">
+    <div class="tabs" role="tablist" aria-label="長照 3.0 小工具">
+      <label><input type="radio" name="v3t" value="pick" checked>幫我想想選哪組</label>
+      <label><input type="radio" name="v3t" value="rent">智慧輔具租金試算</label>
     </div>
-    <div>
-      <p class="note" style="margin-bottom:4px">每個月自己大約出</p>
-      <div class="big" id="rentBig">—</div>
-      <p id="rentSub" style="margin:10px 0 0"></p>
+    <div class="split" id="pickPane">
+      <form class="card" id="pickForm" onsubmit="return false">
+        <fieldset style="margin:0"><legend>符合的情況（可以複選）</legend>
+          <label class="opt"><input type="checkbox" name="pk" value="2"><span>晚上會自己下床，擔心跌倒</span></label>
+          <label class="opt"><input type="checkbox" name="pk" value="2"><span>白天沒人在家，需要異常時能通知家人</span></label>
+          <label class="opt"><input type="checkbox" name="pk" value="2"><span>剛出院或在復健，狀況可能還會變</span></label>
+          <label class="opt"><input type="checkbox" name="pk" value="1"><span>需要量身訂做的輪椅、氣墊床或照顧床</span></label>
+          <label class="opt"><input type="checkbox" name="pk" value="1"><span>只需要幾樣基本輔具</span></label>
+          <label class="opt"><input type="checkbox" name="pk" value="1"><span>家裡要大幅改裝浴室、門檻或斜坡</span></label>
+        </fieldset>
+      </form>
+      <div id="pickOut" aria-live="polite"></div>
+    </div>
+    <div class="calc" id="rentPane" hidden>
+      <div class="card">
+        <label class="f" for="rent">每月租金報價（元）</label>
+        <input id="rent" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 2000">
+        <label class="f" for="mod">無障礙改善預計花費（最多 2 萬元）</label>
+        <input id="mod" type="number" inputmode="numeric" min="0" max="20000" step="1000" placeholder="例如 0">
+        <label class="f" for="inc3">家裡的經濟身分</label>
+        <select id="inc3" style="margin:0"><option value="gen">一般</option><option value="mid">中低收入戶</option><option value="low">低收入戶</option></select>
+      </div>
+      <div>
+        <p class="note" style="margin:0">每個月自己大約出<span class="est">估算</span></p>
+        <div class="big" id="rentBig">—</div>
+        <p id="rentSub" style="margin:0"></p>
+        <p class="note" style="margin-top:14px">智慧輔具租金由各合作輔具店訂定，請先取得書面報價</p>
+      </div>
     </div>
   </div>
 </div></section>
 
-<section class="band soft" id="county"><div class="wrap center">
-  <h2 class="sec-title">找你家附近的輔具中心</h2>
-  <p class="lede">選擇你住的縣市，就會看到當地輔具資源中心的電話、地址和地圖　輔具中心可以免費諮詢、評估、維修，也有二手輔具可以租借</p>
-  <div class="county">
-    <label class="f" for="city">我住在</label>
-    <select id="city"><option value="">請選擇縣市</option></select>
-  </div>
+<section class="sec" id="county"><div class="wrap">
+  <div class="sh"><h2>找你家附近的輔具中心</h2><p>可以免費諮詢、評估、維修，也有二手輔具租借</p></div>
+  <div class="county"><label class="f" for="city">我住在</label><select id="city"><option value="">請選擇縣市</option></select></div>
   <div class="centers" id="centers" aria-live="polite"></div>
-  <p class="note" style="margin-top:14px">資料來源：衛生福利部社會及家庭署輔具中心聯絡資料表，部分縣市已再對照縣市政府公告　服務時間或地址可能調整，出門前請先打電話確認</p>
+  <p class="note" style="margin-top:16px">資料來源：衛福部社家署輔具中心聯絡資料表及縣市政府公告　電話、地址或服務時間可能調整，出門前請先打電話確認</p>
 </div></section>
 
-<section class="band" id="dict"><div class="wrap center">
-  <h2 class="sec-title">公文看不懂？名詞翻譯</h2>
-  <p class="lede">接到電話或通知單時，常會看到這些詞</p>
-  <dl class="dict">
-    <div><dt>照管專員<small>照顧管理專員</small></dt><dd>政府派到家裡了解狀況、幫你安排長照服務的人</dd></div>
-    <div><dt>失能等級<small>CMS 等級</small></dt><dd>家人需要被照顧的程度，分 1 到 8 級，2 級以上才能用長照</dd></div>
-    <div><dt>輔具評估報告書</dt><dd>治療師或輔具中心人員寫的證明，說明家人需要哪一種輔具、什麼尺寸</dd></div>
-    <div><dt>核定</dt><dd>政府正式同意補助，會有照顧安排或書面通知</dd></div>
-    <div><dt>特約廠商</dt><dd>跟政府簽約合作的輔具店　走長照時，要在這種店買或租才能用補助</dd></div>
-    <div><dt>部分負擔<small>自付額</small></dt><dd>政府補助以外，自己要出的那部分錢</dd></div>
-    <div><dt>核銷<small>檢據請款</small></dt><dd>買好之後，拿發票等文件去跟政府拿回補助款</dd></div>
-    <div><dt>最低使用年限</dt><dd>同一樣輔具要用滿幾年，才能再申請一次補助</dd></div>
-    <div><dt>實物給付</dt><dd>政府直接給你輔具，可能是整理消毒過的二手品，不是給錢</dd></div>
-    <div><dt>給付額度</dt><dd>政府在一段時間內最多願意幫你出的錢　長照輔具第一組每 3 年 4 萬元、第二組每 3 年 6 萬元</dd></div>
-    <div><dt>第一組／第二組</dt><dd>長照 3.0 把輔具補助分成傳統輔具（4 萬）和智慧輔具（6 萬）兩組，只能選一組</dd></div>
-    <div><dt>全租賃</dt><dd>只能租、不能買，用完或不需要時要還給輔具店</dd></div>
-    <div><dt>甲類輔具評估人員</dt><dd>政府認可、可以評估比較複雜輔具的專業人員，多在輔具中心或醫院</dd></div>
-  </dl>
+<section class="sec soft" id="dict"><div class="wrap">
+  <div class="sh"><h2>公文名詞翻譯</h2><p>接到電話或通知單看不懂？點開名詞看白話說明</p></div>
+  <div class="dict" id="dictList"></div>
 </div></section>
 
-<section class="band soft" id="news"><div class="wrap center">
-  <h2 class="sec-title">最新消息與政府公告</h2>
-  <p class="lede">每週整理一次和輔具、長照有關的新制度與公告，最新的在最上面</p>
+<section class="sec" id="news"><div class="wrap">
+  <div class="sh"><h2>最新消息</h2><p>每週整理和輔具、長照有關的新制度與公告，詳細內容請看原始來源</p></div>
   <ul class="news" id="newsList"></ul>
 </div></section>
 
-<section class="band" id="links"><div class="wrap center">
-  <h2 class="sec-title">找真人幫忙、線上申請</h2>
+<section class="sec soft" id="links"><div class="wrap">
+  <div class="sh"><h2>官方連結</h2><p>申請、查證都以這些官方管道為準</p></div>
   <div class="links">
-    <a href="tel:1966"><strong>長照專線 1966</strong><span>手機、市話直接撥 1966，有人會告訴你下一步</span></a>
-    <a href="https://newrepat.sfaa.gov.tw/" rel="noopener"><strong>找各縣市輔具中心</strong><span>輔具資源入口網，查電話、地址與表單</span></a>
-    <a href="https://atonline.sfaa.gov.tw/" rel="noopener"><strong>身障輔具線上申請</strong><span>需要自然人憑證；不會用可以直接到區公所辦</span></a>
-    <a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0050060" rel="noopener"><strong>身障輔具補助規定原文</strong><span>全國法規資料庫，含每項輔具的補助表</span></a>
-    <a href="https://www.mohw.gov.tw/cp-16-87062-1.html" rel="noopener"><strong>長照 3.0 智慧輔具新制</strong><span>衛福部 115 年 7 月 1 日公告</span></a>
-    <a href="https://ltcat.mohw.gov.tw/" rel="noopener"><strong>長期照顧輔具產品資料庫</strong><span>查哪些智慧輔具型號可以補助</span></a>
-    <a href="https://www.mohw.gov.tw/" rel="noopener"><strong>衛生福利部</strong><span>長照補助最新規定</span></a>
+    <a class="lk" href="tel:1966"><strong>長照專線 1966</strong><span>手機、市話直撥，詢問長照申請與進度</span></a>
+    <a class="lk" href="https://newrepat.sfaa.gov.tw/" rel="noopener"><strong>輔具資源入口網</strong><span>各縣市輔具中心、申請表單</span></a>
+    <a class="lk" href="https://atonline.sfaa.gov.tw/" rel="noopener"><strong>身障輔具線上申請</strong><span>需要自然人憑證，也可到區公所辦</span></a>
+    <a class="lk" href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0050060" rel="noopener"><strong>身障輔具補助規定原文</strong><span>全國法規資料庫，含補助基準表</span></a>
+    <a class="lk" href="https://www.mohw.gov.tw/cp-16-87062-1.html" rel="noopener"><strong>長照 3.0 智慧輔具新制</strong><span>衛生福利部公告</span></a>
+    <a class="lk" href="https://ltcat.mohw.gov.tw/" rel="noopener"><strong>長期照顧輔具產品資料庫</strong><span>查可補助的智慧輔具型號</span></a>
   </div>
-  <footer style="text-align:left">
-    <p><strong>本網站為民間整理之衛教資訊，非政府官方網站</strong>，不代辦申請、不收取費用，也未與任何輔具廠商合作或推薦特定品牌　內容為一般說明與估算，不構成法律或醫療建議；實際資格與金額以照管中心、區公所或輔具資源中心核定為準</p>
-    <p>整理日期：2026 年 11 月 27 日　資料依據：《長期照顧服務申請及給付辦法》附表四與附表四之一（115 年 7 月 1 日施行）、《身心障礙者輔具費用補助辦法》附表（112 年 1 月 1 日施行）、《身心障礙者醫療復健費用及醫療輔具補助辦法》附表（111 年 1 月 1 日施行）、衛福部及各縣市政府公告　圖片皆經授權使用</p>
-  </footer>
 </div></section>
 </div>
 
+<footer><div class="wrap">
+  <h2>使用前請注意</h2>
+  <ul>
+    <li>本網站是民間整理的衛教資訊，<strong>不是政府官方網站</strong>，也不是審核單位</li>
+    <li>內容力求正確，但規定可能修改、各縣市作法不同，<strong>無法保證完全正確或即時</strong>　申請前請向 1966、區公所、輔具中心或衛生局確認</li>
+    <li>資格與金額以主管機關核定為準；快篩與試算只是初步參考，不構成法律、醫療或財務建議</li>
+    <li>不代辦申請、不收取費用，也未與任何輔具廠商合作或推薦特定品牌</li>
+    <li>本站不蒐集個人資料，勾選與設定只留在你的裝置上</li>
+  </ul>
+  <p class="small">資料依據：《長期照顧服務申請及給付辦法》附表四與附表四之一（115 年 7 月 1 日施行）、《身心障礙者輔具費用補助辦法》附表（112 年 1 月 1 日施行）、《身心障礙者醫療復健費用及醫療輔具補助辦法》附表（111 年 1 月 1 日施行）、衛福部及各縣市政府公告　整理日期：<span class="dateTxt">2026 年 11 月 27 日</span>　圖片皆經授權使用</p>
+</div></footer>
+
 <nav class="callbar" aria-label="找真人幫忙">
   <a class="primary" href="tel:1966">撥打長照專線<small>1966</small></a>
-  <a href="#county">找輔具中心<small>選縣市看電話地址</small></a>
+  <a href="#county">找輔具中心<small>選縣市看電話</small></a>
 </nav>
 
 <script>
 {
-const $=s=>document.querySelector(s),R=document.documentElement;
-/* 閱讀設定 */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],R=document.documentElement;
 const save=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},load=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
-const setZ=z=>{R.style.setProperty('--z',z);document.querySelectorAll('.tb[data-z]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.z===z));save('fz',z)};
-const setC=on=>{on?R.setAttribute('data-contrast','on'):R.removeAttribute('data-contrast');$('#hc').setAttribute('aria-pressed',on);save('hc',on?'1':'0')};
-document.querySelectorAll('.tb[data-z]').forEach(b=>b.addEventListener('click',()=>setZ(b.dataset.z)));
-$('#hc').addEventListener('click',()=>setC(!R.hasAttribute('data-contrast')));
-setZ(load('fz')||'1');setC(load('hc')==='1');
-
-/* 圖片 */
-const loadImg=el=>{const src='img/'+el.dataset.img+'.jpg',im=new Image();im.onload=()=>{el.style.backgroundImage=`url(${src})`;el.classList.add('has')};im.src=src};
-if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){io.unobserve(e.target);loadImg(e.target)}}),{rootMargin:'300px'});document.querySelectorAll('.ph[data-img]').forEach(el=>io.observe(el))}
-else document.querySelectorAll('.ph[data-img]').forEach(loadImg);
-const pulse=el=>{el.classList.remove('pulse');void el.offsetWidth;el.classList.add('pulse')};
-
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=n=>n==null?'—':n.toLocaleString('zh-TW')+' 元';
+const pulse=el=>{el.classList.remove('pulse');void el.offsetWidth;el.classList.add('pulse')};
 const LTC={gen:.7,mid:.9,low:1},DIS={gen:.5,mid:.75,low:1},INC={gen:'一般',mid:'中低收入戶',low:'低收入戶'};
+
+/* 彈出選單 */
+const pops=[['setBtn','setPop'],['tocBtn','tocPop']];
+const closeAll=()=>pops.forEach(([b,p])=>{$('#'+p).hidden=true;$('#'+b).setAttribute('aria-expanded','false')});
+pops.forEach(([b,p])=>$('#'+b).addEventListener('click',e=>{e.stopPropagation();const open=$('#'+p).hidden;closeAll();if(open){$('#'+p).hidden=false;$('#'+b).setAttribute('aria-expanded','true')}}));
+document.addEventListener('click',e=>{if(!e.target.closest('.pop'))closeAll()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
+$$('#tocPop a').forEach(a=>a.addEventListener('click',closeAll));
+
+/* 閱讀設定 */
+const setZ=z=>{R.style.setProperty('--z',z);$$('#setPop [data-z]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.z===z));save('fz',z)};
+const setC=on=>{on?R.setAttribute('data-contrast','on'):R.removeAttribute('data-contrast');$('#hc').setAttribute('aria-pressed',on);save('hc',on?'1':'0')};
+$$('#setPop [data-z]').forEach(b=>b.addEventListener('click',()=>setZ(b.dataset.z)));
+$('#hc').addEventListener('click',()=>setC(!R.hasAttribute('data-contrast')));
+{const z=load('fz');setZ(['1','1.15','1.3'].includes(z)?z:'1');setC(load('hc')==='1');}
+
+/* 圖片延遲載入 */
+const loadImg=el=>{const src='img/'+el.dataset.img+'.jpg',im=new Image();im.onload=()=>{el.style.backgroundImage=`url(${src})`};im.src=src};
+if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){io.unobserve(e.target);loadImg(e.target)}}),{rootMargin:'400px'});$$('.ph[data-img]').forEach(el=>io.observe(el))}else $$('.ph[data-img]').forEach(loadImg);
+
+const NEWS=[
+ {d:'2026-11-25',t:'活動',h:'照顧壓力大，可以撥 1966 找家庭照顧者專員',s:'衛福部提醒照顧者不要獨自撐著，撥長照專線可轉介家照據點，安排喘息與支持服務',src:'聯合報',u:'https://udn.com/news/story/7266/9900659'},
+ {d:'2026-11-23',t:'公告',h:'衛福部訂 6 月 3 日為「全國長照日」',s:'表揚第一線長照人員，明年長照相關預算將達 1,153 億元',src:'中央社（華視新聞網）',u:'https://news.cts.com.tw/cna/life/202611/202611233104379.html'},
+ {d:'2026-07-01',t:'新制',h:'長照 3.0 智慧輔具全租賃上路，每 3 年 6 萬元',s:'新增第二組智慧科技輔具，和傳統輔具每 3 年 4 萬元二選一，首批 17 件品項通過審議',src:'衛生福利部',u:'https://www.mohw.gov.tw/cp-16-87062-1.html'},
+ {d:'2023-01-01',t:'新制',h:'身障輔具補助新辦法施行',s:'一般戶補助 50%、中低收入戶 75%、低收入戶全額，每人每 2 年以補助 4 項為原則',src:'全國法規資料庫',u:'https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0050060'}
+];
+const dt=d=>{const [y,m,dd]=d.split('-');return `${y} 年 ${+m} 月 ${+dd} 日`};
+$('#newsList').innerHTML=NEWS.map(n=>`<li><time datetime="${n.d}">${dt(n.d)}</time><div><h3>${esc(n.h)}<span class="nt">${esc(n.t)}</span></h3><p>${esc(n.s)}</p><a class="src" href="${esc(n.u)}" rel="noopener">看原始來源：${esc(n.src)}</a></div></li>`).join('');
+/* 公告輪播：一次一則，比跑馬燈好讀 */
+let ni=0,paused=matchMedia('(prefers-reduced-motion: reduce)').matches,timer;
+const showN=i=>{ni=(i+NEWS.length)%NEWS.length;const n=NEWS[ni],m=$('#msg');m.style.opacity=0;setTimeout(()=>{m.innerHTML=`<b>${n.d.slice(5).replace('-','/')}</b>${esc(n.h)}`;m.style.opacity=1},150)};
+const tick=()=>{clearInterval(timer);if(!paused)timer=setInterval(()=>showN(ni+1),6000)};
+$('#nPrev').addEventListener('click',()=>{showN(ni-1);tick()});$('#nNext').addEventListener('click',()=>{showN(ni+1);tick()});
+$('#nPause').addEventListener('click',e=>{paused=!paused;e.currentTarget.textContent=paused?'播放':'暫停';e.currentTarget.setAttribute('aria-pressed',paused);tick()});
+if(paused){$('#nPause').textContent='播放';$('#nPause').setAttribute('aria-pressed','true')}
+showN(0);tick();
+
+/* 快篩 */
+function quiz(){
+  const v=$$('input[name=q]:checked').map(x=>x.value),has=k=>v.includes(k),inc=document.querySelector('input[name=inc]:checked').value;
+  if(!v.length){$('#out').innerHTML='<div class="empty">勾選家人的狀況後，結果會出現在這裡</div>';return}
+  const base=has('65')||has('ind')||has('dem')||has('dis');
+  const selfPay=inc==='low'?'自己不用出':`自己出 ${Math.round((1-LTC[inc])*100)}%`;
+  let ltc,dis;
+  if(has('inst'))ltc={k:'no',t:'可能不適用',b:['住在安養中心或護理之家，通常不適用長照居家輔具補助，可詢問機構或縣市政府其他補助']};
+  else if(base&&has('adl'))ltc={k:'yes',t:'看起來符合申請條件',b:['撥 1966 申請，照管專員會到家裡評估需要照顧的程度（2 級以上才能使用）',`第一組傳統輔具每 3 年最多 4 萬元，「${INC[inc]}」${selfPay}`,'也可選第二組智慧輔具（只能租）每 3 年 6 萬元，兩組選一組']};
+  else if(base)ltc={k:'maybe',t:'身分符合，還要評估',b:['年齡或身分符合，但要經照管專員評估需要照顧的程度　生活有不方便，都可以先撥 1966 問']};
+  else ltc={k:'no',t:'目前看起來不符合',b:['長照補助對象為 65 歲以上、55 歲以上原住民、50 歲以上失智症或有身障證明者']};
+  if(has('dis'))dis={k:'yes',t:'看起來符合申請條件',b:[`政府補助${inc==='low'?'全額':inc==='mid'?' 75%':'一半'}，部分品項不分身分全額補助`,'每人每 2 年以補助 4 項為原則','線上申請或到戶籍地區公所辦理']};
+  else dis={k:'no',t:'目前不適用',b:['需要身心障礙證明　證明還在辦理中，可以先走長照']};
+  const card=(h,o)=>`<div class="path ${o.k}"><span class="tag">${o.t}</span><h3>${h}</h3><ul>${o.b.map(x=>`<li>${x}</li>`).join('')}</ul></div>`;
+  const tip=(ltc.k!=='no'&&dis.k==='yes')?'<p class="note">兩邊都可能適用時，同一樣輔具只能擇一申請，可用下方試算比較</p>':'';
+  $('#out').innerHTML=card('長照輔具補助',ltc)+card('身障輔具補助',dis)+tip;pulse($('#out'));
+  $('#inc2').value=inc;calc();
+}
+$('#quiz').addEventListener('change',quiz);
+
+/* 流程 */
+const FLOW={
+ L:[['請人來評估','評估','撥 1966 或聯絡照管中心，照管專員到家裡了解需要照顧的程度'],['等待核定','核定','照管中心核定照顧計畫，裡面會寫可以使用哪些輔具'],['購買或租用','購買','到長照合作的輔具店買或租，記得拿發票和保固書'],['付自己的部分','核銷','多數由輔具店向政府請款，你只要付自己負擔的部分']],
+ D:[['確認是否要評估','評估','洗澡椅、一般輪椅等免評估；其他品項先向輔具中心預約評估'],['送件等核定','核定','線上或到戶籍地區公所申請，政府會寄書面通知'],['6 個月內購買','購買','收到核定通知後 6 個月內完成購買'],['拿發票請款','核銷','把發票等文件交給公所，受理後約 1 個月撥款']],
+ M:[['取得醫師證明','評估','由醫師開立診斷證明，部分品項還要醫療輔具評估報告'],['向衛生局申請','核定','向戶籍所在縣市衛生局送件，等待核定'],['依核定購買','購買','依核定內容向合法醫療器材商購買或租用'],['檢據請款','核銷','依衛生局通知，檢附發票等文件申請撥款']]};
+const flow=()=>{const r=document.querySelector('input[name=route]:checked').value;$('#flowList').innerHTML=FLOW[r].map(([t,o,p])=>`<li><h3>${t}</h3><p class="off">公文寫法：${o}</p><p>${p}</p></li>`).join('')};
+$$('input[name=route]').forEach(x=>x.addEventListener('change',flow));flow();
+
+/* 試算 */
 const items=[
  {n:'洗澡椅／便盆椅／馬桶增高器',c:'EA01',ltc:1200,dis:900,y:3,ev:0,p:1800},
  {n:'一般輪椅',c:'EC01',ltc:3500,dis:3500,y:3,ev:0,p:4500},
@@ -557,35 +643,6 @@ const items=[
  {n:'居家照顧床',c:'EH01',ltc:8000,dis:null,y:5,ev:1,p:12000},
  {n:'照顧床加裝電動升降',c:'EH03',ltc:5000,dis:null,y:5,ev:1,p:6000}
 ];
-
-/* 快篩 */
-function quiz(){
-  const v=[...document.querySelectorAll('input[name=q]:checked')].map(x=>x.value),has=k=>v.includes(k);
-  const inc=document.querySelector('input[name=inc]:checked').value;
-  if(!v.length){$('#out').innerHTML='<div class="empty">勾選左邊的狀況後，結果會出現在這裡</div>';return}
-  const base=has('65')||has('ind')||has('dem')||has('dis');
-  const selfPay=inc==='low'?'自己不用出錢':`自己出 ${Math.round((1-LTC[inc])*100)}%`;
-  let ltc,dis;
-  if(has('inst')) ltc={k:'no',t:'目前不適用',b:['住在安養中心、護理之家的人，不能用長照的居家輔具補助　可以問機構或縣市政府有沒有住宿補助']};
-  else if(base&&has('adl')) ltc={k:'yes',t:'很可能可以',b:[
-    '第一步：打 1966，政府會派人到家裡看家人需要多少照顧',
-    `一般輔具：每 3 年最多可以用 40,000 元，你家是「${INC[inc]}」，${selfPay}`,
-    '長照 3.0 新選擇：智慧輔具全部用租的，每 3 年 60,000 元，和上面只能選一組（往下看「傳統還是智慧」）',
-    '氣墊床、量身訂做的輪椅這類預防褥瘡的輔具，自己不用出錢']};
-  else if(base) ltc={k:'maybe',t:'身分符合，還要再確認',b:['年齡或身分符合了，但要等政府派人來看，確認家人需要照顧的程度夠，才能用長照　只要生活上有不方便，都可以先打 1966 問問看']};
-  else ltc={k:'no',t:'目前不符合',b:['長照補助給：65 歲以上、55 歲以上原住民、50 歲以上失智症，或有身障證明的人']};
-  if(has('dis')) dis={k:'yes',t:'可以',b:[
-    `政府補助${inc==='low'?'全額':inc==='mid'?' 75%':'一半'}；預防褥瘡、量身訂做輪椅等品項任何人都全額補助`,
-    '每個人每 2 年最多補助 4 樣輔具',
-    '可以上網申請，或帶證件到戶籍所在的區公所辦']};
-  else dis={k:'no',t:'不適用',b:['要有身心障礙證明才能申請　如果還在辦證明，可以先走長照']};
-  const card=(h,o)=>`<div class="path ${o.k}"><span class="tag">${o.t}</span><h3>${h}</h3><ul>${o.b.map(x=>`<li>${x}</li>`).join('')}</ul></div>`;
-  const tip=(ltc.k!=='no'&&dis.k==='yes')?'<p class="note"><strong>兩邊都可以：</strong>選比較划算的那一邊就好，但同一樣東西不能兩邊都拿　可以用下面的試算比比看</p>':'';
-  $('#out').innerHTML=card('長照補助',ltc)+card('身障輔具補助',dis)+tip;pulse($('#out'));
-  $('#inc2').value=inc;calc();
-}
-
-/* 試算 */
 $('#item').innerHTML=items.map((x,i)=>`<option value="${i}">${x.n}</option>`).join('');
 function calc(){
   const it=items[+$('#item').value],inc=$('#inc2').value;
@@ -594,94 +651,55 @@ function calc(){
   const dg=it.dis==null?null:Math.min(p,Math.round(it.dis*(it.df?1:DIS[inc]))),dpay=dg==null?null:p-dg;
   const best=dg==null||lg>=dg?'l':'d';
   $('#bigNum').textContent=fmt(Math.max(lg,dg||0));pulse($('#bigNum'));
-  $('#bigSub').innerHTML=`報價 ${fmt(p)}，${best==='l'?'走長照':'走身障'}，自己大約出 <strong style="white-space:nowrap">${fmt(best==='l'?lpay:dpay)}</strong>`;
-  const box=(t,cap,rate,g,pay,on)=>`<div class="card ${on?'best':''}"><strong>${t}${on?'（較划算）':''}</strong><dl><dt>政府最多補</dt><dd>${fmt(cap)}</dd><dt>政府出幾成</dt><dd>${rate}</dd><dt>大約拿回</dt><dd>${fmt(g)}</dd><dt>自己要出</dt><dd>${fmt(pay)}</dd></dl></div>`;
-  $('#cmp').innerHTML=box('長照',it.ltc,it.lf?'全額':Math.round(lr*100)+'%',lg,lpay,best==='l')+
-    (dg==null?`<div class="card"><strong>身障補助</strong><p class="note" style="margin-top:8px">這一項請直接問區公所或輔具中心可以補多少</p></div>`
-    :box('身障',it.dis,it.df?'全額':Math.round(DIS[inc]*100)+'%',dg,dpay,best==='d'));
-  $('#itemNote').textContent=`用滿 ${it.y} 年才能再申請・${it.ev?'要先請專業人員評估':'不用先評估'}・代碼 ${it.c}　${typed?'':'還沒輸入報價，先用常見價格 '+fmt(it.p)+' 估算（範例價格）'}`;
+  $('#bigSub').innerHTML=`報價 ${fmt(p)}，走${best==='l'?'長照':'身障'}自己大約出 <strong style="white-space:nowrap">${fmt(best==='l'?lpay:dpay)}</strong>`;
+  const box=(t,cap,rate,g,pay,on)=>`<div class="card ${on?'best':''}"><strong>${t}</strong><dl><dt>品項上限</dt><dd>${fmt(cap)}</dd><dt>政府負擔</dt><dd>${rate}</dd><dt>約可補助</dt><dd>${fmt(g)}</dd><dt>自己負擔</dt><dd>${fmt(pay)}</dd></dl></div>`;
+  $('#cmp').innerHTML=box('長照',it.ltc,it.lf?'全額':Math.round(lr*100)+'%',lg,lpay,best==='l')+(dg==null?'<div class="card"><strong>身障</strong><p class="note" style="margin:8px 0 0">這一項請洽區公所或輔具中心確認金額</p></div>':box('身障',it.dis,it.df?'全額':Math.round(DIS[inc]*100)+'%',dg,dpay,best==='d'));
+  $('#itemNote').textContent=`用滿 ${it.y} 年才能再申請・${it.ev?'要先評估':'不用先評估'}${typed?'':`　未輸入報價時以 ${fmt(it.p)} 示範`}`;
 }
-$('#tbl tbody').innerHTML=items.map(x=>`<tr><td>${x.n}</td><td class="n">${fmt(x.ltc)}</td><td>${x.lf?'不用出錢':'30%／10%／0'}</td><td class="n">${x.dis==null?'問區公所':fmt(x.dis)}</td><td>${x.dis==null?'—':x.df?'全額':'50%／75%／全額'}</td><td class="n">${x.y} 年</td><td>${x.ev?'要':'不用'}</td></tr>`).join('');
+['item','inc2'].forEach(id=>$('#'+id).addEventListener('change',calc));$('#price').addEventListener('input',calc);
 
-$('#quiz').addEventListener('change',quiz);
-['item','inc2'].forEach(id=>$('#'+id).addEventListener('change',calc));
-$('#price').addEventListener('input',calc);
-/* 長照 3.0：選組 */
-function pick(){
-  const v=[...document.querySelectorAll('input[name=pk]:checked')].map(x=>x.value);
-  const a=v.filter(x=>x==='1').length,b=v.filter(x=>x==='2').length;
-  let k,t,d;
-  if(!v.length){$('#pickOut').innerHTML='<div class="empty">勾選左邊符合的情況，這裡會給你一個方向</div>';return}
-  if(b>a){k='第二組：智慧輔具';t='你最在意的是安全看顧和彈性，智慧輔具的偵測、通報功能和可以換租的特性比較合適'}
-  else if(a>b){k='第一組：傳統輔具';t='你需要的是買下來長期用的輔具或比較多的居家改裝，傳統輔具品項比較齊全'}
-  else{k='兩組都有道理';t='可以先把兩邊的需求都列出來，請評估人員一起比較'}
-  $('#pickOut').innerHTML=`<div class="verdict"><span class="tag" style="background:var(--ok);color:var(--bg)">比較適合</span><h3>${k}</h3><p>${t}</p><p class="note">這只是方向參考，最後要由照管專員和輔具評估人員依家人狀況一起決定</p></div>`;
-}
-function rent(){
-  const r=+$('#rent').value,m=Math.min(20000,Math.max(0,+$('#mod').value||0)),inc=$('#inc3').value;
-  if(!(r>0)){$('#rentBig').textContent='—';$('#rentSub').textContent='先輸入輔具店給你的每月租金';return}
-  const self=Math.round(r*(1-LTC[inc])),left=60000-m,mon=Math.min(36,Math.floor(left/r));
-  $('#rentBig').textContent=fmt(self);pulse($('#rentBig'));
-  $('#rentSub').innerHTML=`政府每個月出 ${fmt(r-self)}　扣掉無障礙改善 ${fmt(m)} 後，額度還有 ${fmt(left)}，大約可以租 <strong style="white-space:nowrap">${mon} 個月</strong>${mon<36?'，不到 3 年，超過的月份要自己付或跟評估人員討論':'，可以撐滿 3 年'}`;
-}
-$('#pickForm').addEventListener('change',pick);
-['rent','mod'].forEach(id=>$('#'+id).addEventListener('input',rent));$('#inc3').addEventListener('change',rent);
-/* 最新消息（新的放最前面） */
-const NEWS=[
- {d:'2026-11-25',t:'活動',h:'照顧壓力大，可以撥 1966 找家庭照顧者專員',s:'衛福部提醒照顧者不要獨自撐著，撥長照專線可轉介家照據點，安排喘息與支持服務',src:'聯合報',u:'https://udn.com/news/story/7266/9900659'},
- {d:'2026-11-23',t:'公告',h:'衛福部訂 6 月 3 日為「全國長照日」',s:'表揚第一線長照人員，明年長照相關預算將達 1,153 億元',src:'中央社（華視新聞網）',u:'https://news.cts.com.tw/cna/life/202611/202611233104379.html'},
- {d:'2026-07-01',t:'新制',h:'長照 3.0 智慧輔具全租賃上路，每 3 年 6 萬元',s:'新增第二組智慧科技輔具，和傳統輔具每 3 年 4 萬元二選一，首批 17 件品項通過審議',src:'衛生福利部',u:'https://www.mohw.gov.tw/cp-16-87062-1.html'},
- {d:'2023-01-01',t:'新制',h:'身障輔具補助新辦法施行',s:'一般戶補助 50%、中低收入戶 75%、低收入戶全額，每人每 2 年以補助 4 項為原則',src:'全國法規資料庫',u:'https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0050060'}
-];
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const dt=d=>{const [y,m,dd]=d.split('-');return `${y} 年 ${+m} 月 ${+dd} 日`};
-$('#newsList').innerHTML=NEWS.map(n=>`<li><time datetime="${n.d}">${dt(n.d)}</time><div><h3>${esc(n.h)}<span class="nt">${n.t}</span></h3><p>${esc(n.s)}</p><a class="src" href="${n.u}" rel="noopener">來源：${esc(n.src)}</a></div></li>`).join('');
-const tk=NEWS.slice(0,4).map(n=>`<a href="#news"><b>${n.d.slice(5).replace('-','/')}</b>${esc(n.h)}</a>`).join('');
-$('#run').innerHTML=tk+`<span aria-hidden="true" style="display:contents">${tk.replace(/<a /g,'<a tabindex="-1" ')}</span>`;
-$('#tkBtn').addEventListener('click',e=>{const p=$('#ticker').classList.toggle('paused');e.currentTarget.textContent=p?'播放':'暫停';e.currentTarget.setAttribute('aria-pressed',p)});
-
+/* 全部輔具 */
 const ALL=[{"s":"L","c":"EA01","g":"衛浴","n":"馬桶增高器、便盆椅或沐浴椅","cap":1200,"y":3.0,"ev":0,"f":0,"r":0},{"s":"L","c":"EB01","g":"走路","n":"單支枴杖-不銹鋼製","cap":1000,"y":5.0,"ev":0,"f":0,"r":0},{"s":"L","c":"EB02","g":"走路","n":"單支枴杖-鋁製","cap":500,"y":3.0,"ev":0,"f":0,"r":0},{"s":"L","c":"EB03","g":"走路","n":"助行器","cap":800,"y":3.0,"ev":0,"f":0,"r":0},{"s":"L","c":"EB04","g":"走路","n":"帶輪型助步車（助行椅）","cap":3000,"y":3.0,"ev":1,"f":0,"r":300},{"s":"L","c":"EC01","g":"輪椅","n":"輪椅-A款（非輕量化量產型）","cap":3500,"y":3.0,"ev":0,"f":0,"r":0},{"s":"L","c":"EC02","g":"輪椅","n":"輪椅-B款（輕量化量產型）","cap":4000,"y":3.0,"ev":0,"f":0,"r":450},{"s":"L","c":"EC03","g":"輪椅","n":"輪椅-C款（量身訂製型）","cap":9000,"y":3.0,"ev":1,"f":1,"r":0},{"s":"L","c":"EC04","g":"輪椅","n":"輪椅附加功能-A款（具利於移位功能）","cap":5000,"y":3.0,"ev":1,"f":1,"r":150},{"s":"L","c":"EC05","g":"輪椅","n":"輪椅附加功能-B款（具仰躺功能）","cap":2000,"y":3.0,"ev":1,"f":1,"r":150},{"s":"L","c":"EC06","g":"輪椅","n":"輪椅附加功能-C款（具空中傾倒功能）","cap":4000,"y":3.0,"ev":1,"f":1,"r":150},{"s":"L","c":"EC07","g":"輪椅","n":"擺位系統-A款（平面型輪椅背靠）","cap":1000,"y":3.0,"ev":1,"f":1,"r":0},{"s":"L","c":"EC08","g":"輪椅","n":"擺位系統-B款（曲面適形輪椅背靠）","cap":6000,"y":3.0,"ev":1,"f":1,"r":0},{"s":"L","c":"EC09","g":"輪椅","n":"擺位系統-C款（輪椅軀幹側支撐架）","cap":3000,"y":3.0,"ev":1,"f":1,"r":0},{"s":"L","c":"EC10","g":"輪椅","n":"擺位系統-D款（輪椅頭靠系統）","cap":2500,"y":3.0,"ev":1,"f":1,"r":0},{"s":"L","c":"EC11","g":"輪椅","n":"電動輪椅（只能租）","cap":0,"y":0.0,"ev":1,"f":0,"r":2500},{"s":"L","c":"EC12","g":"輪椅","n":"電動代步車（只能租）","cap":0,"y":0.0,"ev":1,"f":0,"r":1200},{"s":"L","c":"ED01","g":"移位","n":"移位腰帶","cap":1500,"y":3.0,"ev":1,"f":0,"r":0},{"s":"L","c":"ED02","g":"移位","n":"移位板","cap":2000,"y":5.0,"ev":1,"f":0,"r":0},{"s":"L","c":"ED03","g":"移位","n":"人力移位吊帶","cap":4000,"y":3.0,"ev":1,"f":0,"r":0},{"s":"L","c":"ED04","g":"移位","n":"移位滑墊-A款","cap":3000,"y":5.0,"ev":1,"f":0,"r":0},{"s":"L","c":"ED05","g":"移位","n":"移位滑墊-B款","cap":8000,"y":5.0,"ev":1,"f":0,"r":0},{"s":"L","c":"ED06","g":"移位","n":"移位轉盤","cap":2000,"y":3.0,"ev":1,"f":0,"r":0},{"s":"L","c":"ED07","g":"移位","n":"移位機","cap":40000,"y":10.0,"ev":1,"f":0,"r":2000},{"s":"L","c":"ED08","g":"移位","n":"移位機吊帶","cap":6000,"y":3.0,"ev":1,"f":0,"r":0},{"s":"L","c":"EE01","g":"聽覺警示","n":"電話擴音器","cap":2000,"y":5.0,"ev":0,"f":0,"r":0},{"s":"L","c":"EE02","g":"聽覺警示","n":"電話閃光震動器","cap":2000,"y":5.0,"ev":0,"f":0,"r":0},{"s":"L","c":"EE03","g":"聽覺警示","n":"火警閃光警示器","cap":2000,"y":5.0,"ev":0,"f":0,"r":0},{"s":"L","c":"EE04","g":"聽覺警示","n":"門鈴閃光器","cap":2000,"y":5.0,"ev":0,"f":0,"r":0},{"s":"L","c":"EE05","g":"聽覺警示","n":"無線震動警示器","cap":2000,"y":5.0,"ev":0,"f":0,"r":0},{"s":"L","c":"EF01","g":"生活用品","n":"衣著用輔具","cap":500,"y":3.0,"ev":0,"f":0,"r":0},{"s":"L","c":"EF02","g":"生活用品","n":"居家用生活輔具","cap":500,"y":3.0,"ev":0,"f":0,"r":0},{"s":"L","c":"EF03","g":"生活用品","n":"飲食用輔具","cap":500,"y":3.0,"ev":0,"f":0,"r":0},{"s":"L","c":"EG01","g":"預防壓瘡","n":"氣墊床-A款","cap":8000,"y":3.0,"ev":1,"f":1,"r":300},{"s":"L","c":"EG02","g":"預防壓瘡","n":"氣墊床-B款","cap":12000,"y":3.0,"ev":1,"f":1,"r":500},{"s":"L","c":"EG03","g":"預防壓瘡","n":"輪椅座墊-A款（連通管型氣囊氣墊座-塑膠材質）","cap":5000,"y":2.0,"ev":1,"f":1,"r":0},{"s":"L","c":"EG04","g":"預防壓瘡","n":"輪椅座墊-B款（連通管型氣囊氣墊座-橡膠材質）","cap":10000,"y":2.0,"ev":1,"f":1,"r":0},{"s":"L","c":"EG05","g":"預防壓瘡","n":"輪椅座墊-C款（液態凝膠座墊）","cap":10000,"y":2.0,"ev":1,"f":1,"r":0},{"s":"L","c":"EG06","g":"預防壓瘡","n":"輪椅座墊-D款（固態凝膠座墊）","cap":8000,"y":5.0,"ev":1,"f":1,"r":0},{"s":"L","c":"EG07","g":"預防壓瘡","n":"輪椅座墊-E款（填充式氣囊氣墊座）","cap":8000,"y":5.0,"ev":1,"f":1,"r":0},{"s":"L","c":"EG08","g":"預防壓瘡","n":"輪椅座墊-F款（交替充氣型座墊）","cap":5000,"y":3.0,"ev":1,"f":1,"r":0},{"s":"L","c":"EG09","g":"預防壓瘡","n":"輪椅座墊-G款（量製型座墊）","cap":10000,"y":3.0,"ev":1,"f":1,"r":0},{"s":"L","c":"EH01","g":"照顧床與爬梯","n":"居家用照顧床","cap":8000,"y":5.0,"ev":1,"f":0,"r":1000},{"s":"L","c":"EH02","g":"照顧床與爬梯","n":"居家用照顧床-附加功能A款（床面升降）","cap":5000,"y":5.0,"ev":1,"f":0,"r":200},{"s":"L","c":"EH03","g":"照顧床與爬梯","n":"居家用照顧床-附加功能B款（電動升降）","cap":5000,"y":5.0,"ev":1,"f":0,"r":500},{"s":"L","c":"EH04","g":"照顧床與爬梯","n":"爬梯機（單趟，只能租）","cap":0,"y":0.0,"ev":1,"f":0,"r":700},{"s":"L","c":"EH05","g":"照顧床與爬梯","n":"爬梯機（每月，只能租）","cap":0,"y":0.0,"ev":1,"f":0,"r":4000},{"s":"L","c":"EI01","g":"智慧輔具","n":"智慧輔具-移位類（只能租，第二組）","cap":0,"y":0.0,"ev":1,"f":0,"r":-1},{"s":"L","c":"EI02","g":"智慧輔具","n":"智慧輔具-移動類（只能租，第二組）","cap":0,"y":0.0,"ev":1,"f":0,"r":-1},{"s":"L","c":"EI03","g":"智慧輔具","n":"智慧輔具-沐浴排泄類（只能租，第二組）","cap":0,"y":0.0,"ev":1,"f":0,"r":-1},{"s":"L","c":"EI04","g":"智慧輔具","n":"智慧輔具-居家照顧床類（只能租，第二組）","cap":0,"y":0.0,"ev":1,"f":0,"r":-1},{"s":"L","c":"EI05","g":"智慧輔具","n":"智慧輔具-安全看視類（只能租，第二組）","cap":0,"y":0.0,"ev":1,"f":0,"r":-1},{"s":"L","c":"FA08","g":"居家無障礙","n":"居家無障礙-反光貼條或消光處理","cap":3000,"y":3.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA13","g":"居家無障礙","n":"居家無障礙-水龍頭（單處，新增或改換）","cap":3000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA15","g":"居家無障礙","n":"居家無障礙-改善洗臉台（單處）","cap":3000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA17","g":"居家無障礙","n":"居家無障礙-壁掛式淋浴台（單處）","cap":5000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA18","g":"居家無障礙","n":"居家無障礙-改善流理台（單處）","cap":15000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA19","g":"居家無障礙","n":"居家無障礙-改善抽油煙機位置（單處）","cap":1000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA22","g":"居家無障礙","n":"居家無障礙-固定式扶手（每 10 公分）","cap":160,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA23","g":"居家無障礙","n":"居家無障礙-可動式扶手（單支）","cap":3600,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA24","g":"居家無障礙","n":"居家無障礙-床邊扶手（單處）","cap":1000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA25","g":"居家無障礙","n":"居家無障礙-門檻斜角（單側）","cap":1000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA26","g":"居家無障礙","n":"居家無障礙-非固定式斜坡板A款","cap":3500,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA27","g":"居家無障礙","n":"居家無障礙-非固定式斜坡板B款","cap":5000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA28","g":"居家無障礙","n":"居家無障礙-非固定式斜坡板C款","cap":7000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA29","g":"居家無障礙","n":"居家無障礙-非固定式斜坡板D款","cap":10000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA30","g":"居家無障礙","n":"居家無障礙-改善高低差 10 公分以下（單處）","cap":3500,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA31","g":"居家無障礙","n":"居家無障礙-改善高低差 20 公分以下（單處）","cap":5000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA32","g":"居家無障礙","n":"居家無障礙-改善高低差 30 公分以下（單處）","cap":7000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA33","g":"居家無障礙","n":"居家無障礙-改善高低差超過 30 公分（單處）","cap":10000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA34","g":"居家無障礙","n":"居家無障礙-防滑地磚（單處）","cap":6000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA35","g":"居家無障礙","n":"居家無障礙-防滑措施","cap":2000,"y":3.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA36","g":"居家無障礙","n":"居家無障礙-隔間（每平方公尺）","cap":800,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA37","g":"居家無障礙","n":"居家無障礙-門簡易型（單處）","cap":7000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA38","g":"居家無障礙","n":"居家無障礙-門進階型（單處）","cap":10000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA39","g":"居家無障礙","n":"居家無障礙-截水槽（單處）","cap":6000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA40","g":"居家無障礙","n":"居家無障礙-改善浴缸（單處）","cap":7000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA41","g":"居家無障礙","n":"居家無障礙-改善馬桶（單處）","cap":5000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA42","g":"居家無障礙","n":"居家無障礙-馬桶背靠（單處）","cap":2000,"y":10.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA43","g":"居家無障礙","n":"居家無障礙-移動式身體清洗槽（局部型）","cap":2000,"y":3.0,"ev":1,"f":0,"r":0},{"s":"L","c":"FA44","g":"居家無障礙","n":"居家無障礙-移動式身體清洗槽（全身型）","cap":5000,"y":3.0,"ev":1,"f":0,"r":0},{"s":"D","c":"1","g":"行動與移位","n":"推車-一般型","cap":6500,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"2","g":"行動與移位","n":"推車-荷重型","cap":12000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"3","g":"行動與移位","n":"推車-擺位型","cap":28000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"4","g":"行動與移位","n":"輪椅-非輕量化量產型","cap":3500,"y":3.0,"ev":"-","f":0},{"s":"D","c":"5","g":"行動與移位","n":"輪椅-輕量化量產型","cap":4000,"y":3.0,"ev":"-","f":0},{"s":"D","c":"6","g":"行動與移位","n":"輪椅-客製型","cap":9000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"7","g":"行動與移位","n":"輪椅附加功能-具利於移位功能","cap":5000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"8","g":"行動與移位","n":"輪椅附加功能-具仰躺功能","cap":2000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"9","g":"行動與移位","n":"輪椅附加功能-具空中傾倒功能","cap":4000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"10","g":"行動與移位","n":"高活動型輪椅-基礎型","cap":30000,"y":4.0,"ev":"甲類","f":0},{"s":"D","c":"11","g":"行動與移位","n":"高活動型輪椅-進階型","cap":60000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"12","g":"行動與移位","n":"手推圈啟動型動力輔助輪椅","cap":50000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"13","g":"行動與移位","n":"輪椅配件-後推式介護型動力套件","cap":8000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"14","g":"行動與移位","n":"電動輪椅-基礎型","cap":50000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"15","g":"行動與移位","n":"電動輪椅-進階型","cap":60000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"16","g":"行動與移位","n":"電動輪椅配件-沙發型座椅","cap":5000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"17","g":"行動與移位","n":"電動輪椅配件-擺位型椅架","cap":15000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"18","g":"行動與移位","n":"電動輪椅配件-電動變換姿勢功能","cap":10000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"19","g":"行動與移位","n":"電動輪椅配件-特殊規格控制器","cap":35000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"20","g":"行動與移位","n":"電動輪椅配件-新車內建鋰系電池","cap":6000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"21","g":"行動與移位","n":"電動輪椅配件-控制器操作位置調整","cap":5000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"22","g":"行動與移位","n":"電動輪椅或代步車電池（非鋰系，50 安培小時以上）","cap":5000,"y":2.0,"ev":"-","f":0},{"s":"D","c":"23","g":"行動與移位","n":"電動輪椅或代步車電池（非鋰系，50 安培小時以下）","cap":3000,"y":2.0,"ev":"-","f":0},{"s":"D","c":"24","g":"行動與移位","n":"電動輪椅或代步車電池（鋰系，20 安培小時或 480 瓦特小時以上）","cap":12000,"y":4.0,"ev":"-","f":0},{"s":"D","c":"25","g":"行動與移位","n":"電動輪椅或代步車電池（鋰系，20 安培小時或 480 瓦特小時以下）","cap":8000,"y":4.0,"ev":"-","f":0},{"s":"D","c":"26","g":"行動與移位","n":"擺位系統-平面型輪椅背靠","cap":1000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"27","g":"行動與移位","n":"擺位系統-曲面適形輪椅背靠","cap":13000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"28","g":"行動與移位","n":"擺位系統-輪椅擺位架","cap":1500,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"29","g":"行動與移位","n":"擺位系統-輪椅頭靠系統","cap":2500,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"30","g":"行動與移位","n":"電動代步車","cap":25000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"31","g":"行動與移位","n":"行動輔具附加功能-搭配機動車輛使用之衝擊測試","cap":3000,"y":0.0,"ev":"-","f":0},{"s":"D","c":"32","g":"行動與移位","n":"特製機車-加裝輔助後輪特製車","cap":65000,"y":6.0,"ev":"-","f":0},{"s":"D","c":"33","g":"行動與移位","n":"特製機車-加裝差速器套件及輔助後輪特製車","cap":78000,"y":6.0,"ev":"-","f":0},{"s":"D","c":"34","g":"行動與移位","n":"特製機車-改裝輪椅直上式特製車","cap":80000,"y":6.0,"ev":"-","f":0},{"s":"D","c":"35","g":"行動與移位","n":"三輪機車","cap":65000,"y":6.0,"ev":"-","f":0},{"s":"D","c":"36","g":"行動與移位","n":"機車改裝-裝設輔助後輪","cap":15000,"y":6.0,"ev":"-","f":0},{"s":"D","c":"37","g":"行動與移位","n":"機車改裝-裝設差速器套件及輔助後輪","cap":28000,"y":6.0,"ev":"-","f":0},{"s":"D","c":"38","g":"行動與移位","n":"機車改裝-裝設輪椅直上裝置","cap":30000,"y":6.0,"ev":"-","f":0},{"s":"D","c":"39","g":"行動與移位","n":"機車改裝-油門或煞車改裝","cap":6000,"y":6.0,"ev":"-","f":0},{"s":"D","c":"40","g":"行動與移位","n":"特製機車改裝-裝設倒退輔助器","cap":8000,"y":6.0,"ev":"-","f":0},{"s":"D","c":"41","g":"行動與移位","n":"汽車改裝-油門或煞車連桿","cap":15000,"y":6.0,"ev":"-","f":0},{"s":"D","c":"42","g":"行動與移位","n":"單支拐杖-量產型","cap":500,"y":3.0,"ev":"-","f":0},{"s":"D","c":"43","g":"行動與移位","n":"單支拐杖-客製型","cap":1500,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"44","g":"行動與移位","n":"助行器-一般型","cap":800,"y":3.0,"ev":"-","f":0},{"s":"D","c":"45","g":"行動與移位","n":"助行器-輪管型或助起型（R型）","cap":1200,"y":3.0,"ev":"-","f":0},{"s":"D","c":"46","g":"行動與移位","n":"帶輪型助步車（助行椅）","cap":3000,"y":3.0,"ev":"甲類","f":0},{"s":"D","c":"47","g":"行動與移位","n":"姿勢控制型助行器","cap":8000,"y":3.0,"ev":"甲類","f":0},{"s":"D","c":"48","g":"行動與移位","n":"軀幹支撐型步態訓練器","cap":18000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"49","g":"行動與移位","n":"移位腰帶","cap":1500,"y":3.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"50","g":"行動與移位","n":"移位轉盤","cap":2000,"y":3.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"51","g":"行動與移位","n":"移位板","cap":2000,"y":5.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"52","g":"行動與移位","n":"人力移位吊帶","cap":4000,"y":3.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"53","g":"行動與移位","n":"移位滑布","cap":1000,"y":5.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"54","g":"行動與移位","n":"躺式移位滑墊","cap":6000,"y":5.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"55","g":"行動與移位","n":"移位機-人力型","cap":30000,"y":10.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"56","g":"行動與移位","n":"移位機-電動型","cap":60000,"y":10.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"57","g":"行動與移位","n":"移位機吊帶","cap":6000,"y":3.0,"ev":"-","f":0},{"s":"D","c":"58","g":"行動與移位","n":"視障用白手杖或杖頭","cap":700,"y":2.0,"ev":"-","f":0},{"s":"D","c":"59","g":"視覺","n":"收錄音機或隨身聽","cap":1000,"y":3.0,"ev":"-","f":0},{"s":"D","c":"60","g":"視覺","n":"聽書機","cap":3500,"y":5.0,"ev":"-","f":0},{"s":"D","c":"61","g":"視覺","n":"視障用點字手錶","cap":3000,"y":3.0,"ev":"-","f":0},{"s":"D","c":"62","g":"視覺","n":"視障用語音報時器","cap":300,"y":3.0,"ev":"-","f":0},{"s":"D","c":"63","g":"視覺","n":"特製眼鏡（含特製隱形眼鏡）","cap":6000,"y":3.0,"ev":"戊類","f":0},{"s":"D","c":"64","g":"視覺","n":"角膜疾病類隱形眼鏡","cap":10000,"y":3.0,"ev":"醫師診斷","f":0},{"s":"D","c":"65","g":"視覺","n":"包覆式濾光眼鏡","cap":4000,"y":2.0,"ev":"甲類、丁類或戊類","f":0},{"s":"D","c":"66","g":"視覺","n":"望遠鏡","cap":3000,"y":4.0,"ev":"甲類、丁類或戊類","f":0},{"s":"D","c":"67","g":"視覺","n":"放大鏡-低倍率","cap":400,"y":3.0,"ev":"-","f":0},{"s":"D","c":"68","g":"視覺","n":"放大鏡-高倍率","cap":2500,"y":3.0,"ev":"甲類、丁類或戊類","f":0},{"s":"D","c":"69","g":"視覺","n":"點字板","cap":1000,"y":10.0,"ev":"-","f":0},{"s":"D","c":"70","g":"視覺","n":"點字機（打字機）","cap":32000,"y":7.0,"ev":"甲類、丁類或戊類","f":0},{"s":"D","c":"71","g":"視覺","n":"點字觸摸顯示器-20 方以下","cap":50000,"y":4.0,"ev":"甲類、丁類或戊類","f":0},{"s":"D","c":"72","g":"視覺","n":"點字觸摸顯示器-20 方以上","cap":70000,"y":4.0,"ev":"甲類、丁類或戊類","f":0},{"s":"D","c":"73","g":"視覺","n":"可攜式擴視機","cap":40000,"y":4.0,"ev":"甲類、丁類或戊類","f":0},{"s":"D","c":"74","g":"視覺","n":"桌上型擴視機","cap":75000,"y":6.0,"ev":"甲類、丁類或戊類","f":0},{"s":"D","c":"75","g":"視覺","n":"視障用螢幕報讀軟體","cap":12000,"y":4.0,"ev":"甲類、丁類或戊類","f":0},{"s":"D","c":"76","g":"視覺","n":"視障用螢幕放大軟體","cap":18000,"y":4.0,"ev":"甲類、丁類或戊類","f":0},{"s":"D","c":"77","g":"視覺","n":"語音手機-簡易型","cap":2000,"y":3.0,"ev":"-","f":0},{"s":"D","c":"78","g":"視覺","n":"語音手機-智慧型或平板","cap":8000,"y":3.0,"ev":"甲類、丁類或戊類","f":0},{"s":"D","c":"79","g":"聽覺","n":"傳真機","cap":4000,"y":3.0,"ev":"-","f":0},{"s":"D","c":"80","g":"聽覺","n":"行動手機-簡易型","cap":2000,"y":3.0,"ev":"-","f":0},{"s":"D","c":"81","g":"聽覺","n":"行動手機-具雙向即時影像傳輸功能型","cap":8000,"y":3.0,"ev":"甲、乙、丙或丁類","f":0},{"s":"D","c":"82","g":"聽覺","n":"助聽器-簡易型","cap":2000,"y":4.0,"ev":"丙類","f":0},{"s":"D","c":"83","g":"聽覺","n":"助聽器-中階型","cap":10000,"y":4.0,"ev":"丙類","f":0},{"s":"D","c":"84","g":"聽覺","n":"助聽器-進階型","cap":20000,"y":4.0,"ev":"丙類","f":0},{"s":"D","c":"85","g":"聽覺","n":"助聽器-雙對側傳聲型","cap":30000,"y":4.0,"ev":"丙類","f":0},{"s":"D","c":"86","g":"聽覺","n":"電話擴音器","cap":2000,"y":5.0,"ev":"-","f":0},{"s":"D","c":"87","g":"警示與定位","n":"電話閃光震動器","cap":2000,"y":5.0,"ev":"-","f":0},{"s":"D","c":"88","g":"警示與定位","n":"門鈴閃光器","cap":2000,"y":5.0,"ev":"-","f":0},{"s":"D","c":"89","g":"警示與定位","n":"無線震動警示器","cap":2000,"y":5.0,"ev":"-","f":0},{"s":"D","c":"90","g":"警示與定位","n":"火警閃光警示器","cap":2000,"y":5.0,"ev":"-","f":0},{"s":"D","c":"91","g":"警示與定位","n":"個人衛星定位器","cap":9000,"y":2.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"92","g":"溝通與電腦","n":"人工講話器-氣動式","cap":2000,"y":1.0,"ev":"-","f":1},{"s":"D","c":"93","g":"溝通與電腦","n":"人工講話器-電動式","cap":20000,"y":5.0,"ev":"乙類","f":1},{"s":"D","c":"94","g":"溝通與電腦","n":"溝通輔具-無語音輸出之圖卡或設備","cap":5000,"y":4.0,"ev":"乙類","f":0},{"s":"D","c":"95","g":"溝通與電腦","n":"溝通輔具-低階固定版面型語音溝通器","cap":7000,"y":4.0,"ev":"乙類","f":0},{"s":"D","c":"96","g":"溝通與電腦","n":"溝通輔具-高階固定版面型語音溝通器","cap":10000,"y":4.0,"ev":"乙類","f":0},{"s":"D","c":"97","g":"溝通與電腦","n":"溝通輔具-具掃描功能固定版面型語音溝通器","cap":20000,"y":4.0,"ev":"乙類","f":0},{"s":"D","c":"98","g":"溝通與電腦","n":"溝通輔具-電腦使用語音溝通軟體","cap":20000,"y":4.0,"ev":"乙類","f":0},{"s":"D","c":"99","g":"溝通與電腦","n":"溝通輔具-平板使用語音溝通軟體","cap":10000,"y":4.0,"ev":"乙類","f":0},{"s":"D","c":"100","g":"溝通與電腦","n":"溝通輔具-動態版面型語音溝通器","cap":20000,"y":4.0,"ev":"乙類","f":0},{"s":"D","c":"101","g":"溝通與電腦","n":"溝通或電腦輔具用特殊開關","cap":3000,"y":5.0,"ev":"甲、乙或丁類","f":0},{"s":"D","c":"102","g":"溝通與電腦","n":"電腦輔具-滑鼠鍵盤模擬器","cap":3000,"y":5.0,"ev":"甲、乙或丁類","f":0},{"s":"D","c":"103","g":"溝通與電腦","n":"電腦輔具-替代性滑鼠或鍵盤介面","cap":8000,"y":5.0,"ev":"甲、乙或丁類","f":0},{"s":"D","c":"104","g":"溝通與電腦","n":"電腦輔具-嘴控滑鼠","cap":30000,"y":5.0,"ev":"甲、乙或丁類","f":0},{"s":"D","c":"105","g":"溝通與電腦","n":"電腦輔具-紅外線貼片感應滑鼠","cap":35000,"y":5.0,"ev":"甲、乙或丁類","f":0},{"s":"D","c":"106","g":"溝通與電腦","n":"電腦輔具-陀螺儀動作感應滑鼠","cap":35000,"y":5.0,"ev":"甲、乙或丁類","f":0},{"s":"D","c":"107","g":"溝通與電腦","n":"電腦輔具-眼控滑鼠","cap":70000,"y":5.0,"ev":"甲、乙或丁類","f":0},{"s":"D","c":"108","g":"溝通與電腦","n":"溝通或電腦輔具用支撐固定器","cap":5000,"y":5.0,"ev":"甲、乙或丁類","f":0},{"s":"D","c":"109","g":"生活量測","n":"語音血壓計","cap":2000,"y":3.0,"ev":"-","f":0},{"s":"D","c":"110","g":"站立訓練","n":"直立式站立架","cap":15000,"y":5.0,"ev":"甲類","f":1},{"s":"D","c":"111","g":"站立訓練","n":"前趴式站立架","cap":18000,"y":5.0,"ev":"甲類","f":1},{"s":"D","c":"112","g":"站立訓練","n":"後仰式站立架或傾斜床-手動調整型","cap":20000,"y":5.0,"ev":"甲類","f":1},{"s":"D","c":"113","g":"站立訓練","n":"後仰式站立架或傾斜床-電動調整型","cap":25000,"y":5.0,"ev":"甲類","f":1},{"s":"D","c":"114","g":"預防壓瘡","n":"連通管氣囊輪椅座墊-基礎型","cap":5000,"y":2.0,"ev":"甲類","f":1},{"s":"D","c":"115","g":"預防壓瘡","n":"連通管氣囊輪椅座墊-橡膠材質基礎型","cap":8000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"116","g":"預防壓瘡","n":"連通管氣囊輪椅座墊-橡膠材質分區型","cap":11000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"117","g":"預防壓瘡","n":"液態凝膠輪椅座墊","cap":8000,"y":2.0,"ev":"甲類","f":1},{"s":"D","c":"118","g":"預防壓瘡","n":"固態凝膠輪椅座墊","cap":8000,"y":5.0,"ev":"甲類","f":1},{"s":"D","c":"119","g":"預防壓瘡","n":"填充式氣囊輪椅座墊","cap":10000,"y":5.0,"ev":"甲類","f":1},{"s":"D","c":"120","g":"預防壓瘡","n":"客製化適形泡棉輪椅座墊","cap":8000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"121","g":"預防壓瘡","n":"氣墊床-基礎型","cap":10000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"122","g":"預防壓瘡","n":"氣墊床-進階型","cap":14000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"123","g":"照顧床與家具","n":"居家用照顧床","cap":9000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"124","g":"照顧床與家具","n":"照顧床附加功能-床板靠背段及腿段獨立抬升（電動）","cap":3000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"125","g":"照顧床與家具","n":"照顧床附加功能-床板高度調整（手動）","cap":4000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"126","g":"照顧床與家具","n":"照顧床附加功能-床板高度調整（電動）","cap":6000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"127","g":"照顧床與家具","n":"照顧床附加功能-床板高度調整（高升降行程電動）","cap":9000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"128","g":"照顧床與家具","n":"擺位椅-基礎型","cap":4000,"y":3.0,"ev":"甲類","f":0},{"s":"D","c":"129","g":"照顧床與家具","n":"擺位椅-調整型","cap":8000,"y":3.0,"ev":"甲類","f":0},{"s":"D","c":"130","g":"照顧床與家具","n":"擺位椅-進階調整型","cap":15000,"y":5.0,"ev":"甲類","f":0},{"s":"D","c":"131","g":"照顧床與家具","n":"升降桌","cap":6000,"y":5.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"132","g":"居家無障礙","n":"居家無障礙輔具-爬梯機","cap":80000,"y":10.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"133","g":"居家無障礙","n":"居家無障礙修繕-軌道式樓梯升降機","cap":80000,"y":10.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"134","g":"居家無障礙","n":"居家無障礙修繕-固定式動力垂直升降平台","cap":80000,"y":10.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"135","g":"居家無障礙","n":"居家無障礙修繕-門簡易型（單處）","cap":7000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"136","g":"居家無障礙","n":"居家無障礙修繕-門進階型（單處）","cap":10000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"137","g":"居家無障礙","n":"居家無障礙修繕-固定式扶手（每 10 公分）","cap":160,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"138","g":"居家無障礙","n":"居家無障礙修繕-可動式扶手（單支）","cap":3600,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"139","g":"居家無障礙","n":"居家無障礙修繕-截水槽（單處）","cap":6000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"140","g":"居家無障礙","n":"居家無障礙修繕-改善高低差 10 公分以下（單處）","cap":3500,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"141","g":"居家無障礙","n":"居家無障礙修繕-改善高低差 20 公分以下（單處）","cap":5000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"142","g":"居家無障礙","n":"居家無障礙修繕-改善高低差 30 公分以下（單處）","cap":7000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"143","g":"居家無障礙","n":"居家無障礙修繕-改善高低差超過 30 公分（單處）","cap":10000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"144","g":"居家無障礙","n":"居家無障礙修繕-水龍頭（單處，新增或改換）","cap":3000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"145","g":"居家無障礙","n":"居家無障礙修繕-防滑地磚（單處）","cap":6000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"146","g":"居家無障礙","n":"居家無障礙修繕-改善浴缸（單處）","cap":7000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"147","g":"居家無障礙","n":"居家無障礙修繕-改善洗臉台（單處）","cap":3000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"148","g":"居家無障礙","n":"居家無障礙修繕-改善馬桶（單處）","cap":5000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"149","g":"居家無障礙","n":"居家無障礙修繕-馬桶背靠（單處）","cap":2000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"150","g":"居家無障礙","n":"居家無障礙修繕-改善流理台（單處）","cap":15000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"151","g":"居家無障礙","n":"居家無障礙修繕-改善抽油煙機位置（單處）","cap":1000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"152","g":"居家無障礙","n":"居家無障礙修繕-隔間（每平方公尺，新增）","cap":800,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"153","g":"居家無障礙","n":"居家無障礙修繕-壁掛式淋浴台（單處）","cap":5000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"154","g":"居家無障礙","n":"居家無障礙輔具-門檻斜角（單側）","cap":1000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"155","g":"居家無障礙","n":"居家無障礙輔具-非固定式斜坡板（未達 90 公分）","cap":3500,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"156","g":"居家無障礙","n":"居家無障礙輔具-非固定式斜坡板（90 公分以上）","cap":5000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"157","g":"居家無障礙","n":"居家無障礙輔具-非固定式斜坡板（120 公分以上）","cap":7000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"158","g":"居家無障礙","n":"居家無障礙輔具-非固定式斜坡板（150 公分以上）","cap":10000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"159","g":"居家無障礙","n":"居家無障礙輔具-防滑措施（單處）","cap":2000,"y":3.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"160","g":"居家無障礙","n":"居家無障礙輔具-反光貼條或消光處理（單處）","cap":2000,"y":3.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"161","g":"居家無障礙","n":"居家無障礙輔具-馬桶扶手（單處）","cap":900,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"162","g":"居家無障礙","n":"居家無障礙輔具-床邊扶手（單處）","cap":1000,"y":10.0,"ev":"甲、丁或戊類","f":0},{"s":"D","c":"163","g":"居家無障礙","n":"移動式身體清洗槽-局部型","cap":1200,"y":3.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"164","g":"居家無障礙","n":"移動式身體清洗槽-全身型","cap":5000,"y":3.0,"ev":"甲類或丁類","f":0},{"s":"D","c":"165","g":"衛浴與照顧","n":"頭護具","cap":600,"y":2.0,"ev":"-","f":0},{"s":"D","c":"166","g":"衛浴與照顧","n":"馬桶增高器","cap":800,"y":3.0,"ev":"-","f":0},{"s":"D","c":"167","g":"衛浴與照顧","n":"沐浴椅（一般型）","cap":900,"y":3.0,"ev":"-","f":0},{"s":"D","c":"168","g":"衛浴與照顧","n":"便盆椅（一般型）","cap":1200,"y":3.0,"ev":"-","f":0},{"s":"D","c":"169","g":"衛浴與照顧","n":"沐浴椅或便盆椅附加功能-附輪","cap":1000,"y":3.0,"ev":"-","f":0},{"s":"D","c":"170","g":"衛浴與照顧","n":"沐浴椅或便盆椅附加功能-具利於移位之扶手","cap":1000,"y":3.0,"ev":"甲類","f":0},{"s":"D","c":"171","g":"衛浴與照顧","n":"沐浴椅或便盆椅附加功能-具仰躺功能","cap":1500,"y":3.0,"ev":"甲類","f":0},{"s":"D","c":"172","g":"衛浴與照顧","n":"沐浴椅或便盆椅附加功能-具空中傾倒功能","cap":3500,"y":3.0,"ev":"甲類","f":0},{"s":"D","c":"173","g":"衛浴與照顧","n":"語音體溫計","cap":1800,"y":3.0,"ev":"-","f":0},{"s":"D","c":"174","g":"衛浴與照顧","n":"語音體重計","cap":1000,"y":3.0,"ev":"-","f":0},{"s":"D","c":"175","g":"生活用品","n":"衣著用輔具","cap":500,"y":3.0,"ev":"-","f":0},{"s":"D","c":"176","g":"生活用品","n":"飲食用輔具","cap":500,"y":3.0,"ev":"-","f":0},{"s":"D","c":"177","g":"生活用品","n":"居家用輔具","cap":500,"y":3.0,"ev":"-","f":0},{"s":"D","c":"178","g":"生活用品","n":"物品裝置與處理輔具","cap":500,"y":3.0,"ev":"-","f":0},{"s":"D","c":"179","g":"生活用品","n":"藥品處理輔具","cap":500,"y":3.0,"ev":"-","f":0},{"s":"D","c":"180","g":"義肢","n":"部分手義肢","cap":10000,"y":2.0,"ev":"甲類","f":1},{"s":"D","c":"181","g":"義肢","n":"腕離斷義肢-美觀型","cap":14000,"y":4.0,"ev":"甲類","f":1},{"s":"D","c":"182","g":"義肢","n":"腕離斷義肢-功能型","cap":42000,"y":4.0,"ev":"甲類","f":1},{"s":"D","c":"183","g":"義肢","n":"肘下義肢-美觀型","cap":35000,"y":4.0,"ev":"甲類","f":1},{"s":"D","c":"184","g":"義肢","n":"肘下義肢-功能型","cap":45000,"y":4.0,"ev":"甲類","f":1},{"s":"D","c":"185","g":"義肢","n":"肘離斷義肢-美觀型","cap":55000,"y":4.0,"ev":"甲類","f":1},{"s":"D","c":"186","g":"義肢","n":"肘離斷義肢-功能型","cap":65000,"y":4.0,"ev":"甲類","f":1},{"s":"D","c":"187","g":"義肢","n":"肘上義肢-美觀型","cap":55000,"y":4.0,"ev":"甲類","f":1},{"s":"D","c":"188","g":"義肢","n":"肘上義肢-功能型","cap":65000,"y":4.0,"ev":"甲類","f":1},{"s":"D","c":"189","g":"義肢","n":"肩離斷義肢-美觀型","cap":65000,"y":4.0,"ev":"甲類","f":1},{"s":"D","c":"190","g":"義肢","n":"肩離斷義肢-功能型","cap":75000,"y":4.0,"ev":"甲類","f":1},{"s":"D","c":"191","g":"義肢","n":"肩胛骨離斷義肢","cap":70000,"y":4.0,"ev":"甲類","f":1},{"s":"D","c":"192","g":"義肢","n":"部分足義肢-基礎型","cap":7000,"y":2.0,"ev":"甲類","f":1},{"s":"D","c":"193","g":"義肢","n":"部分足義肢-功能型","cap":15000,"y":2.0,"ev":"甲類","f":1},{"s":"D","c":"194","g":"義肢","n":"踝離斷義肢","cap":40000,"y":6.0,"ev":"甲類","f":1},{"s":"D","c":"195","g":"義肢","n":"膝下義肢","cap":40000,"y":6.0,"ev":"甲類","f":1},{"s":"D","c":"196","g":"義肢","n":"膝離斷義肢","cap":60000,"y":7.0,"ev":"甲類","f":1},{"s":"D","c":"197","g":"義肢","n":"膝上義肢","cap":60000,"y":7.0,"ev":"甲類","f":1},{"s":"D","c":"198","g":"義肢","n":"髖離斷義肢","cap":70000,"y":7.0,"ev":"甲類","f":1},{"s":"D","c":"199","g":"義肢","n":"半骨盆切除義肢","cap":70000,"y":7.0,"ev":"甲類","f":1},{"s":"D","c":"200","g":"義肢","n":"義肢組件更換-義肢手套","cap":8000,"y":2.0,"ev":"-","f":1},{"s":"D","c":"201","g":"義肢","n":"義肢組件更換-手部裝置","cap":10000,"y":2.0,"ev":"-","f":1},{"s":"D","c":"202","g":"義肢","n":"義肢組件更換-義肢腳套","cap":4500,"y":2.0,"ev":"-","f":1},{"s":"D","c":"203","g":"義肢","n":"義肢組件更換-義肢腳掌組（基礎型）","cap":4500,"y":2.0,"ev":"-","f":1},{"s":"D","c":"204","g":"義肢","n":"義肢組件更換-義肢腳掌組（進階型）","cap":8000,"y":2.0,"ev":"-","f":1},{"s":"D","c":"205","g":"義肢","n":"義肢組件更換-膝關節","cap":15000,"y":3.0,"ev":"-","f":1},{"s":"D","c":"206","g":"義肢","n":"義肢組件更換-髖關節","cap":10000,"y":3.0,"ev":"-","f":1},{"s":"D","c":"207","g":"義肢","n":"義肢組件更換-踝離斷或膝下義肢承筒或凝膠軟套","cap":10000,"y":2.0,"ev":"-","f":1},{"s":"D","c":"208","g":"義肢","n":"義肢組件更換-膝離斷或膝上義肢承筒或凝膠軟套","cap":15000,"y":2.0,"ev":"-","f":1},{"s":"D","c":"209","g":"義肢","n":"義肢組件更換-髖離斷或半骨盆切除義肢承筒","cap":15000,"y":2.0,"ev":"-","f":1},{"s":"D","c":"210","g":"義肢","n":"義肢組件更換-踝離斷或膝下義肢美觀泡棉","cap":4000,"y":2.0,"ev":"-","f":1},{"s":"D","c":"211","g":"義肢","n":"義肢組件更換-膝離斷或膝上義肢美觀泡棉","cap":6000,"y":2.0,"ev":"-","f":1},{"s":"D","c":"212","g":"義肢","n":"義肢組件更換-髖離斷或半骨盆切除義肢美觀泡棉","cap":6000,"y":2.0,"ev":"-","f":1},{"s":"D","c":"213","g":"矯具與特製鞋","n":"踝足矯具-踝上矯具型","cap":3000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"214","g":"矯具與特製鞋","n":"踝足矯具-固定型或金屬支架型","cap":3500,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"215","g":"矯具與特製鞋","n":"踝足矯具-關節型","cap":4000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"216","g":"矯具與特製鞋","n":"膝踝足矯具","cap":10000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"217","g":"矯具與特製鞋","n":"髖膝踝足矯具","cap":12000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"218","g":"矯具與特製鞋","n":"下肢矯具配件-鞋具（托足鞋型）","cap":1500,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"219","g":"矯具與特製鞋","n":"下肢矯具配件-鞋具（皮鞋型）","cap":4000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"220","g":"矯具與特製鞋","n":"肘矯具","cap":1000,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"221","g":"矯具與特製鞋","n":"膝矯具","cap":1500,"y":3.0,"ev":"甲類","f":1},{"s":"D","c":"222","g":"矯具與特製鞋","n":"髖矯具","cap":6000,"y":5.0,"ev":"甲類","f":1},{"s":"D","c":"223","g":"矯具與特製鞋","n":"脊柱矯具-支持性背架（基礎型）","cap":4000,"y":5.0,"ev":"甲類","f":1},{"s":"D","c":"224","g":"矯具與特製鞋","n":"脊柱矯具-支持性背架（量身訂製型）","cap":10000,"y":5.0,"ev":"甲類","f":1},{"s":"D","c":"225","g":"矯具與特製鞋","n":"脊柱矯具-脊柱側彎矯正背架","cap":15000,"y":5.0,"ev":"甲類","f":1},{"s":"D","c":"226","g":"矯具與特製鞋","n":"量身訂製特製鞋-楦頭修改（單腳）","cap":5000,"y":2.0,"ev":"甲類","f":0},{"s":"D","c":"227","g":"矯具與特製鞋","n":"量身訂製特製鞋-楦頭修改（雙腳）","cap":6000,"y":2.0,"ev":"甲類","f":0},{"s":"D","c":"228","g":"矯具與特製鞋","n":"量身訂製特製鞋-新製開楦（單腳）","cap":12000,"y":2.0,"ev":"甲類","f":0},{"s":"D","c":"229","g":"矯具與特製鞋","n":"量身訂製特製鞋-新製開楦（雙腳）","cap":18000,"y":2.0,"ev":"甲類","f":0},{"s":"D","c":"230","g":"義眼與顏面","n":"透明壓力面膜-不含矽膠內層","cap":16000,"y":1.0,"ev":"醫師診斷","f":0},{"s":"D","c":"231","g":"義眼與顏面","n":"透明壓力面膜-含矽膠內層","cap":18000,"y":1.0,"ev":"醫師診斷","f":0},{"s":"D","c":"232","g":"義眼與顏面","n":"假髮","cap":20000,"y":4.0,"ev":"醫師診斷","f":0},{"s":"D","c":"233","g":"義眼與顏面","n":"義眼","cap":10000,"y":5.0,"ev":"醫師診斷","f":1},{"s":"D","c":"234","g":"義眼與顏面","n":"義鼻","cap":13000,"y":3.0,"ev":"醫師診斷","f":0},{"s":"D","c":"235","g":"義眼與顏面","n":"義耳","cap":16000,"y":3.0,"ev":"醫師診斷","f":0},{"s":"D","c":"236","g":"義眼與顏面","n":"義顎","cap":29000,"y":3.0,"ev":"醫師診斷","f":0},{"s":"D","c":"237","g":"義眼與顏面","n":"混和義臉-人造額片","cap":13000,"y":3.0,"ev":"醫師診斷","f":0},{"s":"D","c":"238","g":"義眼與顏面","n":"混和義臉-人造頰片","cap":13000,"y":3.0,"ev":"醫師診斷","f":0},{"s":"D","c":"239","g":"義眼與顏面","n":"混和義臉-人造眼窩","cap":30000,"y":3.0,"ev":"醫師診斷","f":0},{"s":"D","c":"240","g":"人工電子耳","n":"人工電子耳","cap":600000,"y":-1.0,"ev":"乙類或丙類（專業團隊）","f":0},{"s":"D","c":"241","g":"人工電子耳","n":"人工電子耳語言處理設備更新","cap":200000,"y":10.0,"ev":"-","f":0},{"s":"D","c":"242","g":"人工電子耳","n":"人工電子耳配件","cap":10000,"y":2.0,"ev":"-","f":0},{"s":"M","c":"1","g":"呼吸照護","n":"電動拍痰器","cap":15000,"mid":11300,"gen":7500,"y":3.0,"ev":"診斷"},{"s":"M","c":"2","g":"呼吸照護","n":"非蓄電式抽痰機","cap":5000,"mid":3800,"gen":2500,"y":3.0,"ev":"診斷"},{"s":"M","c":"3","g":"呼吸照護","n":"蓄電式（交直流兩用）抽痰機","cap":10000,"mid":7500,"gen":5000,"y":3.0,"ev":"診斷"},{"s":"M","c":"4","g":"呼吸照護","n":"化痰機（噴霧器）","cap":5000,"mid":3800,"gen":2500,"y":3.0,"ev":"診斷"},{"s":"M","c":"5","g":"呼吸照護","n":"血氧偵測儀（血氧機）","cap":6000,"mid":4500,"gen":3000,"y":3.0,"ev":"診斷"},{"s":"M","c":"6","g":"呼吸照護","n":"氧氣製造機","cap":25000,"mid":18800,"gen":12500,"y":5.0,"ev":"診斷+評估"},{"s":"M","c":"7","g":"呼吸照護","n":"咳嗽（痰）機","cap":120000,"mid":90000,"gen":60000,"y":5.0,"ev":"診斷+評估"},{"s":"M","c":"8","g":"呼吸照護","n":"單相陽壓呼吸器","cap":40000,"mid":30000,"gen":20000,"y":5.0,"ev":"診斷+評估"},{"s":"M","c":"9","g":"呼吸照護","n":"雙相陽壓呼吸器","cap":140000,"mid":105000,"gen":70000,"y":5.0,"ev":"診斷+評估"},{"s":"M","c":"10","g":"呼吸照護","n":"不斷電系統（UPS）","cap":2500,"mid":1900,"gen":1300,"y":3.0,"ev":"診斷"},{"s":"M","c":"11","g":"壓力治療","n":"壓力衣-A款（頭頸）","cap":3000,"mid":2250,"gen":1500,"y":0.5,"ev":"診斷+評估"},{"s":"M","c":"12","g":"壓力治療","n":"壓力衣-B款（肩部、胸部、腹部、背部）","cap":4600,"mid":3450,"gen":2300,"y":0.5,"ev":"診斷+評估"},{"s":"M","c":"13","g":"壓力治療","n":"壓力衣-C款（右上臂、肘、前臂）","cap":1450,"mid":1100,"gen":750,"y":0.5,"ev":"診斷+評估"},{"s":"M","c":"14","g":"壓力治療","n":"壓力衣-D款（右手、腕）","cap":2000,"mid":1500,"gen":1000,"y":0.5,"ev":"診斷+評估"},{"s":"M","c":"15","g":"壓力治療","n":"壓力衣-E款（左上臂、肘、前臂）","cap":1450,"mid":1100,"gen":750,"y":0.5,"ev":"診斷+評估"},{"s":"M","c":"16","g":"壓力治療","n":"壓力衣-F款（左手、腕）","cap":2000,"mid":1500,"gen":1000,"y":0.5,"ev":"診斷+評估"},{"s":"M","c":"17","g":"壓力治療","n":"壓力衣-G款（腰、臀、雙大腿）","cap":3700,"mid":2780,"gen":1850,"y":0.5,"ev":"診斷+評估"},{"s":"M","c":"18","g":"壓力治療","n":"壓力衣-H款（右小腿）","cap":1450,"mid":1100,"gen":750,"y":0.5,"ev":"診斷+評估"},{"s":"M","c":"19","g":"壓力治療","n":"壓力衣-I款（右腳踝、足）","cap":2500,"mid":1900,"gen":1250,"y":0.5,"ev":"診斷+評估"},{"s":"M","c":"20","g":"壓力治療","n":"壓力衣-J款（左小腿）","cap":1450,"mid":1100,"gen":750,"y":0.5,"ev":"診斷+評估"},{"s":"M","c":"21","g":"壓力治療","n":"壓力衣-K款（左腳踝、足）","cap":2500,"mid":1900,"gen":1250,"y":0.5,"ev":"診斷+評估"},{"s":"M","c":"22","g":"壓力治療","n":"矽膠片","cap":9000,"mid":6800,"gen":4500,"y":0.5,"ev":"診斷+評估"},{"s":"M","c":"F1","g":"醫療復健費用","n":"人工電子耳植入手術費用","cap":120000,"mid":90000,"gen":60000,"y":-1.0,"ev":"評估團隊"},{"s":"M","c":"F2","g":"醫療復健費用","n":"開具診斷證明書費用","cap":200,"mid":200,"gen":100,"y":0.0,"ev":"-"},{"s":"M","c":"F3","g":"醫療復健費用","n":"開具醫療輔具評估報告費用","cap":200,"mid":200,"gen":100,"y":0.0,"ev":"-"}];
-/* 輔具總覽 */
 const SYS={L:'長照',D:'身障',M:'醫療輔具'};
-const SYN={'洗澡':['沐浴','浴','淋浴','清洗'],'廁所':['馬桶','便盆'],'上廁所':['馬桶','便盆','排泄'],'大小便':['便盆','排泄','馬桶'],'拐杖':['枴杖','拐杖','手杖'],'枴杖':['拐杖','枴杖'],'電動床':['照顧床'],'病床':['照顧床'],'床':['照顧床','氣墊床','床邊'],'褥瘡':['壓瘡','氣墊','座墊'],'壓瘡':['壓瘡','氣墊','座墊'],'走路':['助行','拐杖','枴杖','步態','助步'],'助行':['助行','助步'],'樓梯':['爬梯','樓梯','升降'],'跌倒':['防滑','扶手','安全看視','反光'],'呼吸':['呼吸','氧氣','抽痰','拍痰','咳嗽','化痰','血氧'],'痰':['痰'],'眼睛':['眼鏡','放大鏡','擴視','點字','視障','望遠鏡','義眼'],'看不清楚':['眼鏡','放大鏡','擴視','視障'],'耳朵':['助聽','電子耳','聽'],'聽不到':['助聽','電子耳','閃光','震動','擴音'],'說話':['溝通','講話'],'代步車':['代步車'],'電動車':['代步車','電動輪椅'],'失智':['定位','安全看視'],'坐墊':['座墊'],'墊子':['座墊','氣墊','滑墊'],'義肢':['義肢'],'假腳':['義肢','足'],'門':['門','門檻','高低差'],'斜坡':['斜坡','高低差','門檻']};
-const norm=s=>s.toLowerCase().replace(/\s+/g,'').replace(/[臺]/g,'台');
+const SYN={'洗澡':['沐浴','浴','淋浴','清洗'],'廁所':['馬桶','便盆'],'上廁所':['馬桶','便盆','排泄'],'大小便':['便盆','排泄','馬桶'],'拐杖':['枴杖','拐杖','手杖'],'枴杖':['拐杖','枴杖'],'電動床':['照顧床'],'病床':['照顧床'],'床':['照顧床','氣墊床','床邊'],'褥瘡':['壓瘡','氣墊','座墊'],'走路':['助行','拐杖','枴杖','步態','助步'],'樓梯':['爬梯','樓梯','升降'],'跌倒':['防滑','扶手','安全看視','反光'],'呼吸':['呼吸','氧氣','抽痰','拍痰','咳嗽','化痰','血氧'],'眼睛':['眼鏡','放大鏡','擴視','點字','視障','望遠鏡','義眼'],'耳朵':['助聽','電子耳','聽'],'聽不到':['助聽','電子耳','閃光','震動','擴音'],'說話':['溝通','講話'],'電動車':['代步車','電動輪椅'],'失智':['定位','安全看視'],'坐墊':['座墊'],'假腳':['義肢','足'],'斜坡':['斜坡','高低差','門檻']};
+const norm=s=>s.toLowerCase().replace(/\s+/g,'').replace(/臺/g,'台');
 for(const o of ALL)o.hay=norm(o.n+o.g+o.c+SYS[o.s]);
 const cnt=k=>ALL.filter(o=>!k||o.s===k).length;
-$('#nAll').textContent=cnt('');['L','D','M'].forEach(k=>$('#n'+k).textContent=cnt(k));
-let shown=24;
-const yrs=y=>y===-1?'終身一次':y===0.5?'用滿 6 個月才能再申請':y>0?`用滿 ${y} 年才能再申請`:'';
-function money(o,inc){
-  if(o.s==='M')return inc==='low'?o.cap:inc==='mid'?o.mid:o.gen;
-  if(o.f)return o.cap;
-  return Math.round(o.cap*(o.s==='L'?LTC[inc]:DIS[inc]));
-}
+$('#nAll').textContent=cnt('');$('#nTotal').textContent=cnt('');['L','D','M'].forEach(k=>$('#n'+k).textContent=cnt(k));
+let shown=12;
+const yrs=y=>y===-1?'終身一次':y===0.5?'6 個月':y>0?`${y} 年`:'';
+const money=(o,inc)=>o.s==='M'?(inc==='low'?o.cap:inc==='mid'?o.mid:o.gen):o.f?o.cap:Math.round(o.cap*(o.s==='L'?LTC[inc]:DIS[inc]));
 function card(o,inc,terms){
-  let nm=esc(o.n);
-  for(const t of terms)if(t)nm=nm.split(t).join(`<mark>${t}</mark>`);
-  const li=[];let amt='';
+  let nm=esc(o.n);for(const t of terms)if(t)nm=nm.split(t).join(`<mark>${t}</mark>`);
+  const facts=[],det=[];let amt;
   if(o.s==='L'){
-    if(o.r===-1)amt='<div class="amt2" style="font-size:18px">租金由合作輔具店訂定</div>';
-    else if(!o.cap)amt=`<div class="amt2">${fmt(Math.round(o.r*(o.f?1:LTC[inc])))}<small>${o.c==='EH04'?'每趟':'每月'}租金政府最多出</small></div>`;
-    else amt=`<div class="amt2">${fmt(money(o,inc))}<small>政府最多出</small></div>`;
-    li.push(o.f?'不分身分全額補助，自己不用出錢':'自己出：一般 30%・中低收 10%・低收不用出');
-    if(o.cap&&o.r>0)li.push(`也可以租，每月租金上限 ${fmt(o.r)}`);
-    if(o.cap)li.push(`品項上限 ${fmt(o.cap)}`);
-    li.push(o.ev?'要先請專業人員評估':'不用先評估');
-    if(o.c.startsWith('EI')||['EA01','EB01','EB02','EB03'].includes(o.c)||o.c.startsWith('FA'))li.push(o.c.startsWith('EI')?'只有第二組可以用':o.c.startsWith('FA')?'第一組、第二組都可以用（第二組無障礙改善最多 2 萬元）':'第一組、第二組都可以用');
+    if(o.r===-1)amt='<div class="amt" style="font-size:19px">租金依店家報價<small>政府依比例補助</small></div>';
+    else if(!o.cap)amt=`<div class="amt">${fmt(Math.round(o.r*(o.f?1:LTC[inc])))}<small>${o.c==='EH04'?'每趟':'每月'}租金政府最多出（${INC[inc]}）</small></div>`;
+    else amt=`<div class="amt">${fmt(money(o,inc))}<small>政府最多出（${INC[inc]}）</small></div>`;
+    facts.push(o.f?'<span class="g">全額補助</span>':`<span>自付 ${Math.round((1-LTC[inc])*100)}%</span>`);
+    if(o.cap)det.push(`品項上限 ${fmt(o.cap)}`);
+    if(o.cap&&o.r>0)det.push(`也可以租，每月上限 ${fmt(o.r)}`);
+    det.push(o.f?'不分身分全額補助':'自己負擔：一般 30%、中低收 10%、低收 0');
+    if(o.c.startsWith('EI'))det.push('只有第二組可以使用');
+    else if(o.c.startsWith('FA'))det.push('第一組、第二組都可使用（第二組無障礙改善最多 2 萬元）');
+    else if(['EA01','EB01','EB02','EB03'].includes(o.c))det.push('第一組、第二組都可使用');
+    facts.push(o.ev?'<span>需評估</span>':'<span>免評估</span>');
   }else if(o.s==='D'){
-    amt=`<div class="amt2">${fmt(money(o,inc))}<small>政府最多出</small></div>`;
-    li.push(o.f?'不分身分全額補助':'政府出：一般 50%・中低收 75%・低收全額');
-    li.push(`品項上限 ${fmt(o.cap)}`);
-    li.push(o.ev==='-'?'不用先評估':o.ev==='醫師診斷'?'要醫師診斷證明':`要先評估（評估人員：${esc(o.ev)}）`);
+    amt=`<div class="amt">${fmt(money(o,inc))}<small>政府最多出（${INC[inc]}）</small></div>`;
+    facts.push(o.f?'<span class="g">全額補助</span>':`<span>補助 ${Math.round(DIS[inc]*100)}%</span>`);
+    facts.push(o.ev==='-'?'<span>免評估</span>':o.ev==='醫師診斷'?'<span>需醫師診斷</span>':'<span>需評估</span>');
+    det.push(`品項上限 ${fmt(o.cap)}`,o.f?'不分身分全額補助':'政府負擔：一般 50%、中低收 75%、低收全額');
+    if(o.ev!=='-'&&o.ev!=='醫師診斷')det.push(`評估人員類別：${esc(o.ev)}`);
   }else{
-    amt=`<div class="amt2">${fmt(money(o,inc))}<small>政府最多出</small></div>`;
-    li.push(`低收 ${fmt(o.cap)}・中低收 ${fmt(o.mid)}・一般 ${fmt(o.gen)}`);
-    li.push(o.ev==='診斷'?'要醫師診斷證明':o.ev==='診斷+評估'?'要醫師診斷證明和醫療輔具評估報告':o.ev==='評估團隊'?'要專業團隊評估':'和醫療輔具一起申請');
-    li.push(o.c.startsWith('F')?'醫療復健費用補助':Number(o.c)<=10?'限居家自我照顧使用・向縣市衛生局申請':'向縣市衛生局申請');
+    amt=`<div class="amt">${fmt(money(o,inc))}<small>政府最多出（${INC[inc]}）</small></div>`;
+    facts.push(o.ev==='診斷'?'<span>需診斷證明</span>':o.ev==='診斷+評估'?'<span>需診斷＋評估</span>':'<span>需評估</span>');
+    det.push(`低收 ${fmt(o.cap)}、中低收 ${fmt(o.mid)}、一般 ${fmt(o.gen)}`,'向縣市衛生局申請');
+    if(!o.c.startsWith('F')&&Number(o.c)<=10)det.push('限居家自我照顧使用');
   }
-  const y=yrs(o.y);if(y)li.push(y);
-  const code=o.s==='L'?`代碼 ${o.c}`:o.s==='D'?`身障基準表項次 ${o.c}`:o.c.startsWith('F')?'醫療復健費用':`醫療輔具第 ${o.c} 項`;
-  return `<article class="it"><div class="top2"><h3>${nm}</h3><span class="sys ${o.s}">${SYS[o.s]}</span></div>${amt}<ul>${li.map(x=>`<li>${x}</li>`).join('')}</ul><span class="meta">${esc(o.g)}・${code}</span></article>`;
+  const y=yrs(o.y);if(y)facts.push(`<span>${y}</span>`);
+  if(y&&o.y!==-1)det.push(`用滿 ${y} 才能再申請`);
+  const code=o.s==='L'?o.c:o.s==='D'?`項次 ${o.c}`:o.c.startsWith('F')?'復健費用':`第 ${o.c} 項`;
+  return `<article class="it"><div class="hd"><span class="sys ${o.s}">${SYS[o.s]}</span><span class="code">${esc(o.g)}・${code}</span></div><h3>${nm}</h3>${amt}<div class="facts">${facts.join('')}</div><details><summary>詳細說明</summary><ul>${det.map(x=>`<li>${x}</li>`).join('')}</ul></details></article>`;
 }
 function cats(){
   const s=document.querySelector('input[name=sys]:checked').value,cur=$('#cat').value;
@@ -689,29 +707,44 @@ function cats(){
   $('#cat').innerHTML='<option value="">所有分類</option>'+list.map(g=>`<option${g===cur?' selected':''}>${g}</option>`).join('');
 }
 function find(reset){
-  if(reset)shown=24;
+  if(reset)shown=12;
   const raw=$('#q').value.trim(),s=document.querySelector('input[name=sys]:checked').value,g=$('#cat').value,inc=$('#inc4').value;
   $('#qClear').hidden=!raw;
-  const words=raw.split(/\s+/).filter(Boolean);
-  const groups=words.map(w=>{const n=norm(w);return [n,...(SYN[w]||SYN[n]||[]).map(norm)]});
-  const res=ALL.filter(o=>(!s||o.s===s)&&(!g||o.g===g)&&groups.every(alts=>alts.some(a=>o.hay.includes(a))));
+  const words=raw.split(/\s+/).filter(Boolean),groups=words.map(w=>[norm(w),...(SYN[w]||[]).map(norm)]);
+  const res=ALL.filter(o=>(!s||o.s===s)&&(!g||o.g===g)&&groups.every(a=>a.some(x=>o.hay.includes(x))));
   const terms=[...new Set(words.concat(...words.map(w=>SYN[w]||[])))].map(esc).sort((a,b)=>b.length-a.length);
-  $('#cnt').textContent=res.length?`找到 ${res.length} 項${raw?`「${raw}」相關`:''}輔具`:'';
-  if(!res.length){$('#items').innerHTML=`<div class="empty" style="grid-column:1/-1">找不到「${esc(raw)}」　換個說法試試，例如「洗澡」「走路」「呼吸」，或直接打 1966 問</div>`;$('#more').hidden=true;return}
+  $('#cnt').textContent=res.length?`找到 ${res.length} 項${raw?`「${raw}」相關的`:''}輔具`:'';
+  if(!res.length){$('#items').innerHTML=`<div class="empty" style="grid-column:1/-1">找不到「${esc(raw)}」　試試「洗澡」「走路」「呼吸」，或撥 1966 詢問</div>`;$('#more').hidden=true;return}
   $('#items').innerHTML=res.slice(0,shown).map(o=>card(o,inc,terms)).join('');
-  $('#more').hidden=res.length<=shown;$('#more').textContent=`再顯示更多（還有 ${res.length-shown} 項）`;
+  $('#more').hidden=res.length<=shown;$('#more').textContent=`再顯示 12 項（還有 ${res.length-shown} 項）`;
 }
 let qt;$('#q').addEventListener('input',()=>{clearTimeout(qt);qt=setTimeout(()=>find(true),150)});
 $('#qClear').addEventListener('click',()=>{$('#q').value='';find(true);$('#q').focus()});
-document.querySelectorAll('input[name=sys]').forEach(r=>r.addEventListener('change',()=>{cats();find(true)}));
+$$('input[name=sys]').forEach(r=>r.addEventListener('change',()=>{cats();find(true)}));
 $('#cat').addEventListener('change',()=>find(true));$('#inc4').addEventListener('change',()=>find(false));
-$('#more').addEventListener('click',()=>{shown+=24;find(false)});
-document.querySelectorAll('.hint button').forEach(b=>b.addEventListener('click',()=>{$('#q').value=b.textContent;find(true)}));
-$('#toSearch').addEventListener('click',()=>setTimeout(()=>$('#q').focus({preventScroll:true}),400));
-const tbh=()=>R.style.setProperty('--tbh',($('.tools').offsetHeight||62)+'px');tbh();addEventListener('resize',tbh);
-cats();find(true);
+$('#more').addEventListener('click',()=>{shown+=12;find(false)});
+$$('.hint .chip').forEach(b=>b.addEventListener('click',()=>{$('#q').value=b.textContent;find(true)}));
+$('#toSearch').addEventListener('click',()=>setTimeout(()=>$('#q').focus({preventScroll:true}),500));
 
-/* 縣市輔具中心 */
+/* 長照 3.0 */
+$$('input[name=v3t]').forEach(r=>r.addEventListener('change',()=>{const v=document.querySelector('input[name=v3t]:checked').value;$('#pickPane').hidden=v!=='pick';$('#rentPane').hidden=v!=='rent'}));
+function pick(){
+  const v=$$('input[name=pk]:checked').map(x=>x.value),a=v.filter(x=>x==='1').length,b=v.filter(x=>x==='2').length;
+  if(!v.length){$('#pickOut').innerHTML='<div class="empty">勾選符合的情況，這裡會給你一個參考方向</div>';return}
+  const [k,t]=b>a?['可以優先考慮第二組','你在意安全看顧和彈性，智慧輔具的偵測通報與換租功能比較貼近']:a>b?['可以優先考慮第一組','你需要長期使用的輔具或較多居家改裝，傳統輔具品項較齊全']:['兩組都值得比較','把需求列出來，請評估人員一起比較'];
+  $('#pickOut').innerHTML=`<div class="verdict"><span class="tag" style="background:var(--ok);color:var(--bg)">參考方向</span><h3>${k}</h3><p>${t}</p><p class="note" style="margin:0">實際選擇請與照管專員、輔具評估人員討論後決定</p></div>`;
+}
+$('#pickForm').addEventListener('change',pick);
+function rent(){
+  const r=+$('#rent').value,m=Math.min(20000,Math.max(0,+$('#mod').value||0)),inc=$('#inc3').value;
+  if(!(r>0)){$('#rentBig').textContent='—';$('#rentSub').textContent='先輸入輔具店的每月租金報價';return}
+  const self=Math.round(r*(1-LTC[inc])),left=60000-m,mon=Math.min(36,Math.floor(left/r));
+  $('#rentBig').textContent=fmt(self);pulse($('#rentBig'));
+  $('#rentSub').innerHTML=`政府每月約出 ${fmt(r-self)}　扣掉無障礙改善 ${fmt(m)}，額度約可租 <strong style="white-space:nowrap">${mon} 個月</strong>${mon<36?'（不足 3 年，請與評估人員討論）':''}`;
+}
+['rent','mod'].forEach(id=>$('#'+id).addEventListener('input',rent));$('#inc3').addEventListener('change',rent);
+
+/* 縣市 */
 const CENTERS={
  '臺北市':[['臺北市西區輔具資源中心','02-2523-7902','臺北市中山區長安西路 5 巷 2 號 2 樓','中正、萬華、大安、松山'],['臺北市南區輔具資源中心','02-2720-7364','臺北市信義區信義路 5 段 150 巷 316 號 7 樓','文山、信義、內湖、南港'],['臺北市合宜輔具資源中心','02-7713-7760','臺北市中山區玉門街 1 號','大同、士林、中山、北投']],
  '新北市':[['新北市輔具資源中心','02-8286-7045','新北市蘆洲區集賢路 245 號 9 樓']],
@@ -742,14 +775,17 @@ function city(){
   if(!c){$('#centers').innerHTML='<div class="empty" style="grid-column:1/-1">選好縣市後，這裡會顯示當地輔具中心</div>';return}
   $('#centers').innerHTML=CENTERS[c].map(([n,tel,addr,area])=>{
     const dial=tel.split(' ')[0].replace(/-/g,'')+(tel.includes('分機')?','+tel.split('分機')[1].trim().split('-')[0]:'');
-    return `<article class="ctr"><h3>${n}</h3>${area?`<p><span class="k">服務區域</span>${area}</p>`:''}<p><span class="k">電話</span><span class="tel">${tel}</span></p><p><span class="k">地址</span>${addr}</p>
-    <div class="acts"><a href="tel:${dial}">撥打電話</a><a class="sec" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}" rel="noopener">看地圖</a></div></article>`}).join('')+
-    `<article class="ctr"><h3>${c}的長照申請</h3><p>要申請長照評估、問補助進度，打長照專線</p><p><span class="k">電話</span><span class="tel">1966</span></p><div class="acts"><a href="tel:1966">撥打 1966</a><a class="sec" href="https://newrepat.sfaa.gov.tw/" rel="noopener">輔具資源入口網</a></div></article>`;
+    return `<article class="ctr"><h3>${n}</h3>${area?`<p><span class="k">服務區域</span>${area}</p>`:''}<p><span class="k">電話</span><span class="tel">${tel}</span></p><p><span class="k">地址</span>${addr}</p><div class="acts"><a href="tel:${dial}">撥打電話</a><a class="sec2" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}" rel="noopener">看地圖</a></div></article>`}).join('')+
+    `<article class="ctr"><h3>${c}的長照申請</h3><p>申請長照評估、詢問進度</p><p><span class="k">電話</span><span class="tel">1966</span></p><div class="acts"><a href="tel:1966">撥打 1966</a></div></article>`;
 }
-$('#city').addEventListener('change',()=>{city();if($('#city').value)$('#centers').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})});
+$('#city').addEventListener('change',()=>{city();if($('#city').value)$('#centers').scrollIntoView({block:'nearest'})});
 {const c=load('city');if(c&&CENTERS[c])$('#city').value=c;}
-city();
-quiz();calc();pick();rent();
+
+/* 名詞 */
+const DICT=[['照管專員','照顧管理專員','政府派到家裡了解狀況、安排長照服務的人'],['失能等級','CMS 等級','需要被照顧的程度，分 1 到 8 級，2 級以上才能使用長照'],['評估報告書','','治療師或輔具中心人員寫的證明，說明需要哪種輔具、什麼規格'],['核定','','政府正式同意補助，會有照顧計畫或書面通知'],['特約廠商','','和政府簽約合作的輔具店，走長照要在這類店家買或租'],['部分負擔','自付額','政府補助以外，自己要出的那部分'],['核銷','檢據請款','買好之後拿發票等文件，向政府申請補助款'],['最低使用年限','','同一樣輔具要用滿幾年，才能再申請一次'],['實物給付','','政府直接提供輔具（可能是整理消毒過的二手品），不是給錢'],['給付額度','','一段時間內政府最多幫你出的錢，長照輔具第一組每 3 年 4 萬、第二組 6 萬'],['第一組／第二組','長照 3.0','傳統輔具（4 萬）與智慧輔具（6 萬）兩組，3 年內選一組'],['全租賃','','只能租、不能買，不需要時要歸還'],['甲類輔具評估人員','','政府認可、能評估較複雜輔具的專業人員，多在輔具中心或醫院'],['醫療輔具','','呼吸照護、壓力衣等，要有身障證明，向衛生局申請']];
+$('#dictList').innerHTML=DICT.map(([t,a,d])=>`<details><summary><span>${t}${a?`<small>${a}</small>`:''}</span></summary><p>${d}</p></details>`).join('');
+
+cats();find(true);quiz();calc();pick();rent();city();
 }
 </script>
 </body>
