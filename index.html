@@ -449,6 +449,90 @@ h1,h2,h3,.sh p{text-wrap:balance}
 .zone[open]>summary::after{content:"−"}
 .zone>summary:not(:has(.zc))::after{margin-left:auto}
 .zone .zb{padding-bottom:10px}
+
+/* 選路圖 */
+.tree{padding:24px}
+.trail{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:8px}
+.trail li{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:10px 14px;border-radius:14px;background:var(--soft);font-size:var(--sm)}
+.trail .ta{flex:none;min-height:36px;padding:0 14px;border-radius:999px;border:1.5px solid var(--ink);background:var(--card);font:700 15px "Noto Sans TC",sans-serif;color:var(--ink);cursor:pointer}
+.trail .ta.y{background:var(--ink);color:var(--bg)}
+.tk{display:inline-block;font-size:14px;font-weight:700;color:var(--brown);margin-bottom:6px}
+.tqbox h3,.tend h3{font-size:clamp(22px,2.4vw,26px);margin-bottom:6px}
+.tqbox p{color:var(--mute);margin:0 0 18px}
+.tyn{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:420px}
+.tyn .btn{min-height:60px;font-size:19px}
+.tyn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.tend{border:2px solid var(--ok);border-radius:18px;padding:20px 22px;background:var(--card)}
+.tend .tw{font-weight:700;font-size:19px;margin:0 0 6px}
+.tend p{margin:0 0 6px}
+.tacts{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.link-btn{margin-top:12px;background:none;border:0;padding:6px 0;color:var(--brown);font:700 16px "Noto Sans TC",sans-serif;text-decoration:underline;cursor:pointer}
+/* 誰負責 */
+.who{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;padding-right:44px}
+.wh{flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;padding:3px 10px 3px 6px;border-radius:999px;border:1px solid var(--line);background:var(--soft)}
+.wh svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.wh.w-you{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.wh.w-gov{background:var(--pill)}
+.flow li::before{position:absolute;right:18px;top:18px;margin:0;width:36px;height:36px;font-size:16px}
+/* 文件清單 */
+.doc-card{background:var(--card);border:1px dashed var(--brown);border-radius:16px;padding:18px 20px}
+.doc-card h3{margin-bottom:2px}.doc-card h4{margin:14px 0 6px;font-size:16px;color:var(--brown)}
+.doc-l{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.doc-l label{display:flex;gap:10px;align-items:flex-start;min-height:40px;padding:6px 0;cursor:pointer}
+.doc-l input{width:22px;height:22px;margin-top:2px;flex:none;accent-color:var(--ink)}
+.doc-l input:checked+span{color:var(--mute);text-decoration:line-through}
+.doc-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+@media print{body.print-docs *{visibility:hidden}body.print-docs #docCard,body.print-docs #docCard *{visibility:visible}body.print-docs #docCard{position:absolute;left:0;top:0;width:100%;border:0}body.print-docs #docs{display:block}}
+/* 試算長條 */
+.paybars{display:grid;gap:14px;margin-top:18px}
+.pb-h{display:flex;align-items:center;gap:8px;margin-bottom:6px}.pb-h b{font-size:17px}
+.pb-best{font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--ok);color:var(--bg)}
+.pb-bar{display:flex;height:42px;border-radius:12px;overflow:hidden;background:var(--line);font-size:15px;font-weight:700}
+.pb-bar span{display:flex;align-items:center;padding:0 12px;white-space:nowrap;overflow:hidden;transition:width .5s ease}
+.pg{background:var(--brown);color:var(--bg)}.ps{flex:1;background:light-dark(#e6ddd2,#3a332c);color:var(--ink);justify-content:flex-end}
+.pb:not(.on) .pg{background:light-dark(#a89584,#7a6858)}
+.pb-leg{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px;font-size:14px;color:var(--mute)}
+.pb-leg i,.qleg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.pb-leg .dg{background:var(--brown)}.pb-leg .ds{background:light-dark(#e6ddd2,#3a332c)}
+.cmp-d{margin-top:12px}.cmp-d>summary{cursor:pointer;color:var(--brown);font-weight:700;min-height:44px;display:flex;align-items:center}
+/* 額度條 */
+.q-in{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.q-in{grid-template-columns:1fr}}
+.qbar{display:flex;height:34px;border-radius:10px;overflow:hidden;background:light-dark(#e6ddd2,#3a332c);margin-top:6px}
+.qbar span{transition:width .4s ease}
+.qbar .qu,.qleg .qu{background:var(--brown)}.qbar .qn,.qleg .qn{background:var(--hl)}.qbar .ql{flex:1}.qleg .ql{background:light-dark(#e6ddd2,#3a332c)}
+.qleg{display:inline-block;margin-right:16px}
+/* 分類圖示 */
+.tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:14px 0}
+@media(max-width:800px){.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:420px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:86px;padding:10px 4px;border:1.5px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);font:700 15px "Noto Sans TC",sans-serif;cursor:pointer}
+.tile svg{width:30px;height:30px;fill:none;stroke:var(--brown);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.tile.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}.tile.on svg{stroke:var(--bg)}
+@media(hover:hover){.tile:hover{border-color:var(--brown)}}
+.tile:focus-visible{outline:3px solid var(--brown);outline-offset:2px}
+/* 平面圖 */
+.plan svg{width:100%;height:auto;display:block}
+.rm{cursor:pointer;outline:none}
+.rm rect{fill:var(--card);stroke:var(--ink);stroke-width:2;transition:fill .2s}
+.rm.has rect{fill:light-dark(#f3ead9,#3b3226)}
+.rm.on rect{fill:var(--hl);stroke-width:3}
+.rm:hover rect{fill:light-dark(#efe4d2,#41372b)}.rm.on:hover rect{fill:var(--hl)}
+.rm:focus-visible rect{stroke:var(--brown);stroke-width:4}
+.rm text{text-anchor:middle;font:700 21px "Noto Sans TC",sans-serif;fill:var(--ink)}
+.rm .ic{fill:none;stroke:var(--brown);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rm .st{stroke:var(--line);stroke-width:2}
+.rm .bd{fill:var(--ink)}.rm .bdt{fill:var(--bg);font-size:14px}
+.plan .door{stroke:var(--bg);stroke-width:5}.plan .swing{fill:none;stroke:var(--mute);stroke-width:1.5;stroke-dasharray:4 4}
+.plan .dl{text-anchor:middle;font:700 13px "Noto Sans TC",sans-serif;fill:var(--mute)}
+.zone-t{margin:12px 0 8px}.zone-t b{font-size:19px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+/* 朗讀 */
+.sh h2{display:inline}
+.speak{display:inline-flex;align-items:center;gap:4px;vertical-align:middle;margin-left:10px;min-height:36px;padding:0 12px 0 8px;border:1.5px solid var(--line);border-radius:999px;background:var(--card);color:var(--brown);font:700 14px "Noto Sans TC",sans-serif;cursor:pointer;position:relative;top:-4px}
+.speak svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.speak.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.sh h2+.speak+p,.sh .speak+p{margin-top:10px}
 </style>
 </head>
 <body>
@@ -528,7 +612,13 @@ h1,h2,h3,.sh p{text-wrap:balance}
 </div></section>
 
 <section class="sec" id="check"><div class="wrap">
-  <div class="sh"><p class="k">第一步</p><h2>我能申請嗎？</h2><p>勾選家人的狀況，看看<strong>可能適用哪一種補助</strong>　勾選內容只留在這台裝置，不會傳出去</p></div>
+  <div class="sh"><p class="k">第一步</p><h2>我能申請嗎？</h2><p>回答幾個問題，看看<strong>該找哪個窗口</strong>　回答內容只留在這台裝置，不會傳出去</p></div>
+  <div class="tabs" role="radiogroup" aria-label="檢查方式" style="margin-bottom:18px">
+    <label><input type="radio" name="ckm" value="tree" checked>一題一題問我</label>
+    <label><input type="radio" name="ckm" value="list">一次勾選看結果</label>
+  </div>
+  <div id="treePane" class="tree card" aria-live="polite"></div>
+  <div id="listPane" hidden>
   <div class="split">
     <form class="card" id="quiz" onsubmit="return false">
       <fieldset>
@@ -557,6 +647,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <div class="check-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg><span>這只是依你勾選的內容做的初步整理，實際資格要由<strong>照管中心、區公所或衛生局審核</strong></span></div>
     </div>
   </div>
+  </div>
 </div></section>
 
 <section class="sec soft" id="warn"><div class="wrap">
@@ -581,7 +672,13 @@ h1,h2,h3,.sh p{text-wrap:balance}
     <label><input type="radio" name="route" value="D">身障輔具</label>
     <label><input type="radio" name="route" value="M">醫療輔具</label>
   </div>
+  <div class="who-leg" aria-hidden="true"></div>
   <ol class="flow" id="flowList" aria-live="polite"></ol>
+  <details class="fold" id="docs"><summary><span class="ft">申請前要準備的東西</span><small>可以勾選，也可以列印帶著走</small></summary><div class="fold-body">
+    <div class="doc-card" id="docCard"></div>
+    <div class="doc-acts"><button type="button" class="btn" id="docPrint">列印這張清單</button><button type="button" class="btn ghost" id="docClear">清除勾選</button></div>
+    <p class="note" style="margin-top:10px">依臺中市、桃園市等縣市公告的「應備文件」整理，各縣市略有不同，<strong>出門前請先打電話確認</strong></p>
+  </div></details>
   <p class="note" style="margin-top:16px">各縣市作業方式可能略有不同，送件前請先打電話確認要帶的文件</p>
 </div></section>
 
@@ -601,10 +698,24 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <p class="note" style="margin:0">金額較高的那一邊，大約可補助<span class="est">估算</span></p>
       <div class="big" id="bigNum">—</div>
       <p id="bigSub" style="margin:0"></p>
-      <div class="cmp" id="cmp"></div>
+      <div class="paybars" id="payBars"></div>
+      <details class="cmp-d"><summary>看計算細節</summary><div class="cmp" id="cmp"></div></details>
       <p class="note" style="margin-top:14px">依全國基準估算，不含縣市加碼　<strong>實際金額以核定通知為準</strong></p>
     </div>
   </div>
+  <details class="fold" id="quota"><summary><span class="ft">我的 3 年額度還剩多少</span><small>輸入已經用掉的金額，看看還剩多少可以用</small></summary><div class="fold-body">
+    <div class="tabs" role="radiogroup" aria-label="長照輔具組別" style="margin-bottom:14px">
+      <label><input type="radio" name="qg" value="40000" checked>第一組・4 萬</label>
+      <label><input type="radio" name="qg" value="60000">第二組・6 萬</label>
+    </div>
+    <div class="q-in">
+      <div><label class="f" for="qUsed">這 3 年已經用掉（元）</label><input id="qUsed" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 12000"></div>
+      <div><label class="f" for="qNow">這次預計要用（元）</label><input id="qNow" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 3500"></div>
+    </div>
+    <div class="qbar" id="qBar" aria-hidden="true"></div>
+    <p id="qTxt" style="margin:10px 0 0" aria-live="polite"></p>
+    <p class="note" style="margin-top:8px">已經用掉多少，可以問個管員或照管專員　3 年是從核定開始算，實際以照顧計畫為準</p>
+  </div></details>
 </div></section>
 
 <section class="sec" id="all"><div class="wrap">
@@ -616,6 +727,20 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <input id="q" type="search" placeholder="例如 輪椅、洗澡、扶手、助聽器" aria-label="搜尋輔具" autocomplete="off">
       <button id="qClear" type="button" hidden>清除</button>
     </div>
+    <div class="tiles" role="group" aria-label="依需要找輔具">
+      <button type="button" class="tile" data-q="輪椅"><svg viewBox="0 0 24 24"><circle cx="9" cy="16" r="5"/><circle cx="9" cy="3.8" r="1.6"/><path d="M9 6.5v6h6l2.5 5.5 2-1M9 9.5h5"/></svg>輪椅</button>
+      <button type="button" class="tile" data-q="走路"><svg viewBox="0 0 24 24"><circle cx="12" cy="3.8" r="1.7"/><path d="m10 21 2-6.5 2.5 2.5V21M8 12l2.5-5h3l2.5 4 2 1M12 7l-1 7.5"/><path d="M19 12v9"/></svg>走路</button>
+      <button type="button" class="tile" data-q="床"><svg viewBox="0 0 24 24"><path d="M3 6v13M3 15h18v4M21 15v-3a3 3 0 0 0-3-3h-7v6"/><circle cx="7" cy="11.5" r="2"/></svg>床和床墊</button>
+      <button type="button" class="tile" data-q="洗澡"><svg viewBox="0 0 24 24"><path d="M4 12h16v2.5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM7 19.5l-1 2M17 19.5l1 2M6 12V5.5a2 2 0 0 1 3.6-1.2"/></svg>洗澡</button>
+      <button type="button" class="tile" data-q="廁所"><svg viewBox="0 0 24 24"><path d="M7 3h6v7H7zM5 10h14a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6zM9 16l-1 5h8l-1-5"/></svg>上廁所</button>
+      <button type="button" class="tile" data-q="移位"><svg viewBox="0 0 24 24"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>移位</button>
+      <button type="button" class="tile" data-q="扶手"><svg viewBox="0 0 24 24"><path d="M3 9h18M5 9v4M19 9v4M3 21h18M3 3v18M21 3v18"/></svg>扶手門檻</button>
+      <button type="button" class="tile" data-q="樓梯"><svg viewBox="0 0 24 24"><path d="M3 20h5v-4h4v-4h4V8h5"/></svg>上下樓梯</button>
+      <button type="button" class="tile" data-q="呼吸"><svg viewBox="0 0 24 24"><path d="M12 4v7M12 11c-2 0-3 -1-4.5-1C5 10 4 13 4 16.5 4 19 5.5 20 7 20c2.5 0 3.5-2.5 5-5 1.5 2.5 2.5 5 5 5 1.5 0 3-1 3-3.5 0-3.5-1-6.5-3.5-6.5-1.5 0-2.5 1-4.5 1"/></svg>呼吸</button>
+      <button type="button" class="tile" data-q="耳朵"><svg viewBox="0 0 24 24"><path d="M7 9a5 5 0 0 1 10 0c0 3-3 4-3 7a3 3 0 0 1-5.5 1.5M10 10a2 2 0 0 1 4 0c0 1.2-1.5 1.5-1.5 3"/></svg>聽力</button>
+      <button type="button" class="tile" data-q="眼睛"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>視力</button>
+      <button type="button" class="tile" data-q="說話"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg>說話溝通</button>
+    </div>
     <div class="tabs" role="radiogroup" aria-label="補助類別">
       <label><input type="radio" name="sys" value="" checked>全部<small id="nAll"></small></label>
       <label><input type="radio" name="sys" value="L">長照<small id="nL"></small></label>
@@ -626,7 +751,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <select id="cat" aria-label="分類"><option value="">所有分類</option></select>
       <select id="inc4" aria-label="金額依哪種身分顯示"><option value="gen">金額以一般戶顯示</option><option value="mid">金額以中低收入戶顯示</option><option value="low">金額以低收入戶顯示</option></select>
     </div>
-    <div class="hint"><span class="note">常用：</span><button class="chip" type="button">輪椅</button><button class="chip" type="button">氣墊床</button><button class="chip" type="button">洗澡</button><button class="chip" type="button">扶手</button><button class="chip" type="button">照顧床</button><button class="chip" type="button">呼吸</button><button class="chip" type="button">助聽器</button></div>
+
   </div>
   <p class="count" id="cnt" aria-live="polite"></p>
   <div class="items" id="items"></div>
@@ -770,7 +895,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
   </div>
 
   <h3 class="sm-h" id="h-check">家裡逐區檢查</h3>
-  <p class="note" style="margin:-4px 0 16px">勾選家裡遇到的困難，看看<strong>可能</strong>適用哪些補助項目　金額是一般戶政府最多出的參考值，實際以評估和核定為準</p>
+  <p class="note" style="margin:-4px 0 16px">點平面圖上的房間，勾選遇到的困難，看看<strong>可能</strong>適用哪些補助項目　金額是一般戶政府最多出的參考值，實際以評估和核定為準</p>
   <div class="split">
     <form class="card" id="hzForm" onsubmit="return false"></form>
     <div id="hzOut" aria-live="polite"></div>
@@ -976,7 +1101,15 @@ const FLOW={
  L:[['請人來評估','評估','撥 1966 或聯絡照管中心，照管專員到家裡了解需要照顧的程度'],['等待核定','核定','照管中心核定照顧計畫，裡面會寫可以使用哪些輔具'],['購買或租用','購買','到長照合作的輔具店買或租，記得拿發票和保固書'],['付自己的部分','核銷','多數由輔具店向政府請款，你只要付自己負擔的部分']],
  D:[['確認是否要評估','評估','洗澡椅、一般輪椅等免評估；其他品項先向輔具中心預約評估'],['送件等核定','核定','線上或到戶籍地區公所申請，政府會寄書面通知'],['6 個月內購買','購買','收到核定通知後 6 個月內完成購買'],['拿發票請款','核銷','把發票等文件交給公所，受理後約 1 個月撥款']],
  M:[['取得醫師證明','評估','由醫師開立診斷證明，部分品項還要醫療輔具評估報告'],['向衛生局申請','核定','向戶籍所在縣市衛生局送件，等待核定'],['依核定購買','購買','依核定內容向合法醫療器材商購買或租用'],['檢據請款','核銷','依衛生局通知，檢附發票等文件申請撥款']]};
-const flow=()=>{const r=document.querySelector('input[name=route]:checked').value;$('#flowList').innerHTML=FLOW[r].map(([t,o,p])=>`<li><h3>${t}</h3><p class="off">公文寫法：${o}</p><p>${p}</p></li>`).join('')};
+/* 流程：誰負責 */
+const WHO_I={you:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.8 3.6-5.6 7-5.6s6.2 1.8 7 5.6"/></svg>',
+ gov:'<svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4v-1h6v1M8.5 10h7M8.5 14h7M8.5 18h4"/></svg>',
+ shop:'<svg viewBox="0 0 24 24"><path d="M4 9.5 5.5 4h13L20 9.5M4 9.5h16M4 9.5c0 1.6 1.2 2.6 2.7 2.6S9.3 11.1 9.3 9.5c0 1.6 1.2 2.6 2.7 2.6s2.7-1 2.7-2.6c0 1.6 1.2 2.6 2.7 2.6S20 11.1 20 9.5M5.5 12v8h13v-8M10 20v-4.5h4V20"/></svg>',
+ doc:'<svg viewBox="0 0 24 24"><path d="M7 4v5a5 5 0 0 0 10 0V4M7 4h-1.5M17 4h1.5M12 14v2.5a3.5 3.5 0 0 0 7 0V15"/><circle cx="19" cy="13.5" r="1.6"/></svg>'};
+const WHO_N={you:'你',gov:'政府單位',shop:'輔具店',doc:'醫師或評估人員'};
+const WHO={L:[['you','gov'],['gov'],['you','shop'],['shop']],D:[['you','doc'],['you','gov'],['you','shop'],['you','gov']],M:[['doc'],['you','gov'],['you','shop'],['you','gov']]};
+const WHO_T={L:[['你打電話','照管專員到家'],['照管中心核定'],['你去買或租','店家提供'],['店家向政府請款']],D:[['你預約','評估人員評估'],['你送件','公所核定'],['你去買','店家提供'],['你送發票','公所撥款']],M:[['醫師開證明'],['你送件','衛生局核定'],['你去買或租','合法醫療器材商'],['你送發票','衛生局撥款']]};
+const flow=()=>{const r=document.querySelector('input[name=route]:checked').value;$('#flowList').innerHTML=FLOW[r].map(([t,o,p],i)=>`<li><div class="who">${WHO[r][i].map((w,j)=>`<span class="wh w-${w}">${WHO_I[w]}${WHO_T[r][i][j]}</span>`).join('')}</div><h3>${t}</h3><p class="off">公文寫法：${o}</p><p>${p}</p></li>`).join('')};
 $$('input[name=route]').forEach(x=>x.addEventListener('change',flow));flow();
 
 /* 試算 */
@@ -1001,8 +1134,22 @@ function calc(){
   $('#bigSub').innerHTML=`報價 ${fmt(p)}，走${best==='l'?'長照':'身障'}自己大約出 <strong style="white-space:nowrap">${fmt(best==='l'?lpay:dpay)}</strong>`;
   const box=(t,cap,rate,g,pay,on)=>`<div class="card ${on?'best':''}"><strong>${t}</strong><dl><dt>品項上限</dt><dd>${fmt(cap)}</dd><dt>政府負擔</dt><dd>${rate}</dd><dt>約可補助</dt><dd>${fmt(g)}</dd><dt>自己負擔</dt><dd>${fmt(pay)}</dd></dl></div>`;
   $('#cmp').innerHTML=box('長照',it.ltc,it.lf?'全額':Math.round(lr*100)+'%',lg,lpay,best==='l')+(dg==null?'<div class="card"><strong>身障</strong><p class="note" style="margin:8px 0 0">這一項請洽區公所或輔具中心確認金額</p></div>':box('身障',it.dis,it.df?'全額':Math.round(DIS[inc]*100)+'%',dg,dpay,best==='d'));
+  payBars(p,[['長照',lg,lpay,best==='l'],['身障',dg,dpay,best==='d'&&dg!=null]]);
   $('#itemNote').textContent=`用滿 ${it.y} 年才能再申請・${it.ev?'要先評估':'不用先評估'}${typed?'':`　未輸入報價時以 ${fmt(it.p)} 示範`}`;
 }
+/* 試算長條 */
+function payBars(p,rows){
+  $('#payBars').innerHTML=rows.map(([t,g,pay,on])=>{if(g==null)return `<div class="pb"><div class="pb-h"><b>${t}</b><span class="note">這一項請洽區公所或輔具中心</span></div></div>`;
+    const gw=p?Math.round(g/p*100):0;return `<div class="pb${on?' on':''}"><div class="pb-h"><b>${t}</b>${on?'<span class="pb-best">比較划算</span>':''}</div><div class="pb-bar" role="img" aria-label="${t}：政府出 ${fmt(g)}，自己出 ${fmt(pay)}"><span class="pg" style="width:${gw}%">${gw>=22?'政府 '+fmt(g):''}</span><span class="ps">${100-gw>=22?'自己 '+fmt(pay):''}</span></div><div class="pb-leg"><span><i class="dg"></i>政府出 ${fmt(g)}</span><span><i class="ds"></i>自己出 ${fmt(pay)}</span></div></div>`}).join('');
+}
+/* 3 年額度 */
+function quota(){
+  const tot=+document.querySelector('input[name=qg]:checked').value,u=Math.max(0,+$('#qUsed').value||0),n=Math.max(0,+$('#qNow').value||0);
+  const uw=Math.min(100,u/tot*100),nw=Math.min(100-uw,n/tot*100),left=tot-u-n;
+  $('#qBar').innerHTML=`<span class="qu" style="width:${uw}%"></span><span class="qn" style="width:${nw}%"></span><span class="ql"></span>`;
+  $('#qTxt').innerHTML=!u&&!n?`總額度 <strong>${fmt(tot)}</strong>，輸入金額後會畫出已用和剩下的部分`:left>=0?`<span class="qleg"><i class="qu"></i>已用 ${fmt(u)}</span><span class="qleg"><i class="qn"></i>這次 ${fmt(n)}</span><span class="qleg"><i class="ql"></i>剩下 <strong>${fmt(left)}</strong></span>`:`<strong>會超過額度 ${fmt(-left)}</strong>　超過的部分要自己付，請先和個管員或照管專員討論`;
+}
+$$('input[name=qg]').forEach(r=>r.addEventListener('change',quota));['qUsed','qNow'].forEach(id=>$('#'+id).addEventListener('input',quota));quota();
 ['item','inc2'].forEach(id=>$('#'+id).addEventListener('change',calc));$('#price').addEventListener('input',calc);
 
 /* 全部輔具 */
@@ -1070,7 +1217,8 @@ $('#qClear').addEventListener('click',()=>{$('#q').value='';find(true);$('#q').f
 $$('input[name=sys]').forEach(r=>r.addEventListener('change',()=>{cats();find(true)}));
 $('#cat').addEventListener('change',()=>find(true));$('#inc4').addEventListener('change',()=>find(false));
 $('#more').addEventListener('click',()=>{shown+=12;find(false)});
-$$('.hint .chip').forEach(b=>b.addEventListener('click',()=>{$('#q').value=b.textContent;find(true)}));
+$$('.tile').forEach(b=>b.addEventListener('click',()=>{const on=b.classList.contains('on');$$('.tile').forEach(x=>{x.classList.remove('on');x.setAttribute('aria-pressed','false')});if(!on){b.classList.add('on');b.setAttribute('aria-pressed','true')}$('#q').value=on?'':b.dataset.q;find(true)}));
+$('#q').addEventListener('input',()=>$$('.tile').forEach(x=>{const m=x.dataset.q===$('#q').value.trim();x.classList.toggle('on',m);x.setAttribute('aria-pressed',m)}));
 $('#toSearch').addEventListener('click',()=>setTimeout(()=>$('#q').focus({preventScroll:true}),500));
 
 /* 長照 3.0 */
@@ -1212,8 +1360,19 @@ const HZ=[
   ['住樓上沒有電梯，上下樓困難',['L:EH04','L:EH05','D:132','D:133','D:134']]]]
 ];
 const byKey=k=>{const [s,c]=k.split(':');return ALL.find(o=>o.s===s&&o.c===c)};
-$('#hzForm').innerHTML='<p class="f" style="margin:0 0 4px">點開家裡的區域，勾選遇到的困難</p>'+HZ.map(([z,list],zi)=>`<details class="zone"${zi===1?' open':''}><summary>${z}<small>${list.length} 種狀況</small></summary><div class="zb">${list.map(([t],i)=>`<label class="opt"><input type="checkbox" value="${zi}-${i}"><span>${t}</span></label>`).join('')}</div></details>`).join('');
-const zoneCount=()=>$$('#hzForm .zone').forEach(d=>{const n=d.querySelectorAll('input:checked').length,s=d.querySelector('summary');let c=s.querySelector('.zc');if(n){if(!c){c=document.createElement('span');c.className='zc';s.appendChild(c)}c.textContent=`已勾 ${n}`}else if(c)c.remove()});
+/* 房子平面圖 */
+const ROOMS=[[0,10,210,400,180,'門口與走道','<path d="M-14 12V-12h18v24M4 0h-3"/><path d="M-22 12h36"/>'],[1,210,10,150,120,'浴室','<path d="M-14 0h28v4a8 8 0 0 1-8 8h-12a8 8 0 0 1-8-8zM-12 0v-10a3 3 0 0 1 5.5-1.6"/>'],[2,210,130,150,80,'廁所','<path d="M-6 -12h10v9h-10zM-10 -3h20a9 9 0 0 1-9 9h-2a9 9 0 0 1-9-9zM-4 6l-1 6h10l-1-6"/>'],[3,10,10,200,200,'臥室','<path d="M-16 -8v18M-16 6h32v4M16 6v-4a4 4 0 0 0-4-4h-10v8"/><circle cx="-9" cy="-1" r="3"/>'],[4,360,10,230,200,'廚房','<path d="M-14 -2h28v12h-28zM-10 -2v-6M0 -2v-8M10 -2v-6"/>'],[5,410,210,180,180,'樓梯','<path d="M-16 12h8v-8h8v-8h8v-8h8"/>']];
+let room=1;
+function housePlan(){
+  const cnt=z=>$$(`#hzForm .zone-p[data-z="${z}"] input:checked`).length;
+  const steps=[0,1,2,3,4,5,6,7].map(i=>`<line x1="${430+i*20}" y1="230" x2="${430+i*20}" y2="370" class="st"/>`).join('');
+  $('#hzPlan').innerHTML=`<svg viewBox="0 0 600 400" role="group" aria-label="家裡平面圖，點選房間">${ROOMS.map(([z,x,y,w,h,n,ic])=>{const c=cnt(z),cx=x+w/2,cy=y+h/2;return `<g class="rm${z===room?' on':''}${c?' has':''}" data-z="${z}" role="button" tabindex="0" aria-pressed="${z===room}" aria-label="${n}${c?`，已勾 ${c} 項`:''}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6"/>${z===5?steps:''}<g transform="translate(${cx} ${cy-16}) scale(1.35)" class="ic">${ic}</g><text x="${cx}" y="${cy+30}">${n}</text>${c?`<circle cx="${x+w-20}" cy="${y+20}" r="13" class="bd"/><text x="${x+w-20}" y="${y+25}" class="bdt">${c}</text>`:''}</g>`}).join('')}<path d="M180 390h60" class="door"/><path d="M180 390a60 60 0 0 1 60-60" class="swing"/><text x="210" y="384" class="dl">大門</text></svg>`;
+}
+function pickRoom(z){room=z;$$('#hzForm .zone-p').forEach(p=>p.hidden=+p.dataset.z!==z);housePlan();$('#hzZoneT').textContent=HZ[z][0]}
+$('#hzForm').innerHTML='<div class="plan" id="hzPlan"></div><p class="zone-t">正在看：<b id="hzZoneT"></b>　<span class="note">點平面圖換房間</span></p>'+HZ.map(([z,list],zi)=>`<div class="zone-p" data-z="${zi}"${zi===room?'':' hidden'}><fieldset style="margin:0"><legend class="sr">${z}</legend>${list.map(([t],i)=>`<label class="opt"><input type="checkbox" value="${zi}-${i}"><span>${t}</span></label>`).join('')}</fieldset></div>`).join('');
+const zoneCount=housePlan;pickRoom(1);
+$('#hzPlan').addEventListener('click',e=>{const g=e.target.closest('.rm');if(g)pickRoom(+g.dataset.z)});
+$('#hzPlan').addEventListener('keydown',e=>{const g=e.target.closest('.rm');if(g&&(e.key==='Enter'||e.key===' ')){e.preventDefault();pickRoom(+g.dataset.z);$(`#hzPlan .rm[data-z="${g.dataset.z}"]`).focus()}});
 const hzName=n=>n.replace(/^居家無障礙(修繕|輔具)?-/,'');
 function hz(){
   const v=$$('#hzForm input:checked').map(x=>x.value);
@@ -1234,6 +1393,62 @@ $('#hzAll').addEventListener('click',()=>{const r=document.querySelector('input[
 const openTo=id=>{const el=document.getElementById(id);if(!el)return;let d=el.closest('details.fold');if(el.matches('details.fold'))d=el;if(d&&!d.open)d.open=true};
 document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(a&&a.getAttribute('href').length>1)openTo(a.getAttribute('href').slice(1))});
 if(location.hash)openTo(location.hash.slice(1));
+/* 選路圖：一題一題問 */
+const TREE={
+ care:{q:'家人生活上需要別人幫忙嗎？',h:'例如洗澡、穿衣、上廁所、下床',y:'cert1',n:'cert2'},
+ cert1:{q:'有身心障礙證明嗎？',h:'以前叫身障手冊',y:'@LD',n:'age'},
+ age:{q:'符合下面任何一項嗎？',h:'65 歲以上、55 歲以上的原住民、醫師診斷有失智症，或醫院說符合「急性後期整合照護」',y:'@L',n:'@N1'},
+ cert2:{q:'有身心障礙證明嗎？',h:'以前叫身障手冊',y:'med',n:'@N2'},
+ med:{q:'需要的是醫療用的輔具嗎？',h:'例如呼吸器、製氧機、抽痰機、壓力衣',y:'@M',n:'@D'}
+};
+const ENDS={
+ L:{t:'走「長照」這條路',w:'長期照顧管理中心',p:'1966',d:'撥 1966 申請，照管專員會到家裡評估，2 級以上就能使用長照輔具',r:'L'},
+ LD:{t:'長照和身障都可以申請',w:'先撥長照專線',p:'1966',d:'照管專員會到家評估；長照沒有的品項，可以再向戶籍地區公所或輔具中心申請身障補助，同一項不能重複',r:'L'},
+ D:{t:'走「身障輔具」這條路',w:'戶籍地區公所或縣市輔具中心',d:'需要評估的品項先預約輔具中心評估，也可以用社家署「輔具線上申辦」',r:'D',lk:['#county','查我的輔具中心']},
+ M:{t:'走「醫療輔具」這條路',w:'戶籍所在縣市的衛生局',d:'先請醫師開診斷證明，部分品項還要醫療輔具評估報告',r:'M'},
+ N1:{t:'可能還不符合長照資格',w:'還是可以先問問看',p:'1966',d:'狀況改變時隨時可以申請評估　短期需要可以先向輔具中心借用二手輔具',lk:['#county','查我的輔具中心']},
+ N2:{t:'目前可能沒有適用的輔具補助',w:'可以先借用',d:'短期需要可以向各縣市輔具中心借用二手輔具；之後如果需要別人照顧，再撥 1966 申請',lk:['#county','查我的輔具中心']}
+};
+let path=[];
+const svgI={y:'<svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',n:'<svg viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>'};
+function tree(){
+  let node='care';const done=[];
+  for(const a of path){const t=TREE[node];done.push([t.q,a]);node=a==='y'?t.y:t.n;if(node.startsWith('@'))break}
+  const trail=done.map(([q,a],i)=>`<li><span class="tq">${q}</span><button type="button" class="ta ${a}" data-back="${i}" aria-label="修改這一題">${a==='y'?'是':'不是'}</button></li>`).join('');
+  let body;
+  if(node.startsWith('@')){
+    const e=ENDS[node.slice(1)];
+    body=`<div class="tend"><span class="tk">建議窗口</span><h3>${e.t}</h3><p class="tw">${e.w}</p><p>${e.d}</p><div class="tacts">${e.p?`<a class="btn" href="tel:${e.p}">撥打 ${e.p}</a>`:''}${e.r?`<a class="btn ghost" href="#flow" data-route="${e.r}">看申請步驟</a>`:''}${e.lk?`<a class="btn ghost" href="${e.lk[0]}">${e.lk[1]}</a>`:''}</div></div>`;
+  }else{
+    const t=TREE[node];
+    body=`<div class="tqbox"><span class="tk">第 ${done.length+1} 題</span><h3>${t.q}</h3><p>${t.h}</p><div class="tyn"><button type="button" class="btn" data-a="y">${svgI.y}是</button><button type="button" class="btn ghost" data-a="n">${svgI.n}不是</button></div></div>`;
+  }
+  $('#treePane').innerHTML=`${trail?`<ol class="trail">${trail}</ol>`:''}${body}${path.length?'<button type="button" class="link-btn" data-reset>重新開始</button>':''}<p class="note" style="margin:14px 0 0">只是幫你找窗口，實際資格由照管中心、區公所或衛生局審核</p>`;
+}
+$('#treePane').addEventListener('click',e=>{
+  const b=e.target.closest('button,a');if(!b)return;
+  if(b.dataset.a){path.push(b.dataset.a);tree();$('#treePane').querySelector('.tqbox button, .tend .btn')?.focus({preventScroll:true})}
+  else if(b.dataset.back!=null){path=path.slice(0,+b.dataset.back);tree()}
+  else if(b.hasAttribute('data-reset')){path=[];tree()}
+  else if(b.dataset.route){const r=document.querySelector(`input[name=route][value=${b.dataset.route}]`);if(r){r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}))}}
+});
+tree();
+$$('input[name=ckm]').forEach(r=>r.addEventListener('change',()=>{const v=document.querySelector('input[name=ckm]:checked').value;$('#treePane').hidden=v!=='tree';$('#listPane').hidden=v!=='list'}));
+/* 準備文件清單 */
+const DOCS={
+ L:{t:'撥 1966 申請長照前',sub:'先準備好這些，講電話和評估會比較順',g:[['先準備的資料',['長輩的姓名、身分證字號、住址','聯絡人的姓名和電話','哪些事需要人幫忙，例如洗澡、上廁所、下床','最近有沒有住院、開刀或慢性病']],['有的話先找出來',['身心障礙證明','低收入戶或中低收入戶證明']],['照管專員到家時',['主要照顧的家人最好在場','把想問的問題先寫下來']]]},
+ D:{t:'到區公所申請身障輔具',sub:'也可以用社家署「輔具線上申辦」',g:[['申請時',['申請表（公所或輔具中心可以拿到）','身分證正本','身心障礙證明','三個月內的診斷證明書（規定要的品項才需要）','三個月內的輔具評估報告書（需要評估的品項）','低收入戶或中低收入戶證明（有的話）','委託書和代辦人的身分證、印章（本人不能親自去時）']],['買好之後請款',['公所寄來的核定公文','發票或收據','保固書或其他公所要求的文件']]]},
+ M:{t:'到衛生局申請醫療輔具',sub:'先請醫師開證明',g:[['申請時',['醫療輔具補助申請書','身分證和身心障礙證明','三個月內的診斷證明書正本','三個月內的醫療輔具評估報告（部分品項需要）','低收入戶或中低收入戶證明（有的話）','委託書（家人代辦時）']],['已經買好或租好要請款',['存摺封面影本','發票或收據正本']]]}
+};
+function docs(){
+  const r=document.querySelector('input[name=route]:checked').value,d=DOCS[r];let sv={};try{sv=JSON.parse(localStorage.getItem('docs_'+r)||'{}')}catch(e){}
+  $('#docCard').innerHTML=`<h3>${d.t}</h3><p class="note">${d.sub}</p>${d.g.map(([h,l],gi)=>`<h4>${h}</h4><ul class="doc-l">${l.map((x,i)=>{const k=gi+'-'+i;return `<li><label><input type="checkbox" data-k="${k}"${sv[k]?' checked':''}><span>${x}</span></label></li>`}).join('')}</ul>`).join('')}`;
+}
+$('#docCard').addEventListener('change',e=>{const r=document.querySelector('input[name=route]:checked').value,sv={};$$('#docCard input:checked').forEach(c=>sv[c.dataset.k]=1);try{localStorage.setItem('docs_'+r,JSON.stringify(sv))}catch(e){}});
+$('#docClear').addEventListener('click',()=>{const r=document.querySelector('input[name=route]:checked').value;try{localStorage.removeItem('docs_'+r)}catch(e){}docs()});
+$('#docPrint').addEventListener('click',()=>{document.body.classList.add('print-docs');window.print()});
+addEventListener('afterprint',()=>document.body.classList.remove('print-docs'));
+$$('input[name=route]').forEach(r=>r.addEventListener('change',docs));docs();
 /* 名詞 */
 const DICT=[['照管專員','照顧管理專員','政府派到家裡了解狀況、安排長照服務的人'],['失能等級','CMS 等級','需要被照顧的程度，分 1 到 8 級，2 級以上才能使用長照，每級額度看上方圖解'],['評估報告書','','治療師或輔具中心人員寫的證明，說明需要哪種輔具、什麼規格'],['核定','','政府正式同意補助，會有照顧計畫或書面通知'],['特約廠商','','和政府簽約合作的輔具店，門口會貼長照特約標誌，可在上方「找輔具店」查詢'],['部分負擔','自付額','政府補助以外，自己要出的那部分，比例看上方圖解'],['核銷','檢據請款','買好之後拿發票等文件，向政府申請補助款'],['最低使用年限','','同一樣輔具要用滿幾年，才能再申請一次'],['實物給付','','政府直接提供輔具（可能是整理消毒過的二手品），不是給錢'],['給付額度','','一段時間內政府最多幫你出的錢，長照輔具第一組每 3 年 4 萬、第二組 6 萬'],['第一組／第二組','長照 3.0','傳統輔具（4 萬）與智慧輔具（6 萬）兩組，3 年內選一組'],['全租賃','','以租代買，不需要時歸還；長照智慧輔具原則上採租賃'],['甲類輔具評估人員','','政府認可、能評估較複雜輔具的專業人員，多在輔具中心或醫院'],['醫療輔具','','呼吸照護、壓力衣等，要有身障證明，向衛生局申請']];
 $('#dictList').innerHTML=DICT.map(([t,a,d])=>`<details><summary><span>${t}${a?`<small>${a}</small>`:''}</span></summary><p>${d}</p></details>`).join('');
@@ -1294,6 +1509,17 @@ if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduc
 
 {const c=load('city');if(c&&CENTERS[c]){$('#city').value=c;fillDist(load('dist')||'')}}
 cats();find(true);quiz();calc();pick();rent();city();shops();
+}
+/* 朗讀 */
+if('speechSynthesis' in window){
+  const $$=s=>[...document.querySelectorAll(s)];
+  const SPK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>';
+  let cur=null;
+  const textOf=sec=>{const out=[];const walk=el=>{for(const n of el.childNodes){if(n.nodeType===3){out.push(n.textContent)}else if(n.nodeType===1){if(n.hidden||n.matches('script,style,select,input,svg,button.speak,.items,nav,.tiles,option,[aria-hidden=true]'))continue;if(n.tagName==='DETAILS'&&!n.open){const s=n.querySelector('summary');if(s)out.push(s.textContent+'　');continue}walk(n);if(/^(P|LI|H\d|DIV|DT|DD|SUMMARY)$/.test(n.tagName))out.push('　')}}};walk(sec);return out.join('').replace(/\s+/g,' ').replace(/　+/g,'，').slice(0,1800)};
+  const stop=()=>{speechSynthesis.cancel();if(cur){cur.classList.remove('on');cur.setAttribute('aria-label','朗讀這一區');cur.querySelector('b').textContent='朗讀'};cur=null};
+  $$('section.sec .sh h2').forEach(h=>{const b=document.createElement('button');b.type='button';b.className='speak';b.setAttribute('aria-label','朗讀這一區');b.innerHTML=SPK+'<b>朗讀</b>';h.after(b);
+    b.addEventListener('click',()=>{if(cur===b){stop();return}stop();const sec=b.closest('section');const u=new SpeechSynthesisUtterance(textOf(sec));u.lang='zh-TW';u.rate=.9;const v=speechSynthesis.getVoices().find(v=>/zh[-_]TW/i.test(v.lang));if(v)u.voice=v;u.onend=u.onerror=()=>{if(cur===b)stop()};cur=b;b.classList.add('on');b.setAttribute('aria-label','停止朗讀');b.querySelector('b').textContent='停止';speechSynthesis.speak(u)})});
+  addEventListener('pagehide',stop);
 }
 </script>
 </body>
