@@ -271,6 +271,13 @@ select:focus,input:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3
 .shop .lab{font-size:13px;font-weight:700;color:var(--brown);margin-bottom:4px}
 .shop h3{font-size:19px;margin-bottom:6px}.shop p{margin:0 0 14px;color:var(--mute);font-size:var(--sm)}
 .shop .btn{margin-top:auto;align-self:flex-start;min-height:46px;padding:0 20px;font-size:16px}
+.hf .where{margin-bottom:16px}
+.hf-steps{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:10px;counter-reset:hf}
+.hf-steps li{counter-increment:hf;display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start;background:var(--soft);border-radius:14px;padding:12px 14px}
+.hf-steps li::before{content:counter(hf);width:32px;height:32px;border-radius:50%;background:var(--brown);color:#fff;display:grid;place-items:center;font-weight:700}
+.hf-steps b{color:var(--brown)}
+.hf-act{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.hf-act .btn{min-height:48px}
 .shop-tips{margin-top:18px;background:var(--soft);border-radius:20px;padding:20px 22px}
 .shop-tips h3{font-size:19px;margin-bottom:10px}
 .shop-tips ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
@@ -885,7 +892,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
 <section class="sec" id="home"><div class="wrap">
   <div class="sh"><p class="k">長照・身障都有補助</p><h2>居家無障礙改善專區</h2><p>家裡哪裡不好走、容易滑倒，看看可以怎麼改、政府大約補助多少</p></div>
   <nav class="subnav" aria-label="居家無障礙專區">
-    <a href="#h-what">是什麼</a><a href="#h-check">逐區檢查</a><a href="#h-how">怎麼申請</a><a href="#h-faq">租屋與公寓</a><a href="#h-safe">安全提醒</a>
+    <a href="#h-what">是什麼</a><a href="#h-check">逐區檢查</a><a href="#h-how">怎麼申請</a><a href="#h-find">找施工單位</a><a href="#h-faq">租屋與公寓</a><a href="#h-safe">安全提醒</a>
   </nav>
 
   <div class="sm-what" id="h-what">
@@ -917,6 +924,16 @@ h1,h2,h3,.sh p{text-wrap:balance}
     <li><b>保留單據</b><span>發票、核定通知等都要留著；有些縣市還要施工前後照片，<strong>開工前先問清楚</strong>要準備哪些文件</span></li>
   </ol>
   </div></details>
+
+  <h3 class="sm-h" id="h-find">找附近的無障礙施工單位</h3>
+  <p class="note" style="margin:-4px 0 16px">長照的居家無障礙改善，要找<strong>和政府簽約的長照特約單位</strong>施工　輔具和無障礙用的是同一份特約名單，可以用衛福部的官方地圖依縣市、鄉鎮查詢</p>
+  <div class="card hf">
+    <div class="where">
+      <div><label class="f" for="hfCity">縣市</label><select id="hfCity"><option value="">請選擇縣市</option></select></div>
+      <div><label class="f" for="hfDist">鄉鎮市區</label><select id="hfDist" disabled><option value="">先選縣市</option></select></div>
+    </div>
+    <div id="hfOut" aria-live="polite"></div>
+  </div>
 
   <details class="fold" id="h-faq"><summary><span class="ft">租屋與公寓常見問題</span><small>屋主同意、公共區域、沒有電梯怎麼辦</small></summary><div class="fold-body">
   <div class="dict faq">
@@ -1472,7 +1489,7 @@ function shops(){
   const s=q=>'https://www.google.com/search?q='+encodeURIComponent(q);
   const OFF={'新北市':'https://atrc.aihsin.ntpc.gov.tw/'};
   $('#shops').innerHTML=`
-  <article class="shop"><span class="lab">官方查詢</span><h3>長照服務資源地理地圖</h3><p>衛福部的查詢系統，輸入住址或開啟定位，可查附近的長照服務單位與聯絡方式</p><a class="btn" href="https://ltcpap.mohw.gov.tw/public/index.html" rel="noopener">開啟官方地圖</a></article>
+  <article class="shop"><span class="lab">官方查詢</span><h3>長照服務資源地理地圖</h3><p>衛福部的查詢系統，選「行政區定位」和你的縣市、鄉鎮，服務項目選「輔具及居家無障礙環境改善服務」，就能看到附近單位的地址和電話</p><a class="btn" href="https://ltcpgis.mohw.gov.tw/" rel="noopener">開啟官方地圖</a></article>
   <article class="shop"><span class="lab">官方名冊</span><h3>${esc(c)}長照輔具特約名單</h3><p>特約名單由各縣市衛生局或長照管理中心公告，也可以撥 1966 請照管專員提供</p>${OFF[c]?`<a class="btn" href="${OFF[c]}" rel="noopener">看${esc(c)}特約廠商</a>`:`<a class="btn" href="${s(c+' 長照 輔具 特約單位 名冊 site:gov.tw')}" rel="noopener">搜尋${esc(c)}政府公告</a>`}</article>
   <article class="shop"><span class="lab">地圖搜尋</span><h3>${esc(place)}附近的輔具店</h3><p>用地圖看離你最近的輔具店，出發前先打電話問是不是長照特約、有沒有你要的品項</p><a class="btn" href="${g(place+' 輔具')}" rel="noopener">在地圖上查看</a></article>`;
 }
@@ -1481,6 +1498,29 @@ const fillDist=keep=>{const c=$('#city').value,s=$('#dist');if(!c){s.innerHTML='
   s.disabled=false;s.innerHTML=`<option value="">不指定（${DIST[c].length} 個鄉鎮市區）</option>`+DIST[c].map(x=>`<option${x===keep?' selected':''}>${x}</option>`).join('')};
 $('#city').addEventListener('change',()=>{fillDist('');save('dist','');shops()});
 $('#dist').addEventListener('change',()=>{save('dist',$('#dist').value);city();shops()});
+
+/* 找無障礙施工單位 */
+const MAP='https://ltcpgis.mohw.gov.tw/';
+function hfFill(keep){const c=$('#hfCity').value,s=$('#hfDist');if(!c){s.innerHTML='<option value="">先選縣市</option>';s.disabled=true;return}
+  s.disabled=false;s.innerHTML='<option value="">請選擇</option>'+DIST[c].map(x=>`<option${x===keep?' selected':''}>${x}</option>`).join('')}
+function hf(){
+  const c=$('#hfCity').value,d=$('#hfDist').value;
+  if(!c){$('#hfOut').innerHTML='<div class="empty">先選你家所在的縣市和鄉鎮市區，這裡會教你怎麼在官方地圖上找</div>';return}
+  const where=esc(c)+(d?esc(d):'（再選鄉鎮市區）');
+  $('#hfOut').innerHTML=`<ol class="hf-steps">
+    <li><span>按下方按鈕，開啟衛福部「長照服務資源地理地圖」</span></li>
+    <li><span>選<b>「行政區定位」</b>，縣市和鄉鎮市區選 <b>${where}</b></span></li>
+    <li><span>服務項目選<b>「輔具及居家無障礙環境改善服務」</b>，範圍可以先選 5 公里，找不到再放大</span></li>
+    <li><span>清單會同時列出<b>輔具店和無障礙施工單位</b>，點開名稱可看地址、電話，打電話問有沒有做居家無障礙改善</span></li>
+  </ol>
+  <div class="hf-act"><a class="btn" href="${MAP}" rel="noopener">開啟官方地圖</a><span class="note" style="margin:0">不會用或找不到，撥 <a href="tel:1966"><strong>1966</strong></a> 請照管專員提供特約名冊</span></div>
+  <p class="note" style="margin:14px 0 0">地圖由衛福部建置，資料由各縣市登錄，可能和最新特約名單有落差　<strong>施工前請向照管專員確認是長照特約單位</strong>，並等核定後再動工　本站列出官方查詢管道，不推薦任何廠商</p>`;
+}
+$('#hfCity').innerHTML='<option value="">請選擇縣市</option>'+Object.keys(DIST).map(c=>`<option>${c}</option>`).join('');
+$('#hfCity').addEventListener('change',()=>{hfFill('');hf()});
+$('#hfDist').addEventListener('change',hf);
+{const c=load('city');if(c&&DIST[c]){$('#hfCity').value=c;hfFill(load('dist')||'')}}
+hf();
 
 /* 圖解 */
 const CMS=[[1,0],[2,10020],[3,15460],[4,18580],[5,24100],[6,28070],[7,32090],[8,36180]];
