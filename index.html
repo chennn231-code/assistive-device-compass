@@ -107,6 +107,20 @@ td.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .flow li::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--pill);border:1.5px solid var(--ink);font:700 19px "Noto Serif TC",serif;margin-bottom:12px}
 .flow h3{font-size:21px}.flow .off{font-size:14px;color:var(--mute);margin-bottom:10px}
 .flow p{font-size:16px;margin-bottom:8px}.flow b{color:var(--brown)}
+/* 長照 3.0 */
+.new{display:inline-block;font-size:14px;font-weight:700;padding:2px 12px;border-radius:999px;background:var(--pill);border:1.5px solid var(--ink);margin-bottom:12px}
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:30px;text-align:left}
+.duo .card h3{font-size:22px;margin-bottom:4px}.duo .amt{font:700 clamp(30px,4vw,40px)/1.1 "Noto Serif TC",serif;color:var(--brown);margin:6px 0 12px;white-space:nowrap}
+.duo ul{margin:0;padding-left:22px}.duo li{margin-bottom:6px}
+.or{text-align:center;font-weight:700;margin:16px 0 0}
+.cats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:30px;text-align:left}
+.cats div{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px}
+.cats b{display:block;font-size:18px;margin-bottom:4px}.cats span{font-size:15px;color:var(--mute)}
+.pick{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:24px;margin-top:30px;text-align:left;align-items:start}
+.verdict{border:2px solid var(--ok);border-radius:24px;padding:22px;background:var(--card)}
+.verdict h3{font-size:24px;margin:6px 0 8px}
+@media(max-width:900px){.cats{grid-template-columns:repeat(2,minmax(0,1fr))}.pick{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.duo,.cats{grid-template-columns:minmax(0,1fr)}}
 /* 名詞翻譯 */
 .dict{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:30px 0 0;text-align:left}
 .dict div{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
@@ -154,7 +168,8 @@ footer{font-size:15px;color:var(--mute);border-top:1px solid var(--line);padding
 
 <section class="intro center"><div class="wrap">
   <div class="ph portrait" data-img="portrait" data-label="圖片 2"></div>
-  <p class="eyebrow">長照 2.0 ・ 身障輔具補助</p>
+  <p class="eyebrow">長照 3.0 ・ 身障輔具補助</p>
+  <p class="note" style="margin:-10px 0 20px">補助資料最後確認：2026 年 11 月 27 日</p>
   <h2>照顧來得突然，<br>補助不該錯過</h2>
   <p class="body">家人突然需要輪椅、氣墊床或洗澡椅時，最怕多花錢，或是因為先買了，結果拿不到補助　這裡用三個步驟陪你弄清楚：能申請哪一種、大概能補多少、要照什麼順序辦</p>
 </div></section>
@@ -242,6 +257,61 @@ footer{font-size:15px;color:var(--mute);border-top:1px solid var(--line);padding
   <p class="note" style="margin-top:10px;text-align:left">長照自己出的比例：一般 30%、中低收入戶 10%、低收入戶不用出；寫「不用出錢」的品項，任何人都全額補助　身障補助：一般補一半、中低收入戶補 75%、低收入戶全額；寫「全額」的品項任何人都全額補助</p>
 </div></section>
 
+<section class="band" id="v3"><div class="wrap center">
+  <span class="new">長照 3.0 新制・115 年 7 月 1 日上路</span>
+  <h2 class="sec-title">傳統輔具還是智慧輔具？兩組選一組</h2>
+  <p class="lede">走長照的人，現在可以從兩組裡挑一組用，3 年內不能兩組一起用　智慧輔具會自動偵測、提醒或通報，全部用租的</p>
+  <div class="duo">
+    <div class="card"><h3>第一組：傳統輔具</h3><div class="amt">每 3 年 4 萬元</div>
+      <ul><li>可以買，也可以租</li><li>輪椅、氣墊床、照顧床、洗澡椅、扶手等品項最齊全</li><li>適合需要的東西很清楚、想買下來長期用的家庭</li></ul></div>
+    <div class="card"><h3>第二組：智慧輔具</h3><div class="amt">每 3 年 6 萬元</div>
+      <ul><li>智慧輔具只能租，用完要還</li><li>身體狀況變了，可以換租別的品項</li><li>6 萬元裡，家裡裝扶手、斜坡等無障礙改善最多用 2 萬元</li><li>還是可以買洗澡椅、便盆椅、拐杖、助行器這幾樣基本輔具</li><li>要先經長照評估達 2 級以上，再由有資格的輔具評估人員確認適合</li></ul></div>
+  </div>
+  <p class="or">自己要出的比例兩組一樣：一般 30%、中低收入戶 10%、低收入戶不用出</p>
+
+  <h3 style="margin-top:44px;font-size:22px">智慧輔具有哪五類？</h3>
+  <div class="cats">
+    <div><b>移位</b><span>幫忙從床上站起來、坐到輪椅上的設備</span></div>
+    <div><b>移動</b><span>會監測活動、遇到異常會通報的電動輪椅或步行輔助設備</span></div>
+    <div><b>洗澡上廁所</b><span>協助洗澡或自動清理大小便，有異常會提醒</span></div>
+    <div><b>照顧床</b><span>離床會警示、躺太久會提醒翻身的床或床墊</span></div>
+    <div><b>安全看視</b><span>偵測跌倒、離床或生活異常，通知家人或照顧者</span></div>
+  </div>
+  <p class="note" style="margin-top:12px">只有通過政府審查的型號才能補助，市面上的智慧產品不一定算　可上「長期照顧輔具產品資料庫」查詢</p>
+
+  <div class="pick">
+    <form class="card" id="pickForm" onsubmit="return false">
+      <fieldset style="margin:0"><legend>幫我想想選哪一組（可以勾很多個）</legend>
+        <label class="opt"><input type="checkbox" name="pk" value="2"><span>晚上會自己下床，很怕跌倒</span></label>
+        <label class="opt"><input type="checkbox" name="pk" value="2"><span>家人白天要上班，需要有東西幫忙看著、出事會通知</span></label>
+        <label class="opt"><input type="checkbox" name="pk" value="2"><span>剛出院或正在復健，身體狀況可能還會變</span></label>
+        <label class="opt"><input type="checkbox" name="pk" value="1"><span>需要量身訂做的輪椅、氣墊床或照顧床，想買下來</span></label>
+        <label class="opt"><input type="checkbox" name="pk" value="1"><span>只需要幾樣基本輔具，例如輪椅加洗澡椅</span></label>
+        <label class="opt"><input type="checkbox" name="pk" value="1"><span>家裡要大幅改裝，例如浴室、門檻、斜坡都要做</span></label>
+      </fieldset>
+    </form>
+    <div id="pickOut" aria-live="polite"></div>
+  </div>
+
+  <h3 style="margin-top:44px;font-size:22px">智慧輔具租金試算</h3>
+  <p class="lede" style="margin-bottom:18px">智慧輔具的月租金由各家合作輔具店自己訂，所以要先問到報價　輸入後可以看到每個月自己出多少、額度大約能用幾個月</p>
+  <div class="calc">
+    <div class="card">
+      <label class="f" for="rent">每個月租金報價</label>
+      <input id="rent" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 2000">
+      <label class="f" for="mod">打算用在無障礙改善的錢（最多 2 萬元）</label>
+      <input id="mod" type="number" inputmode="numeric" min="0" max="20000" step="1000" placeholder="例如 0">
+      <label class="f" for="inc3">家裡的經濟身分</label>
+      <select id="inc3"><option value="gen">一般</option><option value="mid">中低收入戶</option><option value="low">低收入戶</option></select>
+    </div>
+    <div>
+      <p class="note" style="margin-bottom:4px">每個月自己大約出</p>
+      <div class="big" id="rentBig">—</div>
+      <p id="rentSub" style="margin:10px 0 0"></p>
+    </div>
+  </div>
+</div></section>
+
 <section class="band" id="flow"><div class="wrap center">
   <h2 class="sec-title">要怎麼辦？四個步驟</h2>
   <ol class="flow">
@@ -275,7 +345,10 @@ footer{font-size:15px;color:var(--mute);border-top:1px solid var(--line);padding
     <div><dt>核銷<small>檢據請款</small></dt><dd>買好之後，拿發票等文件去跟政府拿回補助款</dd></div>
     <div><dt>最低使用年限</dt><dd>同一樣輔具要用滿幾年，才能再申請一次補助</dd></div>
     <div><dt>實物給付</dt><dd>政府直接給你輔具，可能是整理消毒過的二手品，不是給錢</dd></div>
-    <div><dt>給付額度</dt><dd>政府在一段時間內最多願意幫你出的錢　長照輔具是每 3 年 4 萬元</dd></div>
+    <div><dt>給付額度</dt><dd>政府在一段時間內最多願意幫你出的錢　長照輔具第一組每 3 年 4 萬元、第二組每 3 年 6 萬元</dd></div>
+    <div><dt>第一組／第二組</dt><dd>長照 3.0 把輔具補助分成傳統輔具（4 萬）和智慧輔具（6 萬）兩組，只能選一組</dd></div>
+    <div><dt>全租賃</dt><dd>只能租、不能買，用完或不需要時要還給輔具店</dd></div>
+    <div><dt>甲類輔具評估人員</dt><dd>政府認可、可以評估比較複雜輔具的專業人員，多在輔具中心或醫院</dd></div>
   </dl>
 </div></section>
 
@@ -286,12 +359,13 @@ footer{font-size:15px;color:var(--mute);border-top:1px solid var(--line);padding
     <a href="https://newrepat.sfaa.gov.tw/" rel="noopener"><strong>找各縣市輔具中心</strong><span>輔具資源入口網，查電話、地址與表單</span></a>
     <a href="https://atonline.sfaa.gov.tw/" rel="noopener"><strong>身障輔具線上申請</strong><span>需要自然人憑證；不會用可以直接到區公所辦</span></a>
     <a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0050060" rel="noopener"><strong>身障輔具補助規定原文</strong><span>全國法規資料庫，含每項輔具的補助表</span></a>
-    <a href="https://www.mohw.gov.tw/cp-16-87062-1.html" rel="noopener"><strong>長照智慧輔具新制</strong><span>衛福部 115 年 7 月 1 日公告</span></a>
+    <a href="https://www.mohw.gov.tw/cp-16-87062-1.html" rel="noopener"><strong>長照 3.0 智慧輔具新制</strong><span>衛福部 115 年 7 月 1 日公告</span></a>
+    <a href="https://ltcat.mohw.gov.tw/" rel="noopener"><strong>長期照顧輔具產品資料庫</strong><span>查哪些智慧輔具型號可以補助</span></a>
     <a href="https://www.mohw.gov.tw/" rel="noopener"><strong>衛生福利部</strong><span>長照補助最新規定</span></a>
   </div>
   <footer style="text-align:left">
     <p><strong>本網站為民間整理之衛教資訊，非政府官方網站</strong>，不代辦申請、不收取費用，也未與任何輔具廠商合作或推薦特定品牌　內容為一般說明與估算，不構成法律或醫療建議；實際資格與金額以照管中心、區公所或輔具資源中心核定為準</p>
-    <p>整理日期：2026 年 11 月　資料依據：《長期照顧服務給付及支付基準》、《身心障礙者輔具費用補助辦法》（112 年 1 月 1 日施行）及衛福部公告　圖片皆經授權使用</p>
+    <p>整理日期：2026 年 11 月 27 日　資料依據：《長期照顧服務給付及支付基準》、《身心障礙者輔具費用補助辦法》（112 年 1 月 1 日施行）及衛福部公告　圖片皆經授權使用</p>
   </footer>
 </div></section>
 </div>
@@ -343,7 +417,7 @@ function quiz(){
   else if(base&&has('adl')) ltc={k:'yes',t:'很可能可以',b:[
     '第一步：打 1966，政府會派人到家裡看家人需要多少照顧',
     `一般輔具：每 3 年最多可以用 40,000 元，你家是「${INC[inc]}」，${selfPay}`,
-    '另一種選擇是智慧型輔具（只能租）：每 3 年 60,000 元，和上面只能選一種',
+    '長照 3.0 新選擇：智慧輔具全部用租的，每 3 年 60,000 元，和上面只能選一組（往下看「傳統還是智慧」）',
     '氣墊床、量身訂做的輪椅這類預防褥瘡的輔具，自己不用出錢']};
   else if(base) ltc={k:'maybe',t:'身分符合，還要再確認',b:['年齡或身分符合了，但要等政府派人來看，確認家人需要照顧的程度夠，才能用長照　只要生活上有不方便，都可以先打 1966 問問看']};
   else ltc={k:'no',t:'目前不符合',b:['長照補助給：65 歲以上、55 歲以上原住民、50 歲以上失智症，或有身障證明的人']};
@@ -379,7 +453,27 @@ $('#tbl tbody').innerHTML=items.map(x=>`<tr><td>${x.n}</td><td class="n">${fmt(x
 $('#quiz').addEventListener('change',quiz);
 ['item','inc2'].forEach(id=>$('#'+id).addEventListener('change',calc));
 $('#price').addEventListener('input',calc);
-quiz();calc();
+/* 長照 3.0：選組 */
+function pick(){
+  const v=[...document.querySelectorAll('input[name=pk]:checked')].map(x=>x.value);
+  const a=v.filter(x=>x==='1').length,b=v.filter(x=>x==='2').length;
+  let k,t,d;
+  if(!v.length){$('#pickOut').innerHTML='<div class="empty">勾選左邊符合的情況，這裡會給你一個方向</div>';return}
+  if(b>a){k='第二組：智慧輔具';t='你最在意的是安全看顧和彈性，智慧輔具的偵測、通報功能和可以換租的特性比較合適'}
+  else if(a>b){k='第一組：傳統輔具';t='你需要的是買下來長期用的輔具或比較多的居家改裝，傳統輔具品項比較齊全'}
+  else{k='兩組都有道理';t='可以先把兩邊的需求都列出來，請評估人員一起比較'}
+  $('#pickOut').innerHTML=`<div class="verdict"><span class="tag" style="background:var(--ok);color:var(--bg)">比較適合</span><h3>${k}</h3><p>${t}</p><p class="note">這只是方向參考，最後要由照管專員和輔具評估人員依家人狀況一起決定</p></div>`;
+}
+function rent(){
+  const r=+$('#rent').value,m=Math.min(20000,Math.max(0,+$('#mod').value||0)),inc=$('#inc3').value;
+  if(!(r>0)){$('#rentBig').textContent='—';$('#rentSub').textContent='先輸入輔具店給你的每月租金';return}
+  const self=Math.round(r*(1-LTC[inc])),left=60000-m,mon=Math.min(36,Math.floor(left/r));
+  $('#rentBig').textContent=fmt(self);
+  $('#rentSub').innerHTML=`政府每個月出 ${fmt(r-self)}　扣掉無障礙改善 ${fmt(m)} 後，額度還有 ${fmt(left)}，大約可以租 <strong style="white-space:nowrap">${mon} 個月</strong>${mon<36?'，不到 3 年，超過的月份要自己付或跟評估人員討論':'，可以撐滿 3 年'}`;
+}
+$('#pickForm').addEventListener('change',pick);
+['rent','mod'].forEach(id=>$('#'+id).addEventListener('input',rent));$('#inc3').addEventListener('change',rent);
+quiz();calc();pick();rent();
 }
 </script>
 </body>
