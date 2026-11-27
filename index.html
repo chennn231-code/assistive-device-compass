@@ -263,6 +263,19 @@ select:focus,input:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3
 .shop-tips ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .shop-tips li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
 .shop-tips b{display:block;color:var(--brown);margin-bottom:2px}.shop-tips li span{font-size:var(--sm)}
+.explain{background:var(--card);border:1px solid var(--line);border-radius:18px;margin:0 0 18px;padding:0 20px}
+.explain summary{list-style:none;cursor:pointer;min-height:56px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
+.explain summary::-webkit-details-marker{display:none}
+.explain summary::before{content:"？";display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--pill);border:1.5px solid var(--ink);font-size:15px;flex:none}
+.explain summary small{margin-left:auto;font-weight:400;color:var(--mute);font-size:14px}
+.explain[open] summary small{visibility:hidden}
+.explain[open]{border-color:var(--brown)}
+.ex-body{padding:0 0 18px;animation:up .35s ease-out}
+.ex-body p{margin:0 0 12px}
+.ex-body ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ex-body li{background:var(--soft);border-radius:14px;padding:12px 14px}
+.ex-body li b{display:block;color:var(--brown);margin-bottom:2px}.ex-body li span{font-size:var(--sm)}
+@media(max-width:600px){.ex-body ul{grid-template-columns:minmax(0,1fr)}}
 /* 圖解 */
 .viz{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);grid-template-rows:auto auto;gap:14px;margin-bottom:22px}
 .viz figure{margin:0}.vz-main{grid-row:1/3}
@@ -674,6 +687,18 @@ footer a{color:var(--bg)}
     <label><input type="radio" name="wt" value="ctr" checked>輔具中心</label>
     <label><input type="radio" name="wt" value="shop">輔具店（長照特約）</label>
   </div>
+  <details class="explain">
+    <summary><span>什麼是「特約店家」？</span><small>點開看說明</small></summary>
+    <div class="ex-body">
+      <p><strong>特約店家</strong>是和縣市政府簽約、可以提供補助輔具的店家　長照的輔具、租賃和居家無障礙改善，要在長照特約單位使用補助</p>
+      <ul>
+        <li><b>比較方便</b><span>帶著核定公文去買，結帳時直接扣掉補助，通常只付自己負擔的部分，店家會幫你向政府請款</span></li>
+        <li><b>怎麼認</b><span>特約店家要在明顯處張貼「長照特約標誌」，也可以請照管專員提供名冊</span></li>
+        <li><b>身障輔具</b><span>向縣市的特約廠商購買可以直接扣除補助，也可以先付全額再自己請款，各縣市做法略有不同</span></li>
+        <li><b>先問再買</b><span>不論哪一種，都要<strong>先拿到核定再購買</strong>　到非特約店家買可能無法使用長照補助，請先問照管專員或輔具中心</span></li>
+      </ul>
+    </div>
+  </details>
   <div id="ctrPane">
     <div class="centers" id="centers" aria-live="polite"></div>
     <p class="note" style="margin-top:16px">資料來源：衛福部社家署輔具中心聯絡資料表及縣市政府公告　電話、地址或服務時間可能調整，<strong>出門前請先打電話確認</strong></p>
@@ -936,7 +961,7 @@ function rent(){
 /* 縣市 */
 const CENTERS={
  '臺北市':[['臺北市西區輔具資源中心','02-2523-7902','臺北市中山區長安西路 5 巷 2 號 2 樓','中正、萬華、大安、松山'],['臺北市南區輔具資源中心','02-2720-7364','臺北市信義區信義路 5 段 150 巷 316 號 7 樓','文山、信義、內湖、南港'],['臺北市合宜輔具資源中心','02-7713-7760','臺北市中山區玉門街 1 號','大同、士林、中山、北投']],
- '新北市':[['新北市輔具資源中心','02-8286-7045','新北市蘆洲區集賢路 245 號 9 樓']],
+ '新北市':[['新北市輔具資源中心（蘆洲中心）','02-8286-7045','新北市蘆洲區集賢路 245 號 9 樓'],['新北市輔具資源中心（新店中心）','02-2912-1911','新北市新店區北新路一段 281 號']],
  '桃園市':[['桃園市輔具資源中心','03-368-3040','桃園市八德區介壽路 2 段 901 巷 49 弄 91 號']],
  '臺中市':[['臺中市南區輔具資源中心','04-2471-3535','臺中市南屯區東興路 1 段 450 號'],['臺中市北區輔具資源中心','04-2531-4200','臺中市潭子區中山路 2 段 241 巷 7 號 1 樓'],['臺中市海線輔具資源中心','04-2662-7152','臺中市沙鹿區成功西街 31 號']],
  '臺南市':[['臺南市輔具資源中心','06-209-8938','臺南市東區林森路 2 段 500 號']],
@@ -967,6 +992,7 @@ function city(){
   $('#centers').innerHTML=list.map(({x:[n,tel,addr,area],hit})=>{
     const dial=tel.split(' ')[0].replace(/-/g,'')+(tel.includes('分機')?','+tel.split('分機')[1].trim().split('-')[0]:'');
     return `<article class="ctr${hit?' mine':''}">${hit?'<span class="tag" style="background:var(--ok);color:var(--bg);margin-bottom:8px">負責你這一區</span>':''}<h3>${n}</h3>${area?`<p><span class="k">服務區域</span>${area}</p>`:''}<p><span class="k">電話</span><span class="tel">${tel}</span></p><p><span class="k">地址</span>${addr}</p><div class="acts"><a href="tel:${dial}">撥打電話</a><a class="sec2" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}" rel="noopener">看地圖</a></div></article>`}).join('')+
+    (c==='新北市'?`<article class="ctr"><h3>新北市還有 12 個分站</h3><p>可以就近捐贈或領用二手輔具，各分站地址與即時庫存請看新北市輔具資源中心網站</p><div class="acts"><a class="sec2" href="https://atrc.aihsin.ntpc.gov.tw/About/3" rel="noopener">查看分站</a></div></article>`:'')+
     `<article class="ctr"><h3>${c}的長照申請</h3><p>申請長照評估、詢問進度</p><p><span class="k">電話</span><span class="tel">1966</span></p><div class="acts"><a href="tel:1966">撥打 1966</a></div></article>`;
 }
 $('#city').addEventListener('change',()=>{city();if($('#city').value)$('#centers').scrollIntoView({block:'nearest'})});
@@ -985,9 +1011,10 @@ function shops(){
   const place=c+d;
   const g=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
   const s=q=>'https://www.google.com/search?q='+encodeURIComponent(q);
+  const OFF={'新北市':'https://atrc.aihsin.ntpc.gov.tw/'};
   $('#shops').innerHTML=`
   <article class="shop"><span class="lab">官方查詢</span><h3>長照服務資源地理地圖</h3><p>衛福部的查詢系統，輸入住址或開啟定位，可查附近的長照服務單位與聯絡方式</p><a class="btn" href="https://ltcpap.mohw.gov.tw/public/index.html" rel="noopener">開啟官方地圖</a></article>
-  <article class="shop"><span class="lab">官方名冊</span><h3>${esc(c)}長照輔具特約名單</h3><p>特約名單由各縣市衛生局或長照管理中心公告，也可以撥 1966 請照管專員提供</p><a class="btn" href="${s(c+' 長照 輔具 特約單位 名冊 site:gov.tw')}" rel="noopener">搜尋${esc(c)}政府公告</a></article>
+  <article class="shop"><span class="lab">官方名冊</span><h3>${esc(c)}長照輔具特約名單</h3><p>特約名單由各縣市衛生局或長照管理中心公告，也可以撥 1966 請照管專員提供</p>${OFF[c]?`<a class="btn" href="${OFF[c]}" rel="noopener">看${esc(c)}特約廠商</a>`:`<a class="btn" href="${s(c+' 長照 輔具 特約單位 名冊 site:gov.tw')}" rel="noopener">搜尋${esc(c)}政府公告</a>`}</article>
   <article class="shop"><span class="lab">地圖搜尋</span><h3>${esc(place)}附近的輔具店</h3><p>用地圖看離你最近的輔具店，出發前先打電話問是不是長照特約、有沒有你要的品項</p><a class="btn" href="${g(place+' 輔具')}" rel="noopener">在地圖上查看</a></article>`;
 }
 const DIST={"臺北市":["中正區","大同區","中山區","松山區","大安區","萬華區","信義區","士林區","北投區","內湖區","南港區","文山區"],"新北市":["板橋區","三重區","中和區","永和區","新莊區","新店區","樹林區","鶯歌區","三峽區","淡水區","汐止區","瑞芳區","土城區","蘆洲區","五股區","泰山區","林口區","深坑區","石碇區","坪林區","三芝區","石門區","八里區","平溪區","雙溪區","貢寮區","金山區","萬里區","烏來區"],"桃園市":["桃園區","中壢區","大溪區","楊梅區","蘆竹區","大園區","龜山區","八德區","龍潭區","平鎮區","新屋區","觀音區","復興區"],"臺中市":["中區","東區","南區","西區","北區","西屯區","南屯區","北屯區","豐原區","東勢區","大甲區","清水區","沙鹿區","梧棲區","后里區","神岡區","潭子區","大雅區","新社區","石岡區","外埔區","大安區","烏日區","大肚區","龍井區","霧峰區","太平區","大里區","和平區"],"臺南市":["中西區","東區","南區","北區","安平區","安南區","永康區","歸仁區","新化區","左鎮區","玉井區","楠西區","南化區","仁德區","關廟區","龍崎區","官田區","麻豆區","佳里區","西港區","七股區","將軍區","學甲區","北門區","新營區","後壁區","白河區","東山區","六甲區","下營區","柳營區","鹽水區","善化區","大內區","山上區","新市區","安定區"],"高雄市":["新興區","前金區","苓雅區","鹽埕區","鼓山區","旗津區","前鎮區","三民區","楠梓區","小港區","左營區","仁武區","大社區","岡山區","路竹區","阿蓮區","田寮區","燕巢區","橋頭區","梓官區","彌陀區","永安區","湖內區","鳳山區","大寮區","林園區","鳥松區","大樹區","旗山區","美濃區","六龜區","內門區","杉林區","甲仙區","桃源區","那瑪夏區","茂林區","茄萣區"],"基隆市":["仁愛區","信義區","中正區","中山區","安樂區","暖暖區","七堵區"],"新竹市":["東區","北區","香山區"],"新竹縣":["竹北市","竹東鎮","新埔鎮","關西鎮","湖口鄉","新豐鄉","芎林鄉","橫山鄉","北埔鄉","寶山鄉","峨眉鄉","尖石鄉","五峰鄉"],"苗栗縣":["苗栗市","頭份市","苑裡鎮","通霄鎮","竹南鎮","後龍鎮","卓蘭鎮","大湖鄉","公館鄉","銅鑼鄉","南庄鄉","頭屋鄉","三義鄉","西湖鄉","造橋鄉","三灣鄉","獅潭鄉","泰安鄉"],"彰化縣":["彰化市","員林市","鹿港鎮","和美鎮","北斗鎮","溪湖鎮","田中鎮","二林鎮","線西鄉","伸港鄉","福興鄉","秀水鄉","花壇鄉","芬園鄉","大村鄉","埔鹽鄉","埔心鄉","永靖鄉","社頭鄉","二水鄉","田尾鄉","埤頭鄉","芳苑鄉","大城鄉","竹塘鄉","溪州鄉"],"南投縣":["南投市","埔里鎮","草屯鎮","竹山鎮","集集鎮","名間鄉","鹿谷鄉","中寮鄉","魚池鄉","國姓鄉","水里鄉","信義鄉","仁愛鄉"],"雲林縣":["斗六市","斗南鎮","虎尾鎮","西螺鎮","土庫鎮","北港鎮","古坑鄉","大埤鄉","莿桐鄉","林內鄉","二崙鄉","崙背鄉","麥寮鄉","東勢鄉","褒忠鄉","臺西鄉","元長鄉","四湖鄉","口湖鄉","水林鄉"],"嘉義市":["東區","西區"],"嘉義縣":["太保市","朴子市","布袋鎮","大林鎮","民雄鄉","溪口鄉","新港鄉","六腳鄉","東石鄉","義竹鄉","鹿草鄉","水上鄉","中埔鄉","竹崎鄉","梅山鄉","番路鄉","大埔鄉","阿里山鄉"],"屏東縣":["屏東市","潮州鎮","東港鎮","恆春鎮","萬丹鄉","長治鄉","麟洛鄉","九如鄉","里港鄉","鹽埔鄉","高樹鄉","萬巒鄉","內埔鄉","竹田鄉","新埤鄉","枋寮鄉","新園鄉","崁頂鄉","林邊鄉","南州鄉","佳冬鄉","琉球鄉","車城鄉","滿州鄉","枋山鄉","三地門鄉","霧臺鄉","瑪家鄉","泰武鄉","來義鄉","春日鄉","獅子鄉","牡丹鄉"],"宜蘭縣":["宜蘭市","羅東鎮","蘇澳鎮","頭城鎮","礁溪鄉","壯圍鄉","員山鄉","冬山鄉","五結鄉","三星鄉","大同鄉","南澳鄉"],"花蓮縣":["花蓮市","鳳林鎮","玉里鎮","新城鄉","吉安鄉","壽豐鄉","光復鄉","豐濱鄉","瑞穗鄉","富里鄉","秀林鄉","萬榮鄉","卓溪鄉"],"臺東縣":["臺東市","成功鎮","關山鎮","卑南鄉","大武鄉","太麻里鄉","東河鄉","長濱鄉","鹿野鄉","池上鄉","綠島鄉","延平鄉","海端鄉","達仁鄉","金峰鄉","蘭嶼鄉"],"澎湖縣":["馬公市","湖西鄉","白沙鄉","西嶼鄉","望安鄉","七美鄉"],"金門縣":["金城鎮","金湖鎮","金沙鎮","金寧鄉","烈嶼鄉","烏坵鄉"],"連江縣":["南竿鄉","北竿鄉","莒光鄉","東引鄉"]};
