@@ -377,7 +377,7 @@ footer a{color:var(--bg)}
  .svc a{display:grid;grid-template-columns:104px minmax(0,1fr);align-items:center}
  .svc .ph{aspect-ratio:auto;width:104px;height:100%;min-height:120px}
  .hero .ph{background-position:82% 40%}
- .seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.seg label{padding:0 8px;justify-content:center;font-size:16px}
+ .seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.seg label{padding:0 8px;justify-content:center;font-size:16px}
  .svc .t{padding:14px 16px}.svc p{font-size:15px;margin-bottom:6px}
  .flow,.links,.mini-notes,.duo,.dict,.cmp,.frow{grid-template-columns:minmax(0,1fr)}
  .alert{grid-template-columns:minmax(0,1fr);justify-items:start}
@@ -629,10 +629,11 @@ h1,h2,h3,.sh p{text-wrap:balance}
         <legend>家裡的經濟身分</legend>
         <div class="seg" role="radiogroup" aria-label="家裡的經濟身分">
           <label><input type="radio" name="inc" value="gen" checked>一般</label>
+          <label><input type="radio" name="inc" value="sub">領津貼或生活補助</label>
           <label><input type="radio" name="inc" value="mid">中低收入戶</label>
           <label><input type="radio" name="inc" value="low">低收入戶</label>
         </div>
-        <p class="note" style="margin:10px 0 0">沒有公所核發的低收或中低收證明，請選「一般」</p>
+        <p class="note" style="margin:10px 0 0">「領津貼或生活補助」是指領<strong>半額</strong>中低收入老人生活津貼或身障生活補助，但不是低收、中低收入戶的人　都沒有的話請選「一般」</p>
       </fieldset>
     </form>
     <div class="res" aria-live="polite">
@@ -683,7 +684,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <label class="f" for="item">要買什麼輔具</label>
       <select id="item"></select>
       <label class="f" for="inc2">家裡的經濟身分</label>
-      <select id="inc2"><option value="gen">一般</option><option value="mid">中低收入戶</option><option value="low">低收入戶</option></select>
+      <select id="inc2"><option value="gen">一般</option><option value="mid">中低收入戶</option><option value="low">低收入戶</option><option value="sub">領半額中低老人津貼或身障生活補助</option></select>
       <label class="f" for="price">店家報價（元）</label>
       <input id="price" type="number" inputmode="numeric" min="0" step="100" placeholder="例如 5000" style="margin-bottom:10px">
       <p class="note" id="itemNote" style="margin:0"></p>
@@ -708,7 +709,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
     </div>
     <div class="qbar" id="qBar" aria-hidden="true"></div>
     <p id="qTxt" style="margin:10px 0 0" aria-live="polite"></p>
-    <p class="note" style="margin-top:8px">已經用掉多少，可以問個管員或照管專員　3 年是從核定開始算，實際以照顧計畫為準</p>
+    <p class="note" style="margin-top:8px">已經用掉多少、3 年從哪一天開始算，都可以問個管員或照管專員，實際以照顧計畫為準</p>
   </div></details>
 </div></section>
 
@@ -743,7 +744,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
     </div>
     <div class="frow">
       <select id="cat" aria-label="分類"><option value="">所有分類</option></select>
-      <select id="inc4" aria-label="金額依哪種身分顯示"><option value="gen">金額以一般戶顯示</option><option value="mid">金額以中低收入戶顯示</option><option value="low">金額以低收入戶顯示</option></select>
+      <select id="inc4" aria-label="金額依哪種身分顯示"><option value="gen">金額以一般戶顯示</option><option value="mid">金額以中低收入戶顯示</option><option value="low">金額以低收入戶顯示</option><option value="sub">金額以領津貼或生活補助顯示</option></select>
     </div>
 
   </div>
@@ -810,7 +811,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
   <div class="fee">
     <div><b>怎麼計費</b><span>依實際租用期間申報，輔具單位會用「租賃服務紀錄表」記錄並請你簽名確認</span></div>
     <div><b>租金由誰訂</b><span>各特約輔具單位自訂，並報地方政府備查，所以不同店家可能不同</span></div>
-    <div><b>自己出多少</b><span>和長照一樣：一般 30%、中低收入戶 10%、低收入戶不用出</span></div>
+    <div><b>自己出多少</b><span>和長照輔具一樣：一般戶 30%；低收入戶、中低收入戶不用出；領半額中低老人津貼或身障生活補助的人 10%</span></div>
     <div><b>選了就不能換</b><span>兩組二擇一，<strong>選定後 3 年內不能換組</strong>；115 年 6 月 30 日前已核定第一組的人，要等第一組 3 年期滿</span></div>
     <div><b>原民區與離島</b><span>租金可加計 20%，<strong>加計的部分不用自付</strong>，也不扣額度</span></div>
   </div>
@@ -842,7 +843,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
         <label class="f" for="mod">無障礙改善預計花費（最多 2 萬元）</label>
         <input id="mod" type="number" inputmode="numeric" min="0" max="20000" step="1000" placeholder="例如 0">
         <label class="f" for="inc3">家裡的經濟身分</label>
-        <select id="inc3" style="margin:0"><option value="gen">一般</option><option value="mid">中低收入戶</option><option value="low">低收入戶</option></select>
+        <select id="inc3" style="margin:0"><option value="gen">一般</option><option value="mid">中低收入戶</option><option value="low">低收入戶</option><option value="sub">領半額中低老人津貼或身障生活補助</option></select>
       </div>
       <div>
         <p class="note" style="margin:0">每個月自己大約出<span class="est">估算</span></p>
@@ -998,7 +999,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
   <div class="links">
     <a class="lk" href="tel:1966"><strong>長照專線 1966</strong><span>手機、市話直撥，詢問長照申請與進度</span></a>
     <a class="lk" href="https://newrepat.sfaa.gov.tw/" rel="noopener"><strong>輔具資源入口網</strong><span>各縣市輔具中心、申請表單</span></a>
-    <a class="lk" href="https://atonline.sfaa.gov.tw/" rel="noopener"><strong>身障輔具線上申請</strong><span>需要自然人憑證，也可到區公所辦</span></a>
+    <a class="lk" href="https://atonline.sfaa.gov.tw/" rel="noopener"><strong>身障輔具線上申請</strong><span>可以線上送件，不方便的話也可到區公所辦</span></a>
     <a class="lk" href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0050060" rel="noopener"><strong>身障輔具補助規定原文</strong><span>全國法規資料庫，含補助基準表</span></a>
     <a class="lk" href="https://www.mohw.gov.tw/cp-16-87062-1.html" rel="noopener"><strong>長照 3.0 智慧輔具新制</strong><span>衛生福利部公告</span></a>
     <a class="lk" href="https://www.mohw.gov.tw/dl-101314-a5590920-5f8d-4ead-b508-fe4b204fcd36.html" rel="noopener"><strong>智慧輔具規定問答集</strong><span>衛福部 115 年 7 月 22 日版</span></a>
@@ -1032,7 +1033,8 @@ const save=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},load=k=>{try{return
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=n=>n==null?'—':n.toLocaleString('zh-TW')+' 元';
 const pulse=el=>{el.classList.remove('pulse');void el.offsetWidth;el.classList.add('pulse')};
-const LTC={gen:.7,mid:.9,low:1},DIS={gen:.5,mid:.75,low:1},INC={gen:'一般',mid:'中低收入戶',low:'低收入戶'};
+/* 長照部分負擔依《長期照顧服務申請及給付辦法》第 14 條與附表五：第一類（低收、中低收入戶、全額中低老人津貼）0%，第二類（半額中低老人津貼或身障生活補助）10%，第三類 30% */
+const LTC={gen:.7,sub:.9,mid:1,low:1},DIS={gen:.5,sub:.5,mid:.75,low:1},INC={gen:'一般',sub:'領津貼或生活補助',mid:'中低收入戶',low:'低收入戶'};
 
 /* 彈出選單 */
 const pops=[['setBtn','setPop'],['tocBtn','tocPop']];
@@ -1075,7 +1077,7 @@ function quiz(){
   const v=$$('input[name=q]:checked').map(x=>x.value),has=k=>v.includes(k),inc=document.querySelector('input[name=inc]:checked').value;
   if(!v.length){$('#out').innerHTML='<div class="empty">勾選家人的狀況後，結果會出現在這裡</div>';return}
   const base=has('65')||has('ind')||has('dem')||has('dis')||has('pac');
-  const selfPay=inc==='low'?'自己不用出':`自己出 ${Math.round((1-LTC[inc])*100)}%`;
+  const selfPay=LTC[inc]===1?'價格上限內自己不用出':`自己出 ${Math.round((1-LTC[inc])*100)}%`;
   let ltc,dis;
   if(has('inst'))ltc={k:'no',t:'可能不適用',b:['住在住宿機構或團體家屋，通常不適用長照居家服務與輔具補助，可詢問機構或縣市政府其他補助']};
   else if(base&&has('adl'))ltc={k:'yes',t:'看起來符合申請條件',b:['撥 1966 申請，照管專員會到家裡評估需要照顧的程度（2 級以上才能使用）',`第一組傳統輔具每 3 年最多 4 萬元，「${INC[inc]}」${selfPay}`,'也可選第二組智慧輔具（只能租）每 3 年 6 萬元，兩組選一組　<a href="#v3">看智慧輔具專區</a>']};
@@ -1093,7 +1095,7 @@ $('#quiz').addEventListener('change',quiz);
 /* 流程 */
 const FLOW={
  L:[['請人來評估','評估','撥 1966 或聯絡照管中心，照管專員到家裡了解需要照顧的程度'],['等待核定','核定','照管中心核定照顧計畫，裡面會寫可以使用哪些輔具'],['購買或租用','購買','到長照合作的輔具店買或租，記得拿發票和保固書'],['付自己的部分','核銷','多數由輔具店向政府請款，你只要付自己負擔的部分']],
- D:[['確認是否要評估','評估','洗澡椅、一般輪椅等免評估；其他品項先向輔具中心預約評估'],['送件等核定','核定','線上或到戶籍地區公所申請，政府會寄書面通知'],['6 個月內購買','購買','收到核定通知後 6 個月內完成購買'],['拿發票請款','核銷','把發票等文件交給公所，受理後約 1 個月撥款']],
+ D:[['確認是否要評估','評估','洗澡椅、一般輪椅等免評估；其他品項先向輔具中心預約評估'],['送件等核定','核定','線上或到戶籍地區公所申請，政府會寄書面通知'],['6 個月內購買','購買','收到核定通知後 6 個月內完成購買'],['拿發票請款','核銷','把發票等文件交給公所，審核後撥款；在特約廠商買的，多由廠商代為請款']],
  M:[['取得醫師證明','評估','由醫師開立診斷證明，部分品項還要醫療輔具評估報告'],['向衛生局申請','核定','向戶籍所在縣市衛生局送件，等待核定'],['依核定購買','購買','依核定內容向合法醫療器材商購買或租用'],['檢據請款','核銷','依衛生局通知，檢附發票等文件申請撥款']]};
 /* 流程：誰負責 */
 const WHO_I={you:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.8 3.6-5.6 7-5.6s6.2 1.8 7 5.6"/></svg>',
@@ -1108,14 +1110,14 @@ $$('input[name=route]').forEach(x=>x.addEventListener('change',flow));flow();
 
 /* 試算 */
 const items=[
- {n:'洗澡椅／便盆椅／馬桶增高器',c:'EA01',ltc:1200,dis:900,y:3,ev:0,p:1800},
+ {n:'洗澡椅（沐浴椅）',c:'EA01',ltc:1200,dis:900,y:3,ev:0,p:1800},
  {n:'一般輪椅',c:'EC01',ltc:3500,dis:3500,y:3,ev:0,p:4500},
  {n:'輕量輪椅',c:'EC02',ltc:4000,dis:4000,y:3,ev:0,p:6800},
  {n:'量身訂做的輪椅',c:'EC03',ltc:9000,lf:1,dis:9000,df:1,y:3,ev:1,p:15000},
  {n:'氣墊床（基本款）',c:'EG01',ltc:8000,lf:1,dis:10000,df:1,y:3,ev:1,p:9000},
  {n:'氣墊床（進階款）',c:'EG02',ltc:12000,lf:1,dis:14000,df:1,y:3,ev:1,p:16000},
- {n:'居家照顧床',c:'EH01',ltc:8000,dis:null,y:5,ev:1,p:12000},
- {n:'照顧床加裝電動升降',c:'EH03',ltc:5000,dis:null,y:5,ev:1,p:6000}
+ {n:'居家照顧床',c:'EH01',ltc:8000,dis:9000,y:5,ev:1,p:12000},
+ {n:'照顧床加裝電動升降',c:'EH03',ltc:5000,dis:6000,y:5,ev:1,p:6000}
 ];
 $('#item').innerHTML=items.map((x,i)=>`<option value="${i}">${x.n}</option>`).join('');
 function calc(){
@@ -1167,7 +1169,7 @@ function card(o,inc,terms){
     facts.push(o.f?'<span class="g">全額補助</span>':`<span>自付 ${Math.round((1-LTC[inc])*100)}%</span>`);
     if(o.cap)det.push(`品項上限 ${fmt(o.cap)}`);
     if(o.cap&&o.r>0)det.push(`也可以租，每月上限 ${fmt(o.r)}`);
-    det.push(o.f?'不分身分全額補助':'自己負擔：一般 30%、中低收 10%、低收 0');
+    det.push(o.f?'不分身分免部分負擔':'自己負擔：一般戶 30%、領半額中低老人津貼或身障生活補助 10%、低收及中低收入戶 0');
     if(o.c.startsWith('EI'))det.push('只有第二組可以使用');
     else if(o.c.startsWith('FA'))det.push('第一組、第二組都可使用（第二組無障礙改善最多 2 萬元）');
     else if(['EA01','EB01','EB02','EB03'].includes(o.c))det.push('第一組、第二組都可使用');
@@ -1472,7 +1474,7 @@ $('#dist').addEventListener('change',()=>{save('dist',$('#dist').value);city();s
 const CMS=[[1,0],[2,10020],[3,15460],[4,18580],[5,24100],[6,28070],[7,32090],[8,36180]];
 $('#cmsBars').innerHTML=CMS.map(([l,v])=>`<div class="bar${v?'':' off'}"><span class="lv">第 ${l} 級</span><div class="tr"><div class="fl" data-w="${v/36180*100}"></div></div><span class="v">${v?v.toLocaleString('zh-TW')+' 元':'不列入給付'}</span></div>`).join('');
 const sb=(t,g,gl,sl,sv)=>`<div class="sb"><div class="t"><b>${t}</b><span>${sv}</span></div><div class="trk"><span class="g" style="width:${g}%">${gl}</span>${g<100?`<span class="s" style="width:${100-g}%">${sl}</span>`:''}</div></div>`;
-$('#payBars').innerHTML=sb('長照・一般',70,'政府 70%','自付 30%','')+sb('長照・中低收入戶',90,'政府 90%','10%','')+sb('長照・低收入戶',100,'政府全額','','')+sb('身障・一般',50,'政府 50%','自付 50%','')+sb('身障・中低收入戶',75,'政府 75%','25%','');
+$('#payBars').innerHTML=sb('長照・一般',70,'政府 70%','自付 30%','')+sb('長照・領半額津貼或身障生活補助',90,'政府 90%','10%','')+sb('長照・低收或中低收入戶',100,'政府全額','','')+sb('身障・一般',50,'政府 50%','自付 50%','')+sb('身障・中低收入戶',75,'政府 75%','25%','');
 $('#quotaBars').innerHTML=sb('第一組・傳統輔具',100,'4 萬元','','買或租')+`<div class="sb"><div class="t"><b>第二組・智慧輔具</b><span>共 6 萬元</span></div><div class="trk"><span class="g" style="width:66.7%">輔具至少 4 萬</span><span class="s" style="width:33.3%">無障礙最多 2 萬</span></div></div>`;
 const growBars=()=>$$('#cmsBars .fl').forEach(f=>f.style.width=f.dataset.w+'%');
 if('IntersectionObserver' in window){const bo=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){growBars();bo.disconnect()}});bo.observe($('#cmsBars'))}else growBars();
