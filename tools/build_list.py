@@ -372,6 +372,6 @@ for r in M.splitlines():
     out.append({'s':'M','c':c,'g':cat,'n':n,'cap':int(a),'mid':int(b),'gen':int(g),'y':float(y),'ev':doc})
 js=json.dumps(out,ensure_ascii=False,separators=(',',':'))
 assert '。' not in js and '`' not in js
-open('/home/claude/aids/list_data.js','w').write('const ALL='+js+';')
+open('list_data.js','w').write('const ALL='+js+';')
 from collections import Counter
 print(Counter(o['s'] for o in out), len(js))
