@@ -243,6 +243,7 @@ select:focus,input:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3
 .centers{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px;margin-top:6px}
 .ctr{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 22px;box-shadow:var(--shadow)}
 .ctr h3{font-size:19px;margin-bottom:10px}
+.ctr.mine{border:2px solid var(--ok)}
 .ctr p{margin:0 0 4px}.ctr .k{color:var(--mute);font-size:var(--sm);margin-right:8px}
 .ctr .tel{font-size:20px;font-weight:700;white-space:nowrap}
 .ctr .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
@@ -667,7 +668,7 @@ footer a{color:var(--bg)}
   <div class="sh"><h2>找輔具中心和輔具店</h2><p>輸入你住的地方，看附近的輔具中心，以及怎麼找到長照特約的輔具店</p></div>
   <div class="where">
     <div><label class="f" for="city">縣市</label><select id="city"><option value="">請選擇縣市</option></select></div>
-    <div><label class="f" for="dist">行政區（可不填）</label><input id="dist" type="search" placeholder="例如 中山區" autocomplete="off"></div>
+    <div><label class="f" for="dist">鄉鎮市區（可不選）</label><select id="dist" disabled><option value="">先選縣市</option></select></div>
   </div>
   <div class="tabs" role="radiogroup" aria-label="要找什麼" style="margin-bottom:18px">
     <label><input type="radio" name="wt" value="ctr" checked>輔具中心</label>
@@ -961,13 +962,15 @@ $('#city').insertAdjacentHTML('beforeend',Object.keys(CENTERS).map(c=>`<option>$
 function city(){
   const c=$('#city').value;save('city',c);
   if(!c){$('#centers').innerHTML='<div class="empty" style="grid-column:1/-1">選好縣市後，這裡會顯示當地輔具中心</div>';return}
-  $('#centers').innerHTML=CENTERS[c].map(([n,tel,addr,area])=>{
+  const dv=($('#dist')&&$('#dist').value||'').replace(/[區鄉鎮市]$/,'');
+  const list=CENTERS[c].map(x=>({x,hit:!!(dv&&x[3]&&x[3].includes(dv))})).sort((a,b)=>b.hit-a.hit);
+  $('#centers').innerHTML=list.map(({x:[n,tel,addr,area],hit})=>{
     const dial=tel.split(' ')[0].replace(/-/g,'')+(tel.includes('分機')?','+tel.split('分機')[1].trim().split('-')[0]:'');
-    return `<article class="ctr"><h3>${n}</h3>${area?`<p><span class="k">服務區域</span>${area}</p>`:''}<p><span class="k">電話</span><span class="tel">${tel}</span></p><p><span class="k">地址</span>${addr}</p><div class="acts"><a href="tel:${dial}">撥打電話</a><a class="sec2" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}" rel="noopener">看地圖</a></div></article>`}).join('')+
+    return `<article class="ctr${hit?' mine':''}">${hit?'<span class="tag" style="background:var(--ok);color:var(--bg);margin-bottom:8px">負責你這一區</span>':''}<h3>${n}</h3>${area?`<p><span class="k">服務區域</span>${area}</p>`:''}<p><span class="k">電話</span><span class="tel">${tel}</span></p><p><span class="k">地址</span>${addr}</p><div class="acts"><a href="tel:${dial}">撥打電話</a><a class="sec2" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}" rel="noopener">看地圖</a></div></article>`}).join('')+
     `<article class="ctr"><h3>${c}的長照申請</h3><p>申請長照評估、詢問進度</p><p><span class="k">電話</span><span class="tel">1966</span></p><div class="acts"><a href="tel:1966">撥打 1966</a></div></article>`;
 }
 $('#city').addEventListener('change',()=>{city();if($('#city').value)$('#centers').scrollIntoView({block:'nearest'})});
-{const c=load('city');if(c&&CENTERS[c])$('#city').value=c;}
+
 
 /* 名詞 */
 const DICT=[['照管專員','照顧管理專員','政府派到家裡了解狀況、安排長照服務的人'],['失能等級','CMS 等級','需要被照顧的程度，分 1 到 8 級，2 級以上才能使用長照，每級額度看上方圖解'],['評估報告書','','治療師或輔具中心人員寫的證明，說明需要哪種輔具、什麼規格'],['核定','','政府正式同意補助，會有照顧計畫或書面通知'],['特約廠商','','和政府簽約合作的輔具店，門口會貼長照特約標誌，可在上方「找輔具店」查詢'],['部分負擔','自付額','政府補助以外，自己要出的那部分，比例看上方圖解'],['核銷','檢據請款','買好之後拿發票等文件，向政府申請補助款'],['最低使用年限','','同一樣輔具要用滿幾年，才能再申請一次'],['實物給付','','政府直接提供輔具（可能是整理消毒過的二手品），不是給錢'],['給付額度','','一段時間內政府最多幫你出的錢，長照輔具第一組每 3 年 4 萬、第二組 6 萬'],['第一組／第二組','長照 3.0','傳統輔具（4 萬）與智慧輔具（6 萬）兩組，3 年內選一組'],['全租賃','','以租代買，不需要時歸還；長照智慧輔具原則上採租賃'],['甲類輔具評估人員','','政府認可、能評估較複雜輔具的專業人員，多在輔具中心或醫院'],['醫療輔具','','呼吸照護、壓力衣等，要有身障證明，向衛生局申請']];
@@ -977,9 +980,9 @@ $('#dictList').innerHTML=DICT.map(([t,a,d])=>`<details><summary><span>${t}${a?`<
 /* 找輔具店 */
 $$('input[name=wt]').forEach(r=>r.addEventListener('change',()=>{const v=document.querySelector('input[name=wt]:checked').value;$('#ctrPane').hidden=v!=='ctr';$('#shopPane').hidden=v!=='shop';shops()}));
 function shops(){
-  const c=$('#city').value,d=$('#dist').value.trim().replace(/[<>"'&]/g,'');
+  const c=$('#city').value,d=$('#dist').value;
   if(!c){$('#shops').innerHTML='<div class="empty" style="grid-column:1/-1">先選縣市，可再填行政區，例如「中山區」</div>';return}
-  const place=c+(d?(d.endsWith('區')||d.endsWith('鄉')||d.endsWith('鎮')||d.endsWith('市')?d:d+'區'):'');
+  const place=c+d;
   const g=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
   const s=q=>'https://www.google.com/search?q='+encodeURIComponent(q);
   $('#shops').innerHTML=`
@@ -987,7 +990,11 @@ function shops(){
   <article class="shop"><span class="lab">官方名冊</span><h3>${esc(c)}長照輔具特約名單</h3><p>特約名單由各縣市衛生局或長照管理中心公告，也可以撥 1966 請照管專員提供</p><a class="btn" href="${s(c+' 長照 輔具 特約單位 名冊 site:gov.tw')}" rel="noopener">搜尋${esc(c)}政府公告</a></article>
   <article class="shop"><span class="lab">地圖搜尋</span><h3>${esc(place)}附近的輔具店</h3><p>用地圖看離你最近的輔具店，出發前先打電話問是不是長照特約、有沒有你要的品項</p><a class="btn" href="${g(place+' 輔具')}" rel="noopener">在地圖上查看</a></article>`;
 }
-['#city','#dist'].forEach(s=>$(s).addEventListener(s==='#dist'?'input':'change',()=>{if(!$('#shopPane').hidden)shops()}));
+const DIST={"臺北市":["中正區","大同區","中山區","松山區","大安區","萬華區","信義區","士林區","北投區","內湖區","南港區","文山區"],"新北市":["板橋區","三重區","中和區","永和區","新莊區","新店區","樹林區","鶯歌區","三峽區","淡水區","汐止區","瑞芳區","土城區","蘆洲區","五股區","泰山區","林口區","深坑區","石碇區","坪林區","三芝區","石門區","八里區","平溪區","雙溪區","貢寮區","金山區","萬里區","烏來區"],"桃園市":["桃園區","中壢區","大溪區","楊梅區","蘆竹區","大園區","龜山區","八德區","龍潭區","平鎮區","新屋區","觀音區","復興區"],"臺中市":["中區","東區","南區","西區","北區","西屯區","南屯區","北屯區","豐原區","東勢區","大甲區","清水區","沙鹿區","梧棲區","后里區","神岡區","潭子區","大雅區","新社區","石岡區","外埔區","大安區","烏日區","大肚區","龍井區","霧峰區","太平區","大里區","和平區"],"臺南市":["中西區","東區","南區","北區","安平區","安南區","永康區","歸仁區","新化區","左鎮區","玉井區","楠西區","南化區","仁德區","關廟區","龍崎區","官田區","麻豆區","佳里區","西港區","七股區","將軍區","學甲區","北門區","新營區","後壁區","白河區","東山區","六甲區","下營區","柳營區","鹽水區","善化區","大內區","山上區","新市區","安定區"],"高雄市":["新興區","前金區","苓雅區","鹽埕區","鼓山區","旗津區","前鎮區","三民區","楠梓區","小港區","左營區","仁武區","大社區","岡山區","路竹區","阿蓮區","田寮區","燕巢區","橋頭區","梓官區","彌陀區","永安區","湖內區","鳳山區","大寮區","林園區","鳥松區","大樹區","旗山區","美濃區","六龜區","內門區","杉林區","甲仙區","桃源區","那瑪夏區","茂林區","茄萣區"],"基隆市":["仁愛區","信義區","中正區","中山區","安樂區","暖暖區","七堵區"],"新竹市":["東區","北區","香山區"],"新竹縣":["竹北市","竹東鎮","新埔鎮","關西鎮","湖口鄉","新豐鄉","芎林鄉","橫山鄉","北埔鄉","寶山鄉","峨眉鄉","尖石鄉","五峰鄉"],"苗栗縣":["苗栗市","頭份市","苑裡鎮","通霄鎮","竹南鎮","後龍鎮","卓蘭鎮","大湖鄉","公館鄉","銅鑼鄉","南庄鄉","頭屋鄉","三義鄉","西湖鄉","造橋鄉","三灣鄉","獅潭鄉","泰安鄉"],"彰化縣":["彰化市","員林市","鹿港鎮","和美鎮","北斗鎮","溪湖鎮","田中鎮","二林鎮","線西鄉","伸港鄉","福興鄉","秀水鄉","花壇鄉","芬園鄉","大村鄉","埔鹽鄉","埔心鄉","永靖鄉","社頭鄉","二水鄉","田尾鄉","埤頭鄉","芳苑鄉","大城鄉","竹塘鄉","溪州鄉"],"南投縣":["南投市","埔里鎮","草屯鎮","竹山鎮","集集鎮","名間鄉","鹿谷鄉","中寮鄉","魚池鄉","國姓鄉","水里鄉","信義鄉","仁愛鄉"],"雲林縣":["斗六市","斗南鎮","虎尾鎮","西螺鎮","土庫鎮","北港鎮","古坑鄉","大埤鄉","莿桐鄉","林內鄉","二崙鄉","崙背鄉","麥寮鄉","東勢鄉","褒忠鄉","臺西鄉","元長鄉","四湖鄉","口湖鄉","水林鄉"],"嘉義市":["東區","西區"],"嘉義縣":["太保市","朴子市","布袋鎮","大林鎮","民雄鄉","溪口鄉","新港鄉","六腳鄉","東石鄉","義竹鄉","鹿草鄉","水上鄉","中埔鄉","竹崎鄉","梅山鄉","番路鄉","大埔鄉","阿里山鄉"],"屏東縣":["屏東市","潮州鎮","東港鎮","恆春鎮","萬丹鄉","長治鄉","麟洛鄉","九如鄉","里港鄉","鹽埔鄉","高樹鄉","萬巒鄉","內埔鄉","竹田鄉","新埤鄉","枋寮鄉","新園鄉","崁頂鄉","林邊鄉","南州鄉","佳冬鄉","琉球鄉","車城鄉","滿州鄉","枋山鄉","三地門鄉","霧臺鄉","瑪家鄉","泰武鄉","來義鄉","春日鄉","獅子鄉","牡丹鄉"],"宜蘭縣":["宜蘭市","羅東鎮","蘇澳鎮","頭城鎮","礁溪鄉","壯圍鄉","員山鄉","冬山鄉","五結鄉","三星鄉","大同鄉","南澳鄉"],"花蓮縣":["花蓮市","鳳林鎮","玉里鎮","新城鄉","吉安鄉","壽豐鄉","光復鄉","豐濱鄉","瑞穗鄉","富里鄉","秀林鄉","萬榮鄉","卓溪鄉"],"臺東縣":["臺東市","成功鎮","關山鎮","卑南鄉","大武鄉","太麻里鄉","東河鄉","長濱鄉","鹿野鄉","池上鄉","綠島鄉","延平鄉","海端鄉","達仁鄉","金峰鄉","蘭嶼鄉"],"澎湖縣":["馬公市","湖西鄉","白沙鄉","西嶼鄉","望安鄉","七美鄉"],"金門縣":["金城鎮","金湖鎮","金沙鎮","金寧鄉","烈嶼鄉","烏坵鄉"],"連江縣":["南竿鄉","北竿鄉","莒光鄉","東引鄉"]};
+const fillDist=keep=>{const c=$('#city').value,s=$('#dist');if(!c){s.innerHTML='<option value="">先選縣市</option>';s.disabled=true;return}
+  s.disabled=false;s.innerHTML=`<option value="">不指定（${DIST[c].length} 個鄉鎮市區）</option>`+DIST[c].map(x=>`<option${x===keep?' selected':''}>${x}</option>`).join('')};
+$('#city').addEventListener('change',()=>{fillDist('');save('dist','');shops()});
+$('#dist').addEventListener('change',()=>{save('dist',$('#dist').value);city();shops()});
 
 /* 圖解 */
 const CMS=[[1,0],[2,10020],[3,15460],[4,18580],[5,24100],[6,28070],[7,32090],[8,36180]];
@@ -1022,6 +1029,7 @@ if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduc
   setTimeout(()=>targets.forEach(el=>{if(el.getBoundingClientRect().top<innerHeight)el.classList.add('in')}),50);
 }
 
+{const c=load('city');if(c&&CENTERS[c]){$('#city').value=c;fillDist(load('dist')||'')}}
 cats();find(true);quiz();calc();pick();rent();city();shops();
 }
 </script>
