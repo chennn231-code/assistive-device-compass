@@ -385,6 +385,22 @@ footer a{color:var(--bg)}
  .notice .ctl .pv{display:none}
  .brand span{font-size:17px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+
+/* 優化 2026-11-28 */
+.duo .card ul,footer ul,.path ul,.it details ul{list-style:none;padding-left:0}
+.duo .card li,footer li,.path li,.it details li{position:relative;padding-left:1.5em}
+.duo .card li::before,footer li::before,.path li::before,.it details li::before{content:"";position:absolute;left:.2em;top:.62em;width:.62em;height:.34em;border-left:2.5px solid var(--brown);border-bottom:2.5px solid var(--brown);transform:rotate(-45deg)}
+footer li::before{border-color:var(--hl)}
+.hero p.sub{text-wrap:balance;max-width:24em}
+.seg label,.tabs label{white-space:nowrap}
+.fee{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
+.vz-main{display:flex;flex-direction:column}.vz-main .bars{flex:1;display:flex;flex-direction:column;justify-content:space-evenly}
+@media(min-width:1000px){.links{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.lk strong{display:inline;background:linear-gradient(transparent 62%,var(--hl) 0);padding:0 2px}
+.lk span{display:block;margin-top:4px}
+.links{align-items:stretch}
+.notice .ctl button{font-size:20px}
+h1,h2,h3,.sh p{text-wrap:balance}
 </style>
 </head>
 <body>
