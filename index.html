@@ -145,7 +145,10 @@ select:focus,input:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3
 .stamp{width:clamp(96px,12vw,124px);aspect-ratio:1;border:3px solid #fff;border-radius:50%;display:grid;place-items:center;text-align:center;font:900 clamp(18px,2vw,21px)/1.2 "Noto Serif TC",serif;transform:rotate(-8deg)}
 .alert h2{color:#fff;margin-bottom:10px}
 .alert p{font-size:18px;margin:0 0 12px;max-width:46ch}
-.alert ul{margin:0;padding-left:22px;max-width:52ch}.alert li{margin-bottom:6px}
+.al{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px;max-width:56ch}
+.al li{display:grid;grid-template-columns:4.4em minmax(0,1fr);gap:10px;align-items:baseline}
+.al .tg{text-align:center;font-size:14px;font-weight:700;padding:2px 12px;border-radius:999px;background:#fff;color:var(--red);white-space:nowrap}
+:root[data-contrast=on] .al .tg{color:#7a0000}
 
 /* 流程 */
 .flow{list-style:none;margin:24px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:s}
@@ -392,10 +395,10 @@ footer a{color:var(--bg)}
     <div>
       <h2>先別急著買</h2>
       <p>先買了再申請，<strong>通常拿不到補助</strong>　請等政府同意之後，再去買或租</p>
-      <ul>
-        <li>長照：照顧計畫核定後，到政府合作的輔具店買或租</li>
-        <li>身障：收到核定通知後 6 個月內買好，再拿發票請款</li>
-        <li>還在住院？請醫院的出院準備小組或社工先幫你聯絡長照</li>
+      <ul class="al">
+        <li><span class="tg">長照</span><span>照顧計畫核定後，到政府合作的輔具店買或租</span></li>
+        <li><span class="tg">身障</span><span>收到核定通知後 6 個月內買好，再拿發票請款</span></li>
+        <li><span class="tg">住院中</span><span>請醫院的出院準備小組或社工先幫你聯絡長照</span></li>
       </ul>
     </div>
   </div>
