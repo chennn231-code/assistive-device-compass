@@ -458,6 +458,23 @@ body[data-mode] .sec.mhide{display:none}
 .link-btn{background:none;border:0;padding:6px 0;color:var(--brown);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer}
 .sh-prev{max-height:58vh;overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff}
 .sh-prev img{display:block;width:100%;height:auto}
+.fg-intro{background:var(--soft);border-radius:18px;padding:16px 20px;margin-bottom:16px}.fg-intro p{margin:0;line-height:1.8}
+.fg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.fg-c{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:20px 22px}
+.fg-c.ok{border-color:var(--ok)}
+.fg-c h3{margin:8px 0 8px;font-size:20px}
+.fg-c p{margin:0 0 10px;line-height:1.75}
+.fg-t{display:inline-block;font-size:14px;font-weight:700;padding:3px 12px;border-radius:999px;background:var(--soft)}
+.fg-c.ok .fg-t{background:light-dark(#e3eadb,#2f3a2a);color:light-dark(#3d5a2c,#c9dcb8)}
+.fg-c.no .fg-t{background:var(--hl);color:var(--ink)}
+.fg-who{color:var(--mute);font-size:var(--sm)}
+.fg-l{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:8px}
+.fg-l li{line-height:1.7}.fg-l b{display:block;color:var(--brown);font-size:15px}
+.fg-src{font-size:14px;color:var(--mute)}
+.fg2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.fg2>div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.fg2 b{display:block;color:var(--brown);margin-bottom:4px}.fg2 span{font-size:var(--sm);line-height:1.7}
+@media(max-width:860px){.fg,.fg2{grid-template-columns:minmax(0,1fr)}}
 .links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .lk{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
 .lk strong{display:block;color:var(--brown);font-size:18px}.lk span{font-size:var(--sm);color:var(--mute)}
@@ -708,7 +725,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
 </div>
 <nav class="card pop" id="tocPop" hidden aria-label="網站目錄">
   <ul class="toc-list">
-    <li><a href="#check">我能申請嗎</a></li><li><a href="#warn">先申請，再購買</a></li><li><a href="#flow">申請四步驟</a></li><li><a href="#online">不用出門也能辦</a></li><li><a href="#calc">能補多少錢</a></li><li><a href="#all">全部輔具查詢</a></li><li><a href="#v3">智慧輔具專區（長照 3.0）</a></li><li><a href="#home">居家無障礙改善</a></li><li><a href="#county">找輔具中心和輔具店</a></li><li><a href="#dict">公文名詞翻譯</a></li><li><a href="#history">小知識：長照 1.0 到 3.0</a></li><li><a href="#news">最新消息</a></li><li><a href="#links">官方連結</a></li>
+    <li><a href="#check">我能申請嗎</a></li><li><a href="#warn">先申請，再購買</a></li><li><a href="#flow">申請四步驟</a></li><li><a href="#online">不用出門也能辦</a></li><li><a href="#calc">能補多少錢</a></li><li><a href="#all">全部輔具查詢</a></li><li><a href="#v3">智慧輔具專區（長照 3.0）</a></li><li><a href="#home">居家無障礙改善</a></li><li><a href="#county">找輔具中心和輔具店</a></li><li><a href="#dict">公文名詞翻譯</a></li><li><a href="#history">小知識：長照 1.0 到 3.0</a></li><li><a href="#foreign">外籍人士專區</a></li><li><a href="#news">最新消息</a></li><li><a href="#links">官方連結</a></li>
   </ul>
 </nav>
 </header>
@@ -819,7 +836,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <p>先買了再申請，<strong>通常拿不到補助</strong>　請等政府同意之後，再去買或租</p>
       <ul class="al">
         <li><span class="tg">長照</span><span>照顧計畫<strong>核定後</strong>，到政府合作的輔具店買或租</span></li>
-        <li><span class="tg">身障</span><span>收到核定通知後 <strong>6 個月內</strong>買好，再拿發票請款</span></li>
+        <li><span class="tg">身障</span><span>核定公文發文後 <strong>6 個月內</strong>要買好並辦理請款</span></li>
         <li><span class="tg">住院中</span><span>請醫院的出院準備小組或社工先幫你聯絡長照</span></li>
       </ul>
     </div>
@@ -1252,12 +1269,57 @@ h1,h2,h3,.sh p{text-wrap:balance}
   <p class="note" style="margin-top:14px">本區整理自行政院、衛生福利部、社會及家庭署公開資料，日期以公告或施行日為準</p>
 </div></section>
 
-<section class="sec" id="news"><div class="wrap">
+<section class="sec" id="foreign"><div class="wrap">
+  <div class="sh"><p class="k">外籍人士專區</p><h2>沒有台灣身分證，也想在台灣使用輔具</h2><p>給在台灣生活的外國朋友、外籍配偶和他們的家人：哪些人可以申請補助、自費購買要注意什麼</p></div>
+  <div class="fg-intro"><p>台灣的長照和身障輔具補助，<strong>原則上以具我國國籍、在台灣設有戶籍的國民為對象</strong>，部分外國人是因為法律另有規定才納入　先看看自己屬於哪一種身分</p></div>
+  <div class="fg">
+    <article class="fg-c ok">
+      <span class="fg-t">可以申請長照</span>
+      <h3>外國專業人才及其眷屬</h3>
+      <p class="fg-who">外國專業人才、外國特定專業人才、外國高級專業人才，以及他們的配偶、未成年子女、因身心障礙無法自理生活的成年子女</p>
+      <ul class="fg-l">
+        <li><b>什麼時候開始</b>115 年 6 月 30 日起</li>
+        <li><b>條件</b>經移民署許可永久居留、合法累計居留 10 年、每年在台居住 183 日以上，並且 65 歲以上或符合身心障礙鑑定資格，經失能評估符合長照資格</li>
+        <li><b>可以用什麼</b>照顧及專業服務、交通接送、<strong>輔具及居家無障礙改善</strong>、喘息服務</li>
+        <li><b>補助多少</b>長照需要等級、給付額度、自付比例都和國人相同</li>
+        <li><b>怎麼申請</b>向縣市長期照顧管理中心申請，或撥 1966</li>
+      </ul>
+      <p class="fg-src">依據：《外國專業人才及其眷屬長期照顧服務申請及給付辦法》　<a href="https://www.mohw.gov.tw/cp-16-86932-1.html" rel="noopener">衛福部說明</a></p>
+    </article>
+    <article class="fg-c">
+      <span class="fg-t">身障鑑定</span>
+      <h3>外國專業人才的身心障礙鑑定</h3>
+      <p>《外國專業人才延攬及僱用法》第 28 條規定，符合永久居留和居留年限條件的外國專業人才及其配偶、子女，可以向縣市政府申請身心障礙鑑定及需求評估</p>
+      <p>因為沒有戶籍和國民身分證，衛福部正在配合修正鑑定的申請程序，<strong>實際怎麼受理、鑑定後能用哪些身障福利，請先問居住地的縣市政府社會局</strong></p>
+      <p class="fg-src">依據：衛福部《身心障礙者鑑定作業辦法》第五條修正草案說明　<a href="https://www.mohw.gov.tw/dl-99299-113fb98c-de8d-4832-8f48-f5600de894d4.html" rel="noopener">原文</a></p>
+    </article>
+    <article class="fg-c no">
+      <span class="fg-t">目前一般不在補助對象內</span>
+      <h3>其他沒有身分證的人</h3>
+      <p class="fg-who">例如尚未取得身分證的外籍配偶、移工、留學生、短期來台的人</p>
+      <p>目前一般不能使用長照和身障輔具補助　衛福部表示，無法取得我國國籍、遇到照顧困難的人，可以向地方政府求助，由社政系統協助連結資源；外籍配偶也可以考慮申請歸化，取得身分證後就能依一般規定申請</p>
+      <p>政府和民間團體對這個議題仍在討論，<strong>規定可能改變</strong>，請以最新公告為準</p>
+    </article>
+  </div>
+
+  <h3 class="sm-h" style="margin-top:32px">自費購買或租用輔具：每個人都適用</h3>
+  <div class="fg2">
+    <div><b>認明許可證字號</b><span>多數輔具是一般商品，但機械式輪椅、醫療用手杖、助行器、助聽器等屬於醫療器材　購買時要看包裝上的醫療器材許可證字號或登錄字號，可以到<a href="https://www.fda.gov.tw/" rel="noopener">食藥署網站</a>的許可證資料庫查詢</span></div>
+    <div><b>網路購買要小心</b><span>只有公告開放的醫療器材可以在網路賣，而且賣家要是領有藥商許可執照、有實體店面的業者</span></div>
+    <div><b>買到有問題的產品</b><span>可以向居住地的衛生局檢舉，使用時發生不良反應，撥 02-2396-0100 通報</span></div>
+    <div><b>健保</b><span>持有居留證、在台居留滿 6 個月要參加健保；受僱者從受僱日起加保　看醫生、開診斷證明都會用到</span></div>
+    <div><b>需要外語協助</b><span>移民署「外來人士在臺生活諮詢服務熱線」<a href="tel:1990"><strong>1990</strong></a>，提供多國語言諮詢</span></div>
+    <div><b>先問再買</b><span>不確定買哪一種，可以先打電話問居住地的<a href="#county">輔具中心</a>能不能提供諮詢，各縣市服務對象不同</span></div>
+  </div>
+  <p class="note" style="margin-top:14px">本區整理自衛福部、食藥署、健保署、移民署公開資料，以及衛福部對外說明　規定以主管機關最新公告為準</p>
+</div></section>
+
+<section class="sec soft" id="news"><div class="wrap">
   <div class="sh"><h2>最新消息</h2><p>每週整理衛福部等政府機關和輔具、長照有關的公告，詳細內容請看原始來源</p></div>
   <ul class="news" id="newsList"></ul>
 </div></section>
 
-<section class="sec soft" id="links"><div class="wrap">
+<section class="sec" id="links"><div class="wrap">
   <div class="sh"><h2>官方連結</h2><p>申請、查證都以這些官方管道為準</p></div>
   <div class="links">
     <a class="lk" href="tel:1966"><strong>長照專線 1966</strong><span>手機、市話直撥，詢問長照申請與進度</span></a>
@@ -1396,7 +1458,7 @@ $('#quiz').addEventListener('change',quiz);
 /* 流程 */
 const FLOW={
  L:[['請人來評估','評估','撥 1966 或聯絡照管中心，照管專員到家裡了解需要照顧的程度'],['等待核定','核定','照管中心核定照顧計畫，裡面會寫可以使用哪些輔具'],['購買或租用','購買','到長照合作的輔具店買或租，記得拿發票和保固書'],['付自己的部分','核銷','多數由輔具店向政府請款，你只要付自己負擔的部分']],
- D:[['確認是否要評估','評估','洗澡椅、一般輪椅等免評估；其他品項先向輔具中心預約評估'],['送件等核定','核定','線上或到戶籍地區公所申請，政府會寄書面通知'],['6 個月內購買','購買','收到核定通知後 6 個月內完成購買'],['拿發票請款','核銷','把發票等文件交給公所，審核後撥款；在特約廠商買的，多由廠商代為請款']],
+ D:[['確認是否要評估','評估','洗澡椅、一般輪椅等免評估；其他品項先向輔具中心預約評估'],['送件等核定','核定','線上或到戶籍地區公所申請，政府會寄書面通知'],['6 個月內購買','購買','核定公文發文後 6 個月內要買好並辦理請款'],['拿發票請款','核銷','把發票等文件交給公所，審核後撥款；在特約廠商買的，多由廠商代為請款']],
  M:[['取得醫師證明','評估','由醫師開立診斷證明，部分品項還要醫療輔具評估報告'],['向衛生局申請','核定','向戶籍所在縣市衛生局送件，等待核定'],['依核定購買','購買','依核定內容向合法醫療器材商購買或租用'],['檢據請款','核銷','依衛生局通知，檢附發票等文件申請撥款']]};
 /* 流程：誰負責 */
 const WHO_I={you:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.8 3.6-5.6 7-5.6s6.2 1.8 7 5.6"/></svg>',
@@ -1883,13 +1945,13 @@ const CMS=[[1,0],[2,10020],[3,15460],[4,18580],[5,24100],[6,28070],[7,32090],[8,
 $('#cmsBars').innerHTML=CMS.map(([l,v])=>`<div class="bar${v?'':' off'}"><span class="lv">第 ${l} 級</span><div class="tr"><div class="fl" data-w="${v/36180*100}"></div></div><span class="v">${v?v.toLocaleString('zh-TW')+' 元':'不列入給付'}</span></div>`).join('');
 const sb=(t,g,gl,sl,sv)=>{const narrow=100-g<35;return `<div class="sb"><div class="t"><b>${t}</b><span>${narrow&&sl?'自付 '+sl.replace('自付 ',''):sv}</span></div><div class="trk"><span class="g" style="width:${g}%">${gl}</span>${g<100?`<span class="s" style="width:${100-g}%">${narrow?'':sl}</span>`:''}</div></div>`};
 $('#rateBars').innerHTML=sb('長照・一般',70,'政府 70%','自付 30%','')+sb('長照・領半額津貼或身障生活補助',90,'政府 90%','10%','')+sb('長照・低收或中低收入戶',100,'政府全額','','')+sb('身障・一般',50,'政府 50%','自付 50%','')+sb('身障・中低收入戶',75,'政府 75%','25%','')+sb('身障・低收入戶',100,'政府全額','','');
-$('#quotaBars').innerHTML=sb('第一組・傳統輔具',100,'4 萬元','','買或租')+`<div class="sb"><div class="t"><b>第二組・智慧輔具</b><span>共 6 萬元</span></div><div class="trk"><span class="g" style="width:66.7%">輔具至少 4 萬</span><span class="s" style="width:33.3%">無障礙最多 2 萬</span></div></div>`;
+$('#quotaBars').innerHTML=sb('第一組・傳統輔具',100,'4 萬元','','買或租')+`<div class="sb"><div class="t"><b>第二組・智慧輔具</b><span>共 6 萬元</span></div><div class="trk"><span class="g" style="width:66.7%">輔具可用 4 萬以上</span><span class="s" style="width:33.3%">無障礙最多 2 萬</span></div></div>`;
 const growBars=()=>$$('#cmsBars .fl').forEach(f=>f.style.width=f.dataset.w+'%');
 if('IntersectionObserver' in window){const bo=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){growBars();bo.disconnect()}});bo.observe($('#cmsBars'))}else growBars();
 setTimeout(growBars,3000);
 
 /* 讀到哪裡：進度條、目前章節、目錄標示 */
-const SECS=[['check','我能申請嗎'],['warn','先申請再購買'],['flow','申請四步驟'],['calc','能補多少錢'],['all','全部輔具查詢'],['v3','智慧輔具專區'],['home','居家無障礙'],['county','找輔具中心和店'],['dict','公文名詞翻譯'],['history','小知識庫'],['news','最新消息'],['links','官方連結']];
+const SECS=[['check','我能申請嗎'],['warn','先申請再購買'],['flow','申請四步驟'],['calc','能補多少錢'],['all','全部輔具查詢'],['v3','智慧輔具專區'],['home','居家無障礙'],['county','找輔具中心和店'],['dict','公文名詞翻譯'],['history','小知識庫'],['foreign','外籍人士專區'],['news','最新消息'],['links','官方連結']];
 const secEls=SECS.map(([id])=>document.getElementById(id));
 let ticking=false;
 const onScroll=()=>{
