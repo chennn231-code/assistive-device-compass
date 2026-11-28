@@ -443,6 +443,9 @@ body[data-mode] .sec.mhide{display:none}
 .where2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .where2 select{margin-bottom:0}
 .ctr-mini{margin:4px 0 0;padding-left:1.1em}.ctr-mini li{margin:2px 0}
+.x-msg:empty{display:none}
+.x-msg{margin:8px 0;padding:10px 14px;border-radius:12px;background:var(--hl);color:var(--ink);font-size:var(--sm);font-weight:700;line-height:1.6}
+.pb.off .pb-h b{color:var(--mute)}
 .links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .lk{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
 .lk strong{display:block;color:var(--brown);font-size:18px}.lk span{font-size:var(--sm);color:var(--mute)}
@@ -767,8 +770,8 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <fieldset>
         <legend>家人的狀況（可以複選）</legend>
         <label class="opt"><input type="checkbox" name="q" value="dis"><span>有身心障礙證明<small>以前叫身障手冊</small></span></label>
-        <label class="opt"><input type="checkbox" name="q" value="65"><span>65 歲以上</span></label>
-        <label class="opt"><input type="checkbox" name="q" value="ind"><span>55 到 64 歲的原住民</span></label>
+        <label class="opt"><input type="checkbox" name="q" value="65" data-x="age"><span>65 歲以上</span></label>
+        <label class="opt"><input type="checkbox" name="q" value="ind" data-x="age"><span>55 到 64 歲的原住民</span></label>
         <label class="opt"><input type="checkbox" name="q" value="dem"><span>醫師診斷有失智症<small>115 年起不限年齡</small></span></label>
         <label class="opt"><input type="checkbox" name="q" value="adl"><span>生活上需要別人幫忙<small>例如洗澡、穿衣、上廁所、下床</small></span></label>
         <label class="opt"><input type="checkbox" name="q" value="pac"><span>剛出院，醫院說符合「急性後期整合照護」<small>例如中風、骨折、心臟衰竭等出院後的復健照護</small></span></label>
@@ -778,7 +781,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
         <legend>家裡的經濟身分</legend>
         <div class="seg" role="radiogroup" aria-label="家裡的經濟身分">
           <label><input type="radio" name="inc" value="gen" checked>一般</label>
-          <label><input type="radio" name="inc" value="sub">領津貼或生活補助</label>
+          <label><input type="radio" name="inc" value="sub">領半額中低老人津貼或身障生活補助</label>
           <label><input type="radio" name="inc" value="mid">中低收入戶</label>
           <label><input type="radio" name="inc" value="low">低收入戶</label>
         </div>
@@ -787,6 +790,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
     </form>
     <div class="res" aria-live="polite">
       <h3>初步參考結果</h3>
+      <p class="x-msg" id="ckMsg" aria-live="polite"></p>
       <div id="out"></div>
       <div class="fam-acts"><button type="button" class="btn lineCopy">複製 LINE 討論摘要</button><button type="button" class="btn ghost shareLink">分享此結果的連結</button><button type="button" class="btn ghost packOpen">懶人包卡片</button></div>
       <p class="note famMsg" aria-live="polite"></p>
@@ -920,6 +924,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <div class="qbar" id="qBar" aria-hidden="true"></div>
       <div class="q-scale" aria-hidden="true"><span>0</span><span id="qTot"></span></div>
       <p id="qTxt" style="margin:10px 0 0"></p>
+      <p class="x-msg" id="qWarn" aria-live="polite"></p>
       <p id="qPay" style="margin:6px 0 0"></p>
     </div>
     <div class="hf-act" style="margin-top:12px"><button type="button" class="q-add" id="qReset">清除重填</button><a href="#calc">想知道這次大約補多少？先試算 →</a></div>
@@ -967,7 +972,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
     </div>
     <div class="frow">
       <select id="cat" aria-label="分類"><option value="">所有分類</option></select>
-      <select id="inc4" aria-label="金額依哪種身分顯示"><option value="gen">金額以一般戶顯示</option><option value="mid">金額以中低收入戶顯示</option><option value="low">金額以低收入戶顯示</option><option value="sub">金額以領津貼或生活補助顯示</option></select>
+      <select id="inc4" aria-label="金額依哪種身分顯示"><option value="gen">金額以一般戶顯示</option><option value="mid">金額以中低收入戶顯示</option><option value="low">金額以低收入戶顯示</option><option value="sub">金額以領半額中低老人津貼或身障生活補助顯示</option></select>
     </div>
 
   </div>
@@ -1047,13 +1052,13 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <label><input type="radio" name="v3t" value="rent">智慧輔具租金試算</label>
     </div>
     <div class="split" id="pickPane">
-      <form class="card" id="pickForm" onsubmit="return false">
+      <form class="card" id="pickForm" onsubmit="return false"><p class="x-msg" id="pkMsg" aria-live="polite"></p>
         <fieldset style="margin:0"><legend>符合的情況（可以複選）</legend>
           <label class="opt"><input type="checkbox" name="pk" value="2"><span>晚上會自己下床，擔心跌倒</span></label>
           <label class="opt"><input type="checkbox" name="pk" value="2"><span>白天沒人在家，需要異常時能通知家人</span></label>
           <label class="opt"><input type="checkbox" name="pk" value="2"><span>剛出院或在復健，狀況可能還會變</span></label>
-          <label class="opt"><input type="checkbox" name="pk" value="1"><span>需要量身訂做的輪椅、氣墊床或照顧床</span></label>
-          <label class="opt"><input type="checkbox" name="pk" value="1"><span>只需要幾樣基本輔具</span></label>
+          <label class="opt"><input type="checkbox" name="pk" value="1" data-x="need"><span>需要量身訂做的輪椅、氣墊床或照顧床</span></label>
+          <label class="opt"><input type="checkbox" name="pk" value="1" data-x="need"><span>只需要幾樣基本輔具</span></label>
           <label class="opt"><input type="checkbox" name="pk" value="1"><span>家裡要大幅改裝浴室、門檻或斜坡</span></label>
         </fieldset>
       </form>
@@ -1074,6 +1079,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
         <p class="note" style="margin:0">每個月自己大約出<span class="est">估算</span></p>
         <div class="big" id="rentBig">—</div>
         <p id="rentSub" style="margin:0"></p>
+        <p class="x-msg" id="rentWarn" aria-live="polite"></p>
         <p class="note" style="margin-top:14px">請先向輔具單位取得書面報價，實際以核定為準</p>
       </div>
     </div>
@@ -1387,19 +1393,25 @@ function calc(){
   let p=+$('#price').value;const typed=p>0;if(!typed)p=it.p;
   const lr=it.lf?1:LTC[inc],lg=Math.round(Math.min(p,it.ltc)*lr),lpay=p-lg;
   const dg=it.dis==null?null:Math.min(p,Math.round(it.dis*(it.df?1:DIS[inc]))),dpay=dg==null?null:p-dg;
-  const best=dg==null||lg>=dg?'l':'d';
-  CALC={n:it.n,c:it.c,p,typed,best,lg,lpay,dg,dpay};
-  $('#priceLive').textContent=typed?`走${best==='l'?'長照':'身障'}：政府約出 ${fmt(best==='l'?lg:dg)}，自己約付 ${fmt(best==='l'?lpay:dpay)}`:'';if(typeof updBar==='function')updBar();
-  $('#bigNum').textContent=fmt(Math.max(lg,dg||0));pulse($('#bigNum'));
-  $('#bigSub').innerHTML=`報價 ${fmt(p)}，走${best==='l'?'長照':'身障'}自己大約出 <strong style="white-space:nowrap">${fmt(best==='l'?lpay:dpay)}</strong>`;
+  const qg=document.querySelector('input[name=qg]:checked'),g2=qg&&qg.value==='60000',BASIC=['EA01','EB01','EB02','EB03'];
+  let lWhy='',dWhy='';
+  if(QUIZ&&(QUIZ.l==='目前看起來不符合'||QUIZ.l==='可能不適用'))lWhy=`快篩結果：長照${QUIZ.l}`;
+  else if(g2&&!BASIC.includes(it.c))lWhy='你在「還能用多少錢」選了智慧輔具（6 萬），這項傳統輔具長照不補助';
+  if(QUIZ&&QUIZ.d==='目前不適用')dWhy='快篩結果：身障輔具要有身心障礙證明';
+  const lOk=!lWhy,dOk=!dWhy&&dg!=null;
+  const best=lOk&&dOk?(lg>=dg?'l':'d'):lOk?'l':dOk?'d':'';
+  CALC={n:it.n,c:it.c,p,typed,best,lg,lpay,dg,dpay,lOk,dOk,lWhy,dWhy};
+  $('#priceLive').textContent=typed&&best?`走${best==='l'?'長照':'身障'}：政府約出 ${fmt(best==='l'?lg:dg)}，自己約付 ${fmt(best==='l'?lpay:dpay)}`:'';if(typeof updBar==='function')updBar();
+  $('#bigNum').textContent=best?fmt(best==='l'?lg:dg):'—';pulse($('#bigNum'));
+  $('#bigSub').innerHTML=best?`報價 ${fmt(p)}，走${best==='l'?'長照':'身障'}自己大約出 <strong style="white-space:nowrap">${fmt(best==='l'?lpay:dpay)}</strong>`:'依你前面的選擇，兩邊目前都不適用　可以先撥 <a href="tel:1966">1966</a> 或問輔具中心';
   const box=(t,cap,rate,g,pay,on)=>`<div class="card ${on?'best':''}"><strong>${t}</strong><dl><dt>品項上限</dt><dd>${fmt(cap)}</dd><dt>政府負擔</dt><dd>${rate}</dd><dt>約可補助</dt><dd>${fmt(g)}</dd><dt>自己負擔</dt><dd>${fmt(pay)}</dd></dl></div>`;
   $('#cmp').innerHTML=box('長照',it.ltc,it.lf?'全額':Math.round(lr*100)+'%',lg,lpay,best==='l')+(dg==null?'<div class="card"><strong>身障</strong><p class="note" style="margin:8px 0 0">這一項請洽區公所或輔具中心確認金額</p></div>':box('身障',it.dis,it.df?'全額':Math.round(DIS[inc]*100)+'%',dg,dpay,best==='d'));
-  payBars(p,[['長照',lg,lpay,best==='l'],['身障',dg,dpay,best==='d'&&dg!=null]]);
+  payBars(p,[['長照',lg,lpay,best==='l'&&lOk&&dOk,lWhy],['身障',dg,dpay,best==='d'&&lOk&&dOk,dWhy]]);
   $('#itemNote').textContent=`用滿 ${it.y} 年才能再申請・${it.ev?'要先評估':'不用先評估'}${typed?'':`　未輸入報價時以 ${fmt(it.p)} 示範`}`;
 }
 /* 試算長條 */
 function payBars(p,rows){
-  $('#payBars').innerHTML=rows.map(([t,g,pay,on])=>{if(g==null)return `<div class="pb"><div class="pb-h"><b>${t}</b><span class="note">這一項請洽區公所或輔具中心</span></div></div>`;
+  $('#payBars').innerHTML=rows.map(([t,g,pay,on,why])=>{if(why)return `<div class="pb off"><div class="pb-h"><b>${t}</b><span class="note">${why}</span></div></div>`;if(g==null)return `<div class="pb"><div class="pb-h"><b>${t}</b><span class="note">這一項請洽區公所或輔具中心</span></div></div>`;
     const gw=p?Math.round(g/p*100):0;return `<div class="pb${on?' on':''}"><div class="pb-h"><b>${t}</b>${on?'<span class="pb-best">比較划算</span>':''}</div><div class="pb-bar" role="img" aria-label="${t}：政府出 ${fmt(g)}，自己出 ${fmt(pay)}"><span class="pg" style="width:${gw}%">${gw>=22?'政府 '+fmt(g):''}</span><span class="ps">${100-gw>=22?'自己 '+fmt(pay):''}</span></div><div class="pb-leg"><span><i class="dg"></i>政府出 ${fmt(g)}</span><span><i class="ds"></i>自己出 ${fmt(pay)}</span></div></div>`}).join('');
 }
 /* 3 年額度 */
@@ -1415,7 +1427,12 @@ function quota(){
   const u=[...$$('#qList .q-row')].reduce((a,r)=>a+Math.max(0,+r.children[1].value||0),0);
   let n=Math.max(0,+$('#qNow').value||0);const inc=$('#qInc').value;
   $('#qHzBox').hidden=!g2;
-  const before=Math.max(0,tot-u),hzLeft=Math.max(0,20000-Math.max(0,+$('#qHzUsed').value||0));
+  const hzIn=Math.max(0,+$('#qHzUsed').value||0);let warn='';
+  if(g2&&hzIn>u)warn='「之前用在居家無障礙的」比上面「這 3 年已經買過、裝過」的總數還多，請檢查：居家無障礙用掉的錢也要填在上面的清單裡';
+  else if(g2&&hzIn>20000)warn='居家無障礙最多只能用 2 萬元，你填的已經超過，請再確認';
+  if(!g2&&$('#qHz').checked)$('#qHz').checked=false;
+  $('#qWarn').textContent=warn;
+  const before=Math.max(0,tot-u),hzLeft=Math.max(0,20000-Math.min(hzIn,u));
   let cap=before,why='';
   if(g2&&$('#qHz').checked&&hzLeft<cap){cap=hzLeft;why='hz'}
   const inQ=Math.min(n,cap),over=n-inQ,left=before-inQ;
@@ -1547,6 +1564,7 @@ function pick(){
 $('#pickForm').addEventListener('change',pick);
 function rent(){
   const r=+$('#rent').value,m=Math.min(20000,Math.max(0,+$('#mod').value||0)),inc=$('#inc3').value;
+  $('#rentWarn').textContent=(+$('#mod').value||0)>20000?'第二組的居家無障礙改善最多 2 萬元，已用 2 萬元計算':'';
   if(!(r>0)){$('#rentBig').textContent='—';$('#rentSub').textContent='先輸入輔具店的每月租金報價';return}
   const self=Math.round(r*(1-LTC[inc])),left=60000-m,mon=Math.min(36,Math.floor(left/r)),add=$('#remote').checked?Math.round(r*.2):0;
   $('#rentBig').textContent=fmt(self);pulse($('#rentBig'));
@@ -1914,9 +1932,8 @@ function packText(){
   L.push('【輔具補助懶人包】'+new Date().toLocaleDateString('zh-TW'));
   if(c)L.push('住在：'+c+d);
   if(QUIZ)L.push('','■ 能不能申請（初步）','長照輔具：'+QUIZ.l,'身障輔具：'+QUIZ.d);
-  if(CALC){L.push('','■ 試算（'+CALC.n+'，'+(CALC.typed?'報價 ':'示範價 ')+fmt(CALC.p)+'）','長照：政府約出 '+fmt(CALC.lg)+'，自己約付 '+fmt(CALC.lpay));
-    const disOk=!QUIZ||QUIZ.d!=='目前不適用';
-    if(disOk){L.push(CALC.dg==null?'身障：這一項請洽區公所或輔具中心':'身障：政府約出 '+fmt(CALC.dg)+'，自己約付 '+fmt(CALC.dpay));L.push('同一樣輔具只能選一邊申請')}}
+  if(CALC){L.push('','■ 試算（'+CALC.n+'，'+(CALC.typed?'報價 ':'示範價 ')+fmt(CALC.p)+'）',CALC.lOk?'長照：政府約出 '+fmt(CALC.lg)+'，自己約付 '+fmt(CALC.lpay):'長照：'+CALC.lWhy);
+    if(CALC.dOk||CALC.dg==null&&!CALC.dWhy){L.push(CALC.dg==null?'身障：這一項請洽區公所或輔具中心':'身障：政府約出 '+fmt(CALC.dg)+'，自己約付 '+fmt(CALC.dpay));L.push('同一樣輔具只能選一邊申請')}}
   if(QUOTA)L.push('','■ 長照 3 年輔具補助','還能用 '+fmt(QUOTA.left)+'（總數 '+fmt(QUOTA.tot)+'）');
   L.push('','■ '+dc.t+'要準備');dc.g[0][1].forEach(x=>L.push('・'+x.replace(/<[^>]+>/g,'')));
   L.push('','■ 可以找誰');
@@ -1950,6 +1967,31 @@ $('#packCopy').addEventListener('click',async()=>{const t=packText();try{await n
 $('#packShare').addEventListener('click',()=>{navigator.share({title:'輔具補助懶人包',text:packText()}).catch(()=>{})});
 function updBar(){const s=$('#barPackSub');if(!s)return;s.textContent=CALC&&CALC.typed?'自付 '+fmt(CALC.best==='d'?CALC.dpay:CALC.lpay):'整理重點'}
 updBar();
+
+/* ===== 防止互相矛盾的選擇 ===== */
+const XMSG={age:['ckMsg','「65 歲以上」和「55 到 64 歲的原住民」只能選一個，已幫你取消另一個'],need:['pkMsg','「需要量身訂做的輔具」和「只需要幾樣基本輔具」互相矛盾，已幫你取消另一個']};
+document.addEventListener('change',e=>{const x=e.target;if(!x.matches||!x.matches('input[type=checkbox][data-x]')||!x.checked)return;
+  let hit=false;$$(`input[type=checkbox][data-x="${x.dataset.x}"]`).forEach(o=>{if(o!==x&&o.checked){o.checked=false;hit=true}});
+  const m=XMSG[x.dataset.x];if(m){$('#'+m[0]).textContent=hit?m[1]:'';if(hit){clearTimeout(x._t);x._t=setTimeout(()=>{$('#'+m[0]).textContent=''},6000)}}
+},true);
+/* 經濟身分：網頁上 5 處一起改 */
+function setInc(v,from){if(!LTC[v])return;save('inc',v);
+  const r=document.querySelector(`input[name=inc][value="${v}"]`);if(r&&!r.checked){r.checked=true}
+  ['inc2','qInc','inc3','inc4'].forEach(id=>{if(id!==from&&$('#'+id).value!==v)$('#'+id).value=v});
+  if(from!=='quiz')quiz();calc();quota();rent();find(false);}
+$$('input[name=inc]').forEach(r=>r.addEventListener('change',()=>setInc(r.value,'quiz')));
+['inc2','qInc','inc3','inc4'].forEach(id=>$('#'+id).addEventListener('change',()=>setInc($('#'+id).value,id)));
+{const v=load('inc');if(LTC[v]&&!location.search)setInc(v,'init')}
+/* 額度組別改變時，試算也跟著檢查 */
+$$('input[name=qg]').forEach(r=>r.addEventListener('change',calc));
+/* 一題一題問：結果也帶到試算和懶人包 */
+const TQ={L:['看起來符合申請條件','目前不適用'],LD:['看起來符合申請條件','看起來符合申請條件'],D:['目前看起來不符合','看起來符合申請條件'],M:['目前看起來不符合','看起來符合申請條件'],N1:['目前看起來不符合','目前不適用'],N2:['目前看起來不符合','目前不適用']};
+function treeSync(){let node='care';for(const a of path){const t=TREE[node];if(!t)break;node=a==='y'?t.y:t.n;if(node.startsWith('@'))break}
+  if(node.startsWith('@')){const k=node.slice(1),t=TQ[k];if(t){QUIZ={l:t[0],d:t[1]};const e=ENDS[k];if(e&&e.r){const r=document.querySelector(`input[name=route][value="${e.r}"]`);if(r&&!r.checked){r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}))}}calc()}}}
+$('#treePane').addEventListener('click',()=>setTimeout(treeSync,0));
+/* 快篩結果決定要準備的文件 */
+const _quiz=quiz;quiz=function(){_quiz();if(!QUIZ)return;const k=QUIZ.l==='看起來符合申請條件'||QUIZ.l==='身分符合，還要評估'?'L':QUIZ.d==='看起來符合申請條件'?'D':'';if(k){const r=document.querySelector(`input[name=route][value="${k}"]`);if(r&&!r.checked){r.checked=true;r.dispatchEvent(new Event('change',{bubbles:true}))}}};
+$('#quiz').removeEventListener('change',_quiz);$('#quiz').addEventListener('change',()=>quiz());
 
 /* ===== 小知識庫 ===== */
 const TL=[
@@ -2030,7 +2072,8 @@ function lineText(){
   const c=$('#calcCity').value,d=load('dist')||'',ct=c?nearCenter(c,d):null,L=['【家裡輔具補助討論】'];
   if(c)L.push('住在：'+c+d);
   if(QUIZ)L.push('適用管道：長照（'+QUIZ.l+'）、身障（'+QUIZ.d+'）');
-  if(CALC){const disOk=!QUIZ||QUIZ.d!=='目前不適用',useD=disOk&&CALC.best==='d'&&CALC.dg!=null;
+  if(CALC&&!CALC.best){L.push('預計申請：'+CALC.n+'（依目前的選擇，長照和身障都不適用，先撥 1966 或問輔具中心）')}
+  else if(CALC){const useD=CALC.best==='d';
     L.push('預計申請：'+CALC.n+'（'+(CALC.typed?'報價 ':'示範價 ')+fmt(CALC.p)+'）');
     L.push('政府預估補助：'+(useD?'身障約 '+fmt(CALC.dg):'長照約 '+fmt(CALC.lg)));
     L.push('家裡要自付：約 '+fmt(useD?CALC.dpay:CALC.lpay));}
