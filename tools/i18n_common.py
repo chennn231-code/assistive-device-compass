@@ -3,7 +3,7 @@ import re
 RUN=re.compile(r'[　-〿㐀-鿿＀-￯][^<>"\'`\n{}$|=;\\]*')
 CJK=re.compile(r'[㐀-鿿]')
 # 這些區塊保留中文：地名、單位資料、比對用的規則
-SKIP_STARTS=['const CENTERS=','const DIST=','const BUILD=','const CTR_SRC','const areaHit','const CSLUG','const SLUGC','const REMOTE','const isRemote']
+SKIP_STARTS=['const CENTERS=','const DIST=','const BUILD=','const CTR_SRC','const areaHit','const CSLUG','const SLUGC','const REMOTE','const isRemote','const SAY=']
 def skip_mask(h):
     mask=[False]*len(h)
     for s in SKIP_STARTS:

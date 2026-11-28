@@ -704,7 +704,22 @@ h1,h2,h3,.sh p{text-wrap:balance}
  .sb .t{gap:8px;flex-wrap:wrap}
 }
 @media(max-width:420px){.brand .bn{display:none}}
-@media(max-width:560px){.brand .bn{display:none}}</style>
+.contact{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px 32px;align-items:center;margin-top:28px;padding:24px 26px}
+.contact h3{margin-bottom:8px}.contact p{margin:0 0 8px}.ct-a{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.ct-mail{font-weight:700;word-break:break-all}
+@media(max-width:720px){.contact{grid-template-columns:1fr}}
+.ls-warn{display:flex;flex-direction:column;gap:4px;background:#f6e7c8;border:1.5px solid #b88a3c;border-radius:14px;padding:14px 18px;margin-bottom:18px}
+.ls-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.ls-it{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+.ls-n{flex:none;width:36px;height:36px;border-radius:50%;background:var(--brown);color:var(--bg);display:grid;place-items:center;font:700 18px "Noto Serif TC",serif}
+.ls-b{flex:1;min-width:0}.ls-zh{font-size:1.12em;font-weight:700;margin:4px 0 10px;line-height:1.5}.ls-en{margin:-6px 0 10px;color:var(--mute,#6b5f55)}
+.ls-btns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ls-p{min-height:48px;padding:8px 6px;justify-content:center;border-radius:999px;border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);font:700 17px "Noto Sans TC",sans-serif;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+.ls-p.on{background:var(--ink);color:var(--bg)}.ls-ic{font-size:.8em}
+.ls-txt{margin-top:10px}.ls-txt summary{cursor:pointer;color:var(--brown);font-size:.95em}.ls-txt p{margin:8px 0 0;font-size:.95em}.ls-txt b{margin-right:8px}.ls-txt small{word-break:break-word}
+.ls-src{margin-top:18px}.ls-src ul{margin:10px 0 0;padding-left:1.2em}
+@media(max-width:400px){.ls-list{grid-template-columns:1fr}.ls-it{padding:14px;gap:10px}}
+@media(max-width:560px){.brand .bn{display:none}.ls-btns{grid-template-columns:1fr 1fr}}</style>
 </head>
 <body>
 <a class="skip" href="#check">Skip to eligibility check</a>
@@ -731,7 +746,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
 </div>
 <nav class="card pop" id="tocPop" hidden aria-label="Site contents">
   <ul class="toc-list">
-    <li><a href="#check">Am I eligible?</a></li><li><a href="#warn">Apply first, buy later</a></li><li><a href="#flow">4 steps to apply</a></li><li><a href="#online">Apply without leaving home</a></li><li><a href="#calc">How much is covered?</a></li><li><a href="#all">All assistive devices</a></li><li><a href="#v3">Smart assistive technology (LTC 3.0)</a></li><li><a href="#home">Home accessibility modification</a></li><li><a href="#county">Find assistive technology centers & suppliers</a></li><li><a href="#dict">Official terms explained</a></li><li><a href="#history">Knowledge base: LTC 1.0 to 3.0</a></li><li><a href="#foreign">For foreign residents</a></li><li><a href="#news">News</a></li><li><a href="#links">Official links</a></li>
+    <li><a href="#check">Am I eligible?</a></li><li><a href="#warn">Apply first, buy later</a></li><li><a href="#listen">Listen (Mandarin, Taiwanese, Hakka)</a></li><li><a href="#flow">4 steps to apply</a></li><li><a href="#online">Apply without leaving home</a></li><li><a href="#calc">How much is covered?</a></li><li><a href="#all">All assistive devices</a></li><li><a href="#v3">Smart assistive technology (LTC 3.0)</a></li><li><a href="#home">Home accessibility modification</a></li><li><a href="#county">Find assistive technology centers & suppliers</a></li><li><a href="#dict">Official terms explained</a></li><li><a href="#history">Knowledge base: LTC 1.0 to 3.0</a></li><li><a href="#foreign">For foreign residents</a></li><li><a href="#news">News</a></li><li><a href="#links">Official links</a></li><li><a href="#contact">Report an error</a></li>
   </ul>
 </nav>
 </header>
@@ -847,6 +862,21 @@ h1,h2,h3,.sh p{text-wrap:balance}
       </ul>
     </div>
   </div>
+</div></section>
+
+<section class="sec" id="listen"><div class="wrap">
+  <div class="sh"><p class="k">Listen</p><h2>Seven key points in Mandarin, Taiwanese and Hakka</h2><p>For older people who find reading hard: press play to hear the key points</p></div>
+  <div class="ls-warn" role="note"><b>The Taiwanese and Hakka audio is AI-generated and is being checked by native speakers </b><span>Some pronunciation or tones may be inaccurate. If you hear a mistake, please <a href="#contact">email me</a> and I will fix it as soon as possible</span></div>
+  <ol class="ls-list" id="lsList"></ol>
+  <p class="note" id="lsMsg" aria-live="polite"></p>
+  <details class="fold ls-src"><summary><span class="ft">How the audio was made</span></summary>
+    <ul>
+      <li>Mandarin: read aloud by the built-in voice on your phone or computer; nothing to download</li>
+      <li>Taiwanese: Meta’s open MMS speech model (Hugging Face: facebook/mms-tts-nan, licensed CC BY-NC 4.0), generated from Pe̍h-ōe-jī romanization via the Hugging Face Space “toothless-11/Hokkien-tts”</li>
+      <li>Hakka: “Taiwanese Hakka Text-to-Speech System” (developers Hung-Shin Lee and Li-Wei Chen, in cooperation with the National United University Smart Hakka Lab; Hugging Face Space: united-link/taiwanese-hakka-tts), Sixian accent</li>
+      <li>Text written from the rules compiled on this site; generated on November 28, 2026</li>
+    </ul>
+  </details>
 </div></section>
 
 <section class="sec" id="flow"><div class="wrap">
@@ -1335,6 +1365,19 @@ h1,h2,h3,.sh p{text-wrap:balance}
     <a class="lk" href="https://www.mohw.gov.tw/cp-16-87062-1.html" rel="noopener"><strong>LTC 3.0 smart assistive technology </strong><span>MOHW announcement</span></a>
     <a class="lk" href="https://www.mohw.gov.tw/dl-101314-a5590920-5f8d-4ead-b508-fe4b204fcd36.html" rel="noopener"><strong>Smart device rules Q&A </strong><span>MOHW, July 22, 2026 edition</span></a>
     <a class="lk" href="https://ltcat.mohw.gov.tw/" rel="noopener"><strong>Long-term Care Assistive Device Product Database </strong><span>Look up subsidized smart device models</span></a>
+  </div>
+
+  <div class="contact card" id="contact">
+    <div class="ct-t">
+      <h3>Found a mistake? Please let me know</h3>
+      <p>This website is compiled by an individual, so mistakes can happen. If you find incorrect information, a broken link or anything unclear, please email me and I will check and correct it</p>
+      <p class="note">Please include: which section, what the problem is, and a link to the correct source (e.g. a government announcement) <br>Please do not include ID numbers, medical records or other personal data. For questions about your own application, call 1966 or contact your district office</p>
+    </div>
+    <div class="ct-a">
+      <a class="btn" href="mailto:chennn231@gmail.com?subject=Assistive%20Device%20Subsidy%20Compass%3A%20correction&body=Section%3A%0A%0AWhat%20is%20wrong%3A%0A%0ASource%20of%20the%20correct%20information%20%28link%20or%20announcement%29%3A%0A%0A%28Please%20do%20not%20include%20ID%20numbers%2C%20medical%20records%20or%20other%20personal%20data%29%0A">Email me</a>
+      <p class="ct-mail"><span>chennn231@gmail.com</span> <button type="button" class="link-btn" id="mailCopy">Copy address</button></p>
+      <p class="note" id="mailMsg" aria-live="polite"></p>
+    </div>
   </div>
 </div></section>
 </div>
@@ -1957,7 +2000,7 @@ if('IntersectionObserver' in window){const bo=new IntersectionObserver(es=>{if(e
 setTimeout(growBars,3000);
 
 /* 讀到哪裡: 進度條、目前章節、目錄標示 */
-const SECS=[['check','Am I eligible?'],['warn','Apply first, buy later'],['flow','4 steps to apply'],['calc','How much is covered?'],['all','All assistive devices'],['v3','Smart assistive technology'],['home','Home accessibility'],['county','Find centers & suppliers'],['dict','Official terms explained'],['history','Knowledge base'],['foreign','For foreign residents'],['news','News'],['links','Official links']];
+const SECS=[['check','Am I eligible?'],['warn','Apply first, buy later'],['listen','Listen'],['flow','4 steps to apply'],['calc','How much is covered?'],['all','All assistive devices'],['v3','Smart assistive technology'],['home','Home accessibility'],['county','Find centers & suppliers'],['dict','Official terms explained'],['history','Knowledge base'],['foreign','For foreign residents'],['news','News'],['links','Official links']];
 const secEls=SECS.map(([id])=>document.getElementById(id));
 let ticking=false;
 const onScroll=()=>{
@@ -1984,7 +2027,7 @@ if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduc
 cats();find(true);quiz();calc();pick();rent();city();shops();
 
 /* ===== 情境任務 ===== */
-const MODES={guide:['Guide me from the start',['check','warn','flow','calc','county','links']],have:['Calculate & find suppliers',['calc','flow','county','home','links']],item:['Look up a device',['all','v3','home','dict','history','links']]};
+const MODES={guide:['Guide me from the start',['check','warn','listen','flow','calc','county','links']],have:['Calculate & find suppliers',['calc','flow','county','home','links']],item:['Look up a device',['all','v3','home','dict','history','links']]};
 function setMode(m){
   if(!MODES[m]){document.body.removeAttribute('data-mode');$$('.sec.mhide').forEach(x=>x.classList.remove('mhide'));$('#modeBar').hidden=true;$('#modeEnd').hidden=true;onScroll();return}
   const keep=MODES[m][1];document.body.setAttribute('data-mode',m);
@@ -2284,6 +2327,29 @@ $$('.shareLink').forEach(b=>b.addEventListener('click',async()=>{const u=shareUR
  }}
 /* 記住瀏覽方式 */
 if(load('view')==='step'&&!location.search){document.querySelector('input[name=view][value=step]').checked=true;setMode('step',0)}
+
+
+/* 聯絡信箱: 複製 */
+$('#mailCopy')?.addEventListener('click',()=>{const t='chennn231@gmail.com',ok=()=>{$('#mailMsg').textContent='Email address copied'},bad=()=>{$('#mailMsg').textContent='Couldn’t copy automatically; press and hold the address to copy it'};navigator.clipboard?navigator.clipboard.writeText(t).then(ok,bad):bad()});
+
+/* 用聽的: 國語用裝置語音, 台語客語用音檔 */
+window.SAY_EN=["Apply first, wait for government approval, then buy or rent the device", "To apply for long-term care, call 1966", "People with a Disability Certificate can apply for device subsidies at the district office where their household is registered", "After disability device approval, buy the device and claim the subsidy within 6 months", "LTC devices and home accessibility share one allowance every 3 years; once it is used up, you pay yourself", "For the same device, you can apply under LTC or disability, not both", "Questions? Call 1966 or ask an assistive technology center"];const LSN={zh:'Mandarin',tw:'Taiwanese',hk:'Hakka'},LSM={err:'The audio could not be played; please try again later',nozh:'This device has no Mandarin voice; try Taiwanese or Hakka, or read the text'},LSBASE='../audio/';
+const SAY=[["s1", "先申請，等政府核定，再買或租輔具", "先申請，等政府核定了後，才去買抑是稅輔具", "Seng sin-chhéng, tán chèng-hú ha̍k-tēng liáu-āu, chiah khì bé ia̍h-sī sòe hū-kū", "先申請，等政府核定以後，正去買抑係租輔具", "xien24 siin24 qiang31, den31 ziin55 fu31 hed2 tin55 i24 heu55, zang55 hi55 mai24 ia55 he55 zu24 pu31 ki24"], ["s2", "要申請長照，請打 1966", "欲申請長照，請敲 1966", "Beh sin-chhéng tn̂g-chiàu, chhiáⁿ khà it-kiú-la̍k-la̍k", "愛申請長照，請打一九六六", "oi55 siin24 qiang31 cong11 zeu55, qiang31 da31 id2 giu31 liug2 liug2"], ["s3", "有身心障礙證明的人，可以到戶籍地的區公所申請輔具補助", "有身心障礙證明的人，會使去戶籍所在的區公所申請輔具補助", "Ū sin-sim chiòng-gāi chèng-bêng ê lâng, ē-sái khì hō͘-che̍k só͘-chāi ê khu-kong-só͘ sin-chhéng hū-kū pó͘-chō͘", "有身心障礙證明个人，做得到戶籍所在个區公所申請輔具補助", "iu24 siin24 xim24 zong55 ngoi55 ziin55 min11 ge55 ngin11, zo55 ded2 do55 fu55 xid5 so31 cai55 ge55 ki24 gung24 so31 siin24 qiang31 pu31 ki24 bu31 cu55"], ["s4", "身障輔具核定後，6 個月內要買好並請款", "身障輔具核定了後，六個月內就愛買好，閣去請款", "Sin-chiòng hū-kū ha̍k-tēng liáu-āu, la̍k kò goe̍h lāi tō ài bé hó, koh khì chhéng-khoán", "身障輔具核定以後，六個月以內愛買好，還愛去請款", "siin24 zong55 pu31 ki24 hed2 tin55 i24 heu55, liug2 ge55 ngied5 i24 nui55 oi55 mai24 ho31, han11 oi55 hi55 qiang31 kuan31"], ["s5", "長照的輔具和居家無障礙改善，3 年一筆額度，用完就要自己付", "長照的輔具佮居家無障礙改善，三年一筆額度，用了就愛家己出", "Tn̂g-chiàu ê hū-kū kap ki-ka bô chiòng-gāi kái-siān, saⁿ nî chi̍t pit gia̍h-tō͘, iōng liáu tō ài ka-kī chhut", "長照个輔具同居家無障礙改善，三年一筆額度，用忒就愛自家出", "cong11 zeu55 ge55 pu31 ki24 tung11 gi24 ga24 mo11 zong55 ngoi55 goi31 san55, sam24 ngien11 id2 bid2 ngiag2 tu55, iung55 ted2 qiu55 oi55 cii55 ga24 cud2"], ["s6", "同一樣輔具，長照和身障只能選一邊申請", "仝一項輔具，長照佮身障干焦會當揀一爿申請", "Kāng chi̍t hāng hū-kū, tn̂g-chiàu kap sin-chiòng kan-na ē-tàng kéng chi̍t pêng sin-chhéng", "共樣个輔具，長照同身障淨做得揀一片申請", "kiung55 iong55 ge55 pu31 ki24, cong11 zeu55 tung11 siin24 zong55 qiang55 zo55 ded2 gien31 id2 pien31 siin24 qiang31"], ["s7", "有問題，請打 1966，或問輔具中心", "有問題，請敲 1966，抑是問輔具中心", "Ū būn-tê, chhiáⁿ khà it-kiú-la̍k-la̍k, ia̍h-sī mn̄g hū-kū tiong-sim", "有問題，請打一九六六，抑係問輔具中心", "iu24 mun55 ti11, qiang31 da31 id2 giu31 liug2 liug2, ia55 he55 mun55 pu31 ki24 zung24 xim24"]];
+{const lst=$('#lsList');if(lst){
+ const L=[['zh','Mandarin'],['tw','Taiwanese'],['hk','Hakka']];
+ lst.innerHTML=SAY.map((s,i)=>`<li class="ls-it"><div class="ls-n">${i+1}</div><div class="ls-b"><p class="ls-zh">${s[1]}</p>${window.SAY_EN?`<p class="ls-en">${SAY_EN[i]}</p>`:''}<div class="ls-btns">${L.map(([k,n])=>`<button type="button" class="ls-p" data-i="${i}" data-l="${k}" aria-label="${LSN[k]}: ${esc(s[1])}"><span class="ls-ic" aria-hidden="true">▶</span>${n}</button>`).join('')}</div><details class="ls-txt"><summary>See the Taiwanese and Hakka text</summary><p><b>Taiwanese </b>${s[2]}<br><small>Pe̍h-ōe-jī: ${s[3]}</small></p><p><b>Hakka </b>${s[4]}<br><small>Hakka romanization: ${s[5]}</small></p></details></div></li>`).join('');
+ const au=new Audio();au.preload='none';let cur=null;
+ const reset=()=>{if(cur){cur.classList.remove('on');cur.querySelector('.ls-ic').textContent='▶'}cur=null};
+ const stop=()=>{au.pause();try{speechSynthesis.cancel()}catch(e){}reset()};
+ au.addEventListener('ended',reset);au.addEventListener('error',()=>{if(cur)$('#lsMsg').textContent=LSM.err;reset()});
+ lst.addEventListener('click',e=>{const b=e.target.closest('.ls-p');if(!b)return;const was=cur===b;stop();if(was)return;
+  const i=+b.dataset.i,l=b.dataset.l;$('#lsMsg').textContent='';cur=b;b.classList.add('on');b.querySelector('.ls-ic').textContent='■';
+  if(l==='zh'){if(!('speechSynthesis' in window)){$('#lsMsg').textContent=LSM.nozh;reset();return}
+   const u=new SpeechSynthesisUtterance(SAY[i][1].replace(/1966/g,'一九六六'));u.lang='en-US';u.rate=.85;
+   const v=speechSynthesis.getVoices().find(v=>/zh[-_]TW/i.test(v.lang))||speechSynthesis.getVoices().find(v=>/^zh/i.test(v.lang));if(v)u.voice=v;else if(speechSynthesis.getVoices().length)$('#lsMsg').textContent=LSM.nozh;
+   u.onend=u.onerror=reset;speechSynthesis.speak(u)}
+  else{au.src=LSBASE+l+'_'+SAY[i][0]+'.mp3';au.play().catch(()=>{$('#lsMsg').textContent=LSM.err;reset()})}});
+}}
 }
 </script>
 <script>/* EN: capitalize short labels (display text only) */

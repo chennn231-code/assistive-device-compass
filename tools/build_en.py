@@ -181,8 +181,11 @@ POST = [
     ("L.push('Lives in: '+c+d)", "L.push('Lives in: '+cen(c)+(d?' '+d:''))"),
     ("['stair',[", "['Stairs',["),
     ("['assessment report',", "['Assessment report',"),
+    ("LSBASE='audio/'", "LSBASE='../audio/'"),
+    ("const LSN=", "window.SAY_EN=[\"Apply first, wait for government approval, then buy or rent the device\", \"To apply for long-term care, call 1966\", \"People with a Disability Certificate can apply for device subsidies at the district office where their household is registered\", \"After disability device approval, buy the device and claim the subsidy within 6 months\", \"LTC devices and home accessibility share one allowance every 3 years; once it is used up, you pay yourself\", \"For the same device, you can apply under LTC or disability, not both\", \"Questions? Call 1966 or ask an assistive technology center\"];const LSN="),
+    ("subject=%E8%BC%94%E5%85%B7%E8%A3%9C%E5%8A%A9%E6%8C%87%E5%8D%97%E9%87%9D%EF%BC%9A%E8%B3%87%E6%96%99%E6%9B%B4%E6%AD%A3%E5%BB%BA%E8%AD%B0&body=%E5%93%AA%E4%B8%80%E5%80%8B%E5%8D%80%E5%A1%8A%EF%BC%9A%0A%0A%E5%93%AA%E8%A3%A1%E6%9C%89%E5%95%8F%E9%A1%8C%EF%BC%9A%0A%0A%E6%AD%A3%E7%A2%BA%E8%B3%87%E6%96%99%E7%9A%84%E4%BE%86%E6%BA%90%EF%BC%88%E7%B6%B2%E5%9D%80%E6%88%96%E5%85%AC%E5%91%8A%EF%BC%89%EF%BC%9A%0A%0A%EF%BC%88%E8%AB%8B%E4%B8%8D%E8%A6%81%E5%AF%AB%E8%BA%AB%E5%88%86%E8%AD%89%E5%AD%97%E8%99%9F%E3%80%81%E7%97%85%E6%AD%B7%E7%AD%89%E5%80%8B%E4%BA%BA%E8%B3%87%E6%96%99%EF%BC%89%0A", "subject=Assistive%20Device%20Subsidy%20Compass%3A%20correction&body=Section%3A%0A%0AWhat%20is%20wrong%3A%0A%0ASource%20of%20the%20correct%20information%20%28link%20or%20announcement%29%3A%0A%0A%28Please%20do%20not%20include%20ID%20numbers%2C%20medical%20records%20or%20other%20personal%20data%29%0A"),
     ("data-modeall-soft>Assistive technology centers<small>& suppliers</small>", "data-modeall-soft>Centers<small>& suppliers</small>"),
-    ("</style>", "@media(max-width:560px){.brand .bn{display:none}}</style>"),
+    ("</style>", "@media(max-width:560px){.brand .bn{display:none}.ls-btns{grid-template-columns:1fr 1fr}}</style>"),
     ("Choose where you live to see nearby assistive technology centers and LTC-contracted suppliers",
      "Choose where you live to see nearby assistive technology centers and LTC-contracted suppliers. Names and addresses are shown in Chinese as officially registered, so you can paste them into a map app or show them to a taxi driver"),
 ]
