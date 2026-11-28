@@ -446,6 +446,18 @@ body[data-mode] .sec.mhide{display:none}
 .x-msg:empty{display:none}
 .x-msg{margin:8px 0;padding:10px 14px;border-radius:12px;background:var(--hl);color:var(--ink);font-size:var(--sm);font-weight:700;line-height:1.6}
 .pb.off .pb-h b{color:var(--mute)}
+#shareDlg{border:0;border-radius:22px;padding:20px;max-width:min(560px,94vw);width:100%;background:var(--bg);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+#shareDlg::backdrop{background:rgba(20,16,12,.55)}
+.sh-t{margin:0 0 6px;font-size:22px}
+.sh-opts{display:grid;gap:10px}
+.sh-opt{display:block;text-align:left;width:100%;padding:16px 18px;border-radius:16px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.sh-opt:hover,.sh-opt:focus-visible{border-color:var(--brown)}
+.sh-opt b{display:block;font-size:19px;color:var(--brown);margin-bottom:4px}
+.sh-opt span{font-size:var(--sm);color:var(--mute)}
+.sh-more{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px}
+.link-btn{background:none;border:0;padding:6px 0;color:var(--brown);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer}
+.sh-prev{max-height:58vh;overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff}
+.sh-prev img{display:block;width:100%;height:auto}
 .links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .lk{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
 .lk strong{display:block;color:var(--brown);font-size:18px}.lk span{font-size:var(--sm);color:var(--mute)}
@@ -792,8 +804,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <h3>初步參考結果</h3>
       <p class="x-msg" id="ckMsg" aria-live="polite"></p>
       <div id="out"></div>
-      <div class="fam-acts"><button type="button" class="btn lineCopy">複製 LINE 討論摘要</button><button type="button" class="btn ghost shareLink">分享此結果的連結</button><button type="button" class="btn ghost packOpen">懶人包卡片</button></div>
-      <p class="note famMsg" aria-live="polite"></p>
+      <div class="fam-acts"><button type="button" class="btn shareOpen">分享給家人</button><span class="note" style="margin:0">可以選文字摘要或流程圖圖片</span></div>
       <div class="check-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg><span>這只是依你勾選的內容做的初步整理，實際資格要由<strong>照管中心、區公所或衛生局審核</strong></span></div>
     </div>
   </div>
@@ -880,8 +891,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <div class="paybars" id="payBars"></div>
       <details class="cmp-d"><summary>看計算細節</summary><div class="cmp" id="cmp"></div></details>
       <p class="note" style="margin-top:14px">依全國基準估算，不含縣市加碼　<strong>實際金額以核定通知為準</strong></p>
-      <div class="fam-acts"><button type="button" class="btn lineCopy">複製 LINE 討論摘要</button><button type="button" class="btn ghost shareLink">分享此試算結果</button><button type="button" class="btn ghost packOpen">懶人包卡片</button></div>
-      <p class="note famMsg" aria-live="polite"></p>
+      <div class="fam-acts"><button type="button" class="btn shareOpen">分享給家人</button><span class="note" style="margin:0">可以選文字摘要或流程圖圖片</span></div>
     </div>
   </div>
   <details class="fold" id="quota"><summary><span class="ft">我的輔具補助還能用多少錢？</span><small>長照的輔具補助是 3 年一筆總數，用一個例子看懂，再算算自己的</small></summary><div class="fold-body">
@@ -1278,9 +1288,32 @@ h1,h2,h3,.sh p{text-wrap:balance}
 <nav class="callbar" aria-label="常用工具">
   <a class="primary" href="tel:1966">撥 1966<small>長照專線</small></a>
   <a href="#county" data-modeall-soft>輔具中心<small>和輔具店</small></a>
-  <button type="button" class="packOpen" id="barPack">懶人包<small id="barPackSub">整理重點</small></button>
+  <button type="button" class="shareOpen" id="barPack">分享<small id="barPackSub">給家人</small></button>
   <a href="#top" class="totop" aria-label="回到頂端">↑<small>頂端</small></a>
 </nav>
+<dialog id="shareDlg" aria-labelledby="shTitle">
+  <div id="shChoose">
+    <h2 id="shTitle" class="sh-t">要用哪一種方式分享？</h2>
+    <p class="note" style="margin:0 0 14px">內容依你在網頁上填的資料整理，只在你的手機或電腦裡產生</p>
+    <div class="sh-opts">
+      <button type="button" class="sh-opt" id="shText"><b>複製文字摘要</b><span>排好的文字，直接貼到家庭 LINE 群組討論</span></button>
+      <button type="button" class="sh-opt" id="shImg"><b>生成流程圖圖片</b><span>一張清楚的申請流程圖，存到手機再傳，長輩也看得懂</span></button>
+    </div>
+    <div class="sh-more"><button type="button" class="link-btn" id="shLink">或分享試算連結</button><button type="button" class="link-btn packOpen" id="shPack">看完整懶人包</button></div>
+  </div>
+  <div id="shImgBox" hidden>
+    <h2 class="sh-t">流程圖圖片</h2>
+    <div class="sh-prev"><img id="shPrev" alt="輔具補助申請流程圖"></div>
+    <div class="pack-acts">
+      <a class="btn" id="shDl" download="輔具補助流程圖.png">下載圖片</a>
+      <button type="button" class="btn ghost" id="shImgShare" hidden>直接分享</button>
+      <button type="button" class="btn ghost" id="shBack">換別的方式</button>
+    </div>
+    <p class="note" style="margin:8px 0 0;text-align:center">手機也可以長按圖片儲存</p>
+  </div>
+  <p class="x-msg" id="shMsg" aria-live="polite"></p>
+  <div class="pack-acts"><button type="button" class="btn ghost" id="shClose">關閉</button></div>
+</dialog>
 <dialog id="packDlg" aria-labelledby="packTitle">
   <div class="pack-card" id="packCard"></div>
   <div class="pack-acts">
@@ -1965,8 +1998,84 @@ $('#packClose').addEventListener('click',()=>$('#packDlg').close());
 $('#packDlg').addEventListener('click',e=>{if(e.target===$('#packDlg'))$('#packDlg').close()});
 $('#packCopy').addEventListener('click',async()=>{const t=packText();try{await navigator.clipboard.writeText(t);$('#packMsg').textContent='已複製，可以貼到 LINE 或簡訊'}catch(e){const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');$('#packMsg').textContent='已複製，可以貼到 LINE 或簡訊'}catch(x){$('#packMsg').textContent='無法自動複製，請改用截圖'}ta.remove()}});
 $('#packShare').addEventListener('click',()=>{navigator.share({title:'輔具補助懶人包',text:packText()}).catch(()=>{})});
-function updBar(){const s=$('#barPackSub');if(!s)return;s.textContent=CALC&&CALC.typed?'自付 '+fmt(CALC.best==='d'?CALC.dpay:CALC.lpay):'整理重點'}
+function updBar(){const s=$('#barPackSub');if(!s)return;s.textContent=CALC&&CALC.typed&&CALC.best?'自付 '+fmt(CALC.best==='d'?CALC.dpay:CALC.lpay):'給家人'}
 updBar();
+
+/* ===== 分享給家人：文字或流程圖 ===== */
+function shareOpen(){$('#shChoose').hidden=false;$('#shImgBox').hidden=true;$('#shMsg').textContent='';const d=$('#shareDlg');if(d.showModal)d.showModal();else d.setAttribute('open','')}
+$$('.shareOpen').forEach(b=>b.addEventListener('click',shareOpen));
+$('#shClose').addEventListener('click',()=>$('#shareDlg').close());
+$('#shareDlg').addEventListener('click',e=>{if(e.target===$('#shareDlg'))$('#shareDlg').close()});
+$('#shText').addEventListener('click',()=>copyText(lineText(),$('#shMsg')));
+$('#shLink').addEventListener('click',async()=>{const u=shareURL();if(navigator.share){try{await navigator.share({title:'輔具補助試算',url:u});return}catch(e){}}await copyText(u,$('#shMsg'));if(/已複製/.test($('#shMsg').textContent))$('#shMsg').textContent='連結已複製　家人打開就會看到一樣的試算'});
+$('#shPack').addEventListener('click',()=>$('#shareDlg').close());
+$('#shBack').addEventListener('click',()=>{$('#shChoose').hidden=false;$('#shImgBox').hidden=true});
+let shBlob=null;
+$('#shImg').addEventListener('click',async()=>{$('#shMsg').textContent='流程圖產生中…';
+  try{const cv=await drawFlow();const url=cv.toDataURL('image/png');$('#shPrev').src=url;$('#shDl').href=url;
+    shBlob=await new Promise(r=>cv.toBlob(r,'image/png'));
+    const f=shBlob&&new File([shBlob],'輔具補助流程圖.png',{type:'image/png'});
+    $('#shImgShare').hidden=!(f&&navigator.canShare&&navigator.canShare({files:[f]}));
+    $('#shChoose').hidden=true;$('#shImgBox').hidden=false;$('#shMsg').textContent='';
+  }catch(e){$('#shMsg').textContent='圖片產生失敗，請改用文字摘要'}});
+$('#shImgShare').addEventListener('click',async()=>{try{await navigator.share({files:[new File([shBlob],'輔具補助流程圖.png',{type:'image/png'})],title:'輔具補助流程圖'})}catch(e){}});
+async function drawFlow(){
+  const c=$('#calcCity').value,d=load('dist')||'',ct=c?nearCenter(c,d):null,on=c&&ONLINE[c];
+  const r=CALC&&CALC.best==='d'?'D':document.querySelector('input[name=route]:checked').value;
+  const RN={L:'長照',D:'身障輔具',M:'醫療輔具'}[r];
+  const steps=FLOW[r].map(([t,o,p],i)=>[t,p,WHO_T[r][i].join('　')]);
+  const contact={L:'撥 1966（前 5 分鐘免費），照管專員會到家評估',D:'向戶籍地區公所或輔具中心申請，也可以線上申辦',M:'向戶籍所在縣市的衛生局申請'}[r];
+  const docs=(DOCS[r].g[0][1]||[]).slice(0,5).map(x=>x.replace(/<[^>]+>/g,''));
+  const ctrs=c?ctrLines(c,d).slice(0,3):[];
+  const W=1080,P=56,F='"Noto Sans TC",sans-serif',FS='"Noto Serif TC",serif';
+  const allTxt='輔具補助申請流程家人討論用住在預計申請政府約出自己約付走路線要準備找誰先申請等核定再買或租初步估算以政府核定為準輔具補助指南針'+steps.flat().join('')+contact+docs.join('')+ctrs.map(x=>x.n+x.t+(x.s||'')).join('')+(CALC?CALC.n:'')+c+d+'0123456789,元萬（）、：①②③④↓・'+(QUIZ?QUIZ.l+QUIZ.d:'')+(on?on[0]:'');
+  try{await Promise.all([document.fonts.load('700 30px "Noto Sans TC"',allTxt),document.fonts.load('400 30px "Noto Sans TC"',allTxt),document.fonts.load('900 30px "Noto Serif TC"',allTxt)])}catch(e){}
+  const cv=document.createElement('canvas'),x=cv.getContext('2d');
+  const wrap=(t,w,font)=>{x.font=font;const out=[];let line='';for(const ch of t){if(x.measureText(line+ch).width>w&&line){out.push(line);line=ch}else line+=ch}if(line)out.push(line);return out};
+  // layout pass
+  const ops=[];let y=0;
+  const add=(fn,hgt)=>{const yy=y;ops.push(()=>fn(yy));y+=hgt};
+  const text=(t,font,color,lh,w=W-2*P,xo=P)=>{const ls=wrap(t,w,font);add(yy=>{x.font=font;x.fillStyle=color;ls.forEach((l,i)=>x.fillText(l,xo,yy+lh*(i+.8)))},ls.length*lh)};
+  const C={bg:'#f7f2ea',card:'#ffffff',ink:'#2b2118',mute:'#6f6253',brown:'#6b4a30',soft:'#efe6d8',hl:'#f3d98b',line:'#e2d6c4'};
+  // header
+  add(yy=>{x.fillStyle=C.brown;x.fillRect(0,yy,W,170);x.fillStyle='#fff';x.font=`900 50px ${FS}`;x.fillText('輔具補助申請流程',P,yy+80);x.font=`400 26px ${F}`;x.fillText('家人討論用　'+new Date().toLocaleDateString('zh-TW')+(c?'　住在 '+c+d:''),P,yy+128)},170);
+  y+=30;
+  // summary card
+  const sum=[];
+  if(QUIZ)sum.push(['長照',QUIZ.l],['身障輔具',QUIZ.d]);
+  if(CALC&&CALC.best)sum.push(['預計申請',CALC.n+'（'+(CALC.typed?'報價 ':'示範價 ')+fmt(CALC.p)+'）'],['走'+(CALC.best==='l'?'長照':'身障'),'政府約出 '+fmt(CALC.best==='l'?CALC.lg:CALC.dg)+'，自己約付 '+fmt(CALC.best==='l'?CALC.lpay:CALC.dpay)]);
+  if(sum.length){const y0=y;let inner=[];sum.forEach(([k,v])=>{inner.push([k,wrap(v,W-2*P-210,`700 30px ${F}`)])});const hh=inner.reduce((a,[k,ls])=>a+ls.length*44+14,30);
+    add(yy=>{x.fillStyle=C.card;rr(P,yy,W-2*P,hh,24,C.line);let cy=yy+24;inner.forEach(([k,ls])=>{x.font=`400 24px ${F}`;x.fillStyle=C.mute;x.fillText(k,P+28,cy+32);x.font=`700 30px ${F}`;x.fillStyle=C.ink;ls.forEach((l,i)=>x.fillText(l,P+200,cy+34+i*44));cy+=ls.length*44+14})},hh);y+=30}
+  // route title
+  add(yy=>{x.font=`900 36px ${FS}`;x.fillStyle=C.ink;x.fillText('走「'+RN+'」怎麼申請',P,yy+40)},64);
+  // steps
+  steps.forEach(([t,p,who],i)=>{
+    const body=wrap(p+(i===0&&r!=='L'?'　'+contact:''),W-2*P-150,`400 27px ${F}`),hh=Math.max(170,164+(body.length-1)*40);
+    add(yy=>{x.fillStyle=C.card;rr(P,yy,W-2*P,hh,24,i===0?C.brown:C.line);
+      x.fillStyle=C.brown;x.beginPath();x.arc(P+62,yy+62,36,0,Math.PI*2);x.fill();x.fillStyle='#fff';x.font=`900 38px ${FS}`;x.textAlign='center';x.fillText(String(i+1),P+62,yy+76);x.textAlign='left';
+      x.font=`700 33px ${F}`;x.fillStyle=C.ink;x.fillText(t,P+122,yy+56);x.font=`700 22px ${F}`;x.fillStyle=C.brown;x.fillText(who,P+122,yy+92);
+      x.font=`400 27px ${F}`;x.fillStyle=C.ink;body.forEach((l,k)=>x.fillText(l,P+122,yy+134+k*40))},hh);
+    if(i<steps.length-1)add(yy=>{x.fillStyle=C.brown;x.beginPath();x.moveTo(W/2-20,yy+8);x.lineTo(W/2+20,yy+8);x.lineTo(W/2,yy+34);x.closePath();x.fill()},44);
+  });
+  y+=26;
+  // docs
+  if(docs.length){const ls=docs.map(t=>wrap('・'+t,W-2*P-56,`400 26px ${F}`));const hh=74+ls.reduce((a,l)=>a+l.length*38,0)+14;
+    add(yy=>{x.fillStyle=C.soft;rr(P,yy,W-2*P,hh,24);x.font=`700 30px ${F}`;x.fillStyle=C.brown;x.fillText('要準備的資料',P+28,yy+50);x.font=`400 26px ${F}`;x.fillStyle=C.ink;let cy=yy+92;ls.forEach(l=>l.forEach(s=>{x.fillText(s,P+28,cy);cy+=38}))},hh);y+=24}
+  // contacts
+  const cl=[['長照專線','1966（前 5 分鐘免費）']];ctrs.forEach(t=>cl.push([t.n,(t.t||'')+(ct||!t.s?'':'（'+t.s.replace(/（[^）]*）/g,'')+'）')]));if(on)cl.push(['線上申辦',on[0].replace(/，.*$/,'')]);
+  {const ls=cl.map(([k,v])=>[k,wrap(v,W-2*P-56,`400 26px ${F}`)]);const hh=74+ls.reduce((a,[k,l])=>a+38+l.length*36+10,0);
+   add(yy=>{x.fillStyle=C.card;rr(P,yy,W-2*P,hh,24,C.line);x.font=`700 30px ${F}`;x.fillStyle=C.brown;x.fillText('可以找誰',P+28,yy+50);let cy=yy+96;ls.forEach(([k,l])=>{x.font=`700 26px ${F}`;x.fillStyle=C.ink;x.fillText(k,P+28,cy);cy+=36;x.font=`400 26px ${F}`;x.fillStyle=C.mute;l.forEach(s=>{x.fillText(s,P+28,cy);cy+=36});cy+=10})},hh);y+=28}
+  // warning
+  add(yy=>{x.fillStyle=C.hl;rr(P,yy,W-2*P,96,24);x.font=`900 38px ${FS}`;x.fillStyle=C.ink;x.textAlign='center';x.fillText('先申請、等核定，再買或租',W/2,yy+62);x.textAlign='left'},96);
+  y+=24;
+  text('初步估算，以政府核定為準　整理自「輔具補助指南針」（民間衛教網站，非政府網站）',`400 22px ${F}`,C.mute,32);
+  text(location.href.split('#')[0].split('?')[0],`400 20px ${F}`,C.mute,30);
+  y+=36;
+  function rr(x0,y0,w,hh,r0,stroke){x.beginPath();x.moveTo(x0+r0,y0);x.arcTo(x0+w,y0,x0+w,y0+hh,r0);x.arcTo(x0+w,y0+hh,x0,y0+hh,r0);x.arcTo(x0,y0+hh,x0,y0,r0);x.arcTo(x0,y0,x0+w,y0,r0);x.closePath();x.fill();if(stroke){x.lineWidth=3;x.strokeStyle=stroke;x.stroke()}}
+  cv.width=W;cv.height=Math.ceil(y);x.fillStyle=C.bg;x.fillRect(0,0,W,cv.height);x.textBaseline='alphabetic';
+  ops.forEach(f=>f());
+  return cv;
+}
 
 /* ===== 防止互相矛盾的選擇 ===== */
 const XMSG={age:['ckMsg','「65 歲以上」和「55 到 64 歲的原住民」只能選一個，已幫你取消另一個'],need:['pkMsg','「需要量身訂做的輔具」和「只需要幾樣基本輔具」互相矛盾，已幫你取消另一個']};
@@ -2045,13 +2154,13 @@ setMode=function(m,i){
   const hd=document.querySelector('header');$('#modeBar').style.top=(hd?hd.offsetHeight:0)+'px';
   $('#modeTxt').textContent=`第 ${stI+1}／${STEPS.length} 步：${STEPS[stI][1]}`;
   $('#modeBar').hidden=false;$('#modeEnd').hidden=true;
-  $('#stPrev').hidden=stI===0;$('#stNext').hidden=false;$('#stNext').textContent=stI===STEPS.length-1?'完成，整理懶人包':'下一步';
+  $('#stPrev').hidden=stI===0;$('#stNext').hidden=false;$('#stNext').textContent=stI===STEPS.length-1?'完成，分享給家人':'下一步';
   $('#modeAll').textContent='看全部';
   onScroll();
 };
 function stGo(i){setMode('step',i);const t=document.getElementById(STEPS[stI][0]);if(t)t.scrollIntoView({block:'start'})}
 $('#stPrev').addEventListener('click',()=>stGo(stI-1));
-$('#stNext').addEventListener('click',()=>{if(stI===STEPS.length-1){packOpen();return}stGo(stI+1)});
+$('#stNext').addEventListener('click',()=>{if(stI===STEPS.length-1){shareOpen();return}stGo(stI+1)});
 $$('input[name=view]').forEach(r=>r.addEventListener('change',()=>{save('view',r.value);if(r.value==='step')stGo(0);else{setMode('');$('#viewSw').scrollIntoView({block:'start'})}}));
 $('#modeAll').addEventListener('click',()=>{document.querySelector('input[name=view][value=all]').checked=true;save('view','all')});
 document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a||document.body.getAttribute('data-mode')!=='step')return;const id=a.getAttribute('href').slice(1),k=STEPS.findIndex(s=>s[0]===id);if(k>=0){e.preventDefault();stGo(k)}},true);
