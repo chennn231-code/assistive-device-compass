@@ -1890,5 +1890,9 @@
 "正常 1 倍": "Normal 1×",
 "快 1.25 倍": "Fast 1.25×",
 "更快 1.5 倍": "Faster 1.5×",
-"速度": "Speed"
+"速度": "Speed",
+"台語語音製作中，先聽國語或客語": "Taiwanese audio coming soon — try Mandarin or Hakka",
+"（製作中）": " (coming soon)",
+"製作中": "soon",
+"都是 AI 合成語音，台語、客語正在請會說的人確認，念錯或有建議歡迎": "All audio is AI-generated; Taiwanese and Hakka are being checked by native speakers. Hear a mistake or have ideas? Please"
 }
