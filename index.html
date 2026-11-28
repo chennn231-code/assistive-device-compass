@@ -440,6 +440,9 @@ body[data-mode] .sec.mhide{display:none}
 .ub b{font-variant-numeric:tabular-nums;white-space:nowrap}
 .ub span{color:var(--mute);padding-bottom:8px}
 @media(max-width:560px){.ub b{font-size:11px}.usebars{gap:4px;padding:10px 8px 0}}
+.where2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.where2 select{margin-bottom:0}
+.ctr-mini{margin:4px 0 0;padding-left:1.1em}.ctr-mini li{margin:2px 0}
 .links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .lk{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
 .lk strong{display:block;color:var(--brown);font-size:18px}.lk span{font-size:var(--sm);color:var(--mute)}
@@ -852,8 +855,10 @@ h1,h2,h3,.sh p{text-wrap:balance}
   <div class="sh"><p class="k">第三步</p><h2>能補多少錢？</h2><p>選擇輔具、輸入店家報價，估算兩種管道的差別</p></div>
   <div class="calc">
     <div class="card">
-      <label class="f" for="calcCity">戶籍在哪個縣市</label>
-      <select id="calcCity"><option value="">請選擇縣市</option></select>
+      <div class="where2">
+        <div><label class="f" for="calcCity">戶籍在哪個縣市</label><select id="calcCity"><option value="">請選擇縣市</option></select></div>
+        <div><label class="f" for="calcDist">鄉鎮市區</label><select id="calcDist" disabled><option value="">先選縣市</option></select></div>
+      </div>
       <div id="cityTip" aria-live="polite"></div>
       <label class="f" for="item">要買什麼輔具</label>
       <select id="item"></select>
@@ -1876,20 +1881,25 @@ document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');i
 /* ===== 戶籍縣市提示 ===== */
 const ONLINE={'臺北市':['身障生活輔具要用「臺北市輔具資源整合資訊網」線上申請，用台北通登入','https://welfare.gov.taipei/Assistive/','開啟臺北市系統'],'新北市':['身障生活輔具可以用「新北輔具 Easy Go」網頁或 APP 申請、預約評估','https://atrc.aihsin.ntpc.gov.tw/NewsInfo/76','看 Easy Go 說明']};
 const LOCAL={'臺中市':'臺中市除了全國的補助基準表，另有市府公告的「增訂表」項目，可以問區公所或輔具中心'};
-function nearCenter(c,d){const all=CENTERS[c]||[];if(!all.length)return null;const dv=(d||'').replace(/[區鄉鎮市]$/,'');return all.find(x=>areaHit(x.s,dv))||all[0]}
+function nearCenter(c,d){const all=CENTERS[c]||[];if(!all.length)return null;if(all.length===1)return all[0];const dv=(d||'').replace(/[區鄉鎮市]$/,'');return dv?all.find(x=>areaHit(x.s,dv))||null:null}
+const telOk=t=>(t||'').replace(/[^\d#]/g,'').replace(/#.*/,'');
+function ctrLines(c,d){const ct=nearCenter(c,d);if(ct)return [ct];return CENTERS[c]||[]}
+const ctrTxt=(x,one)=>x.n+' '+(x.t||'')+(one||!x.s?'':'（負責 '+x.s.replace(/（[^）]*）/g,'')+'）');
 function cityTip(){
   const c=$('#calcCity').value,o=$('#cityTip');
   if(!c){o.innerHTML='';return}
-  const on=ONLINE[c],ct=nearCenter(c,load('dist'));
-  o.innerHTML=`<div class="city-tip">${on?`<p>${on[0]}　<a href="${on[1]}" rel="noopener">${on[2]}</a></p>`:`<p>身障輔具、醫療輔具可以用社家署「<a href="https://atonline.sfaa.gov.tw/" rel="noopener">輔具線上申辦</a>」送件</p>`}${LOCAL[c]?`<p>${LOCAL[c]}</p>`:''}${ct?`<p>就近的輔具中心：${esc(ct.n)}　<a href="tel:${(ct.t||'').replace(/[^\d#]/g,'').replace(/#.*/,'')}">${esc(ct.t||'')}</a></p>`:''}<p>長照申請撥 <a href="tel:1966">1966</a>　部分縣市另有自訂的補助，以縣市公告為準</p></div>`;
+  const d=$('#calcDist').value,on=ONLINE[c],ct=nearCenter(c,d);
+  o.innerHTML=`<div class="city-tip">${on?`<p>${on[0]}　<a href="${on[1]}" rel="noopener">${on[2]}</a></p>`:`<p>身障輔具、醫療輔具可以用社家署「<a href="https://atonline.sfaa.gov.tw/" rel="noopener">輔具線上申辦</a>」送件</p>`}${LOCAL[c]?`<p>${LOCAL[c]}</p>`:''}${ct?`<p>負責${d?esc(d):'你這一區'}的輔具中心：${esc(ct.n)}　<a href="tel:${telOk(ct.t)}">${esc(ct.t||'')}</a><br><small>依各中心公告的服務區域判斷</small></p>`:(CENTERS[c]||[]).length?`<p>${esc(c)}有 ${CENTERS[c].length} 家輔具中心，依住的區域分工${d?'，你選的區沒有在公告的服務區域裡找到，請直接打電話問':'，<b>選鄉鎮市區後會顯示負責你那一區的</b>'}</p><ul class="ctr-mini">${CENTERS[c].map(x=>`<li>${esc(x.n)}${x.s?`（${esc(x.s.replace(/（[^）]*）/g,''))}）`:''}　<a href="tel:${telOk(x.t)}">${esc(x.t||'')}</a></li>`).join('')}</ul>`:''}<p>長照申請撥 <a href="tel:1966">1966</a>　部分縣市另有自訂的補助，以縣市公告為準</p></div>`;
 }
 $('#calcCity').innerHTML='<option value="">請選擇縣市</option>'+Object.keys(DIST).map(c=>`<option>${c}</option>`).join('');
-$('#calcCity').addEventListener('change',()=>{const c=$('#calcCity').value;
+function calcDistFill(keep){const c=$('#calcCity').value,s=$('#calcDist');if(!c){s.innerHTML='<option value="">先選縣市</option>';s.disabled=true;return}s.disabled=false;s.innerHTML='<option value="">請選擇</option>'+DIST[c].map(x=>`<option${x===keep?' selected':''}>${x}</option>`).join('')}
+$('#calcDist').addEventListener('change',()=>{const c=$('#calcCity').value,d=$('#calcDist').value;save('dist',d);if($('#city').value===c&&!$('#dist').disabled)$('#dist').value=d;if($('#hfCity').value===c&&!$('#hfDist').disabled)$('#hfDist').value=d;city();shSt.more=false;shops();hfSt.more=false;hf();cityTip();remoteSync()});
+$('#calcCity').addEventListener('change',()=>{const c=$('#calcCity').value;calcDistFill('');
   if($('#city').value!==c){$('#city').value=c;fillDist('')}
   if($('#hfCity').value!==c){$('#hfCity').value=c;hfFill('')}
   save('city',c);save('dist','');city();shSt.more=false;shops();hfSt.more=false;hf();cityTip();updBar();remoteSync()});
-{const c=load('city');if(c&&DIST[c])$('#calcCity').value=c}
-const _sp=syncPlace;syncPlace=function(f){_sp(f);const c=load('city')||'';if($('#calcCity').value!==c)$('#calcCity').value=c;cityTip();if(typeof remoteSync==='function')remoteSync()};
+{const c=load('city');if(c&&DIST[c]){$('#calcCity').value=c;calcDistFill(load('dist')||'')}}
+const _sp=syncPlace;syncPlace=function(f){_sp(f);const c=load('city')||'',d=load('dist')||'';if($('#calcCity').value!==c)$('#calcCity').value=c;calcDistFill(d);cityTip();if(typeof remoteSync==='function')remoteSync()};
 cityTip();
 
 /* ===== 懶人包 ===== */
@@ -1911,7 +1921,7 @@ function packText(){
   L.push('','■ '+dc.t+'要準備');dc.g[0][1].forEach(x=>L.push('・'+x.replace(/<[^>]+>/g,'')));
   L.push('','■ 可以找誰');
   L.push('長照申請：撥 1966（前 5 分鐘免費）');
-  if(ct)L.push('輔具中心：'+ct.n+' '+(ct.t||''));
+  if(c)ctrLines(c,d).forEach(x=>L.push('輔具中心：'+ctrTxt(x,!!ct)));
   if(!QUIZ||QUIZ.d!=='目前不適用')L.push('身障輔具線上申請：'+(on?on[1]:'https://atonline.sfaa.gov.tw/'));
   L.push('','提醒：先申請、等核定，再買或租','以上是初步估算，以政府核定為準','整理自：輔具補助指南針 '+location.href.split('#')[0]);
   return L.join('\n');
@@ -2026,7 +2036,7 @@ function lineText(){
     L.push('家裡要自付：約 '+fmt(useD?CALC.dpay:CALC.lpay));}
   L.push('下一步：');
   if(!QUIZ||QUIZ.l!=='目前看起來不符合'&&QUIZ.l!=='可能不適用')L.push('・撥 1966 申請長照評估（前 5 分鐘免費）');
-  if(ct)L.push('・輔具中心：'+ct.n+' '+(ct.t||''));
+  if(c)ctrLines(c,d).forEach(x=>L.push('・輔具中心：'+ctrTxt(x,!!ct)));
   if(!QUIZ||QUIZ.d!=='目前不適用')L.push('・身障輔具可到戶籍地區公所或線上申請');
   L.push('・先申請、等核定，再買或租');
   L.push('看同樣的試算：'+shareURL());
@@ -2043,7 +2053,7 @@ $$('.shareLink').forEach(b=>b.addEventListener('click',async()=>{const u=shareUR
 {const q=new URLSearchParams(location.search);
  if([...q.keys()].length){
   const c=SLUGC[q.get('city')],d=q.get('dist');
-  if(c){$('#calcCity').value=c;$('#city').value=c;fillDist(d&&DIST[c].includes(d)?d:'');$('#hfCity').value=c;hfFill(d&&DIST[c].includes(d)?d:'');save('city',c);save('dist',d&&DIST[c].includes(d)?d:'');city();shops();hf();cityTip();remoteSync()}
+  if(c){$('#calcCity').value=c;$('#city').value=c;fillDist(d&&DIST[c].includes(d)?d:'');$('#hfCity').value=c;hfFill(d&&DIST[c].includes(d)?d:'');save('city',c);save('dist',d&&DIST[c].includes(d)?d:'');calcDistFill(d&&DIST[c].includes(d)?d:'');city();shops();hf();cityTip();remoteSync()}
   const t=q.get('tier');if(LTC[t]){$('#inc2').value=t;const r=document.querySelector(`input[name=inc][value="${t}"]`);if(r)r.checked=true}
   const it=items.findIndex(x=>x.c===q.get('item'));if(it>=0)$('#item').value=it;
   const pr=+q.get('price');if(pr>0)$('#price').value=pr;
