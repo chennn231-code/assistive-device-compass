@@ -271,6 +271,16 @@ select:focus,input:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3
 .shop .lab{font-size:13px;font-weight:700;color:var(--brown);margin-bottom:4px}
 .shop h3{font-size:19px;margin-bottom:6px}.shop p{margin:0 0 14px;color:var(--mute);font-size:var(--sm)}
 .shop .btn{margin-top:auto;align-self:flex-start;min-height:46px;padding:0 20px;font-size:16px}
+.hf-mode{margin-bottom:10px}
+.hf-sum{margin:0 0 12px;font-size:17px}
+.hf-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:10px}
+.hf-u{background:var(--soft);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.hf-n{font-weight:700;font-size:17px;line-height:1.45}
+.hf-a{font-size:var(--sm);color:var(--mute)}
+.hf-p{align-self:flex-start;font-weight:700;font-size:17px;color:var(--brown);min-height:40px;display:inline-flex;align-items:center}
+.hf-tag{display:inline-block;margin-left:8px;font-size:13px;font-weight:700;padding:1px 10px;border-radius:999px;background:var(--card);border:1px solid var(--line);vertical-align:2px}
+.hf-tag.same{background:var(--hl);border-color:transparent;color:var(--ink)}
+.hf-tag.far{color:var(--mute)}
 .hf .where{margin-bottom:16px}
 .hf-steps{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:10px;counter-reset:hf}
 .hf-steps li{counter-increment:hf;display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start;background:var(--soft);border-radius:14px;padding:12px 14px}
@@ -973,7 +983,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
   </div></details>
 
   <h3 class="sm-h" id="h-find">找附近的無障礙施工單位</h3>
-  <p class="note" style="margin:-4px 0 16px">長照的居家無障礙改善，要找<strong>和政府簽約的長照特約單位</strong>施工　輔具和無障礙用的是同一份特約名單，可以用衛福部的官方地圖依縣市、鄉鎮查詢</p>
+  <p class="note" style="margin:-4px 0 16px">長照的居家無障礙改善，要找<strong>和你家縣市簽約的長照特約單位</strong>施工　選好縣市和鄉鎮，下面會直接列出名單、地址和電話</p>
   <div class="card hf">
     <div class="where">
       <div><label class="f" for="hfCity">縣市</label><select id="hfCity"><option value="">請選擇縣市</option></select></div>
@@ -1579,24 +1589,40 @@ $('#dist').addEventListener('change',()=>{save('dist',$('#dist').value);city();s
 
 /* 找無障礙施工單位 */
 const MAP='https://ltcpgis.mohw.gov.tw/';
+const BUILD=/無障礙|工程|裝修|裝潢|營造|室內|土木|水電|建設|門窗|統包|五金|廚具|環境改善|木作|設計|建材|止滑|防滑|修繕|爬梯/;
+let EF=null,efP=null,hfMode='build',hfMore=false;
+const efLoad=()=>efP||(efP=fetch('data/ltc-ef.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>EF=j).catch(()=>{efP=null;return null}));
 function hfFill(keep){const c=$('#hfCity').value,s=$('#hfDist');if(!c){s.innerHTML='<option value="">先選縣市</option>';s.disabled=true;return}
-  s.disabled=false;s.innerHTML='<option value="">請選擇</option>'+DIST[c].map(x=>`<option${x===keep?' selected':''}>${x}</option>`).join('')}
-function hf(){
-  const c=$('#hfCity').value,d=$('#hfDist').value;
-  if(!c){$('#hfOut').innerHTML='<div class="empty">先選你家所在的縣市和鄉鎮市區，這裡會教你怎麼在官方地圖上找</div>';return}
-  const where=esc(c)+(d?esc(d):'（再選鄉鎮市區）');
-  $('#hfOut').innerHTML=`<ol class="hf-steps">
-    <li><span>按下方按鈕，開啟衛福部「長照服務資源地理地圖」</span></li>
-    <li><span>選<b>「行政區定位」</b>，縣市和鄉鎮市區選 <b>${where}</b></span></li>
-    <li><span>服務項目選<b>「輔具及居家無障礙環境改善服務」</b>，範圍可以先選 5 公里，找不到再放大</span></li>
-    <li><span>清單會同時列出<b>輔具店和無障礙施工單位</b>，點開名稱可看地址、電話，打電話問有沒有做居家無障礙改善</span></li>
-  </ol>
-  <div class="hf-act"><a class="btn" href="${MAP}" rel="noopener">開啟官方地圖</a><span class="note" style="margin:0">不會用或找不到，撥 <a href="tel:1966"><strong>1966</strong></a> 請照管專員提供特約名冊</span></div>
-  <p class="note" style="margin:14px 0 0">地圖由衛福部建置，資料由各縣市登錄，可能和最新特約名單有落差　<strong>施工前請向照管專員確認是長照特約單位</strong>，並等核定後再動工　本站列出官方查詢管道，不推薦任何廠商</p>`;
+  s.disabled=false;s.innerHTML='<option value="">不指定</option>'+DIST[c].map(x=>`<option${x===keep?' selected':''}>${x}</option>`).join('')}
+const telOf=p=>p.replace(/[^\d#]/g,'').replace(/#.*/,'');
+function hfCard(u,c,d){const [n,a,p,di]=u,[uc,ud]=EF.d[di].split('|');
+  const tag=uc===c&&ud===d?'<span class="hf-tag same">就在'+esc(ud)+'</span>':uc===c?'<span class="hf-tag">'+esc(ud)+'</span>':'<span class="hf-tag far">外縣市・'+esc(uc+ud)+'</span>';
+  return `<li class="hf-u"><div class="hf-n">${esc(n)}${tag}</div><div class="hf-a">${esc(a)}</div>${p?`<a class="hf-p" href="tel:${telOf(p)}">${esc(p)}</a>`:''}</li>`}
+async function hf(){
+  const c=$('#hfCity').value,d=$('#hfDist').value,o=$('#hfOut');
+  if(!c){o.innerHTML='<div class="empty">先選你家所在的縣市，這裡會列出和該縣市簽約的特約單位</div>';return}
+  if(!EF){o.innerHTML='<div class="empty">名單載入中…</div>';await efLoad();if(!EF){o.innerHTML=`<div class="empty">名單暫時載入失敗，可以改用<a href="${MAP}" rel="noopener">衛福部長照服務資源地理地圖</a>查詢，或撥 1966</div>`;return}}
+  if($('#hfCity').value!==c||$('#hfDist').value!==d)return;
+  const all=EF.u.filter(u=>u[4].includes(c));
+  const loc=u=>{const [uc,ud]=EF.d[u[3]].split('|');return uc===c&&ud===d?0:uc===c?1:2};
+  const pick=(hfMode==='build'?all.filter(u=>BUILD.test(u[0])):all).slice().sort((x,y)=>loc(x)-loc(y)||x[0].localeCompare(y[0],'zh-Hant'));
+  const nb=all.filter(u=>BUILD.test(u[0])).length,nd=d?pick.filter(u=>loc(u)===0).length:0;
+  const show=hfMore?pick:pick.slice(0,10);
+  o.innerHTML=`<div class="tabs hf-mode" role="radiogroup" aria-label="要看哪些單位">
+      <label><input type="radio" name="hfm" value="build"${hfMode==='build'?' checked':''}>無障礙・施工類 ${nb} 家</label>
+      <label><input type="radio" name="hfm" value="all"${hfMode==='all'?' checked':''}>全部特約 ${all.length} 家</label>
+    </div>
+    <p class="hf-sum">${esc(c)}的特約單位${d?`，<strong>${esc(d)}有 ${nd} 家</strong>，排在最前面`:''}${hfMode==='build'?'':'（多數是輔具店，部分也做無障礙改善）'}</p>
+    ${pick.length?`<ul class="hf-list">${show.map(u=>hfCard(u,c,d)).join('')}</ul>`:'<div class="empty">名稱看起來是施工類的單位沒有找到，請改看「全部特約」，或撥 1966 請照管專員提供名冊</div>'}
+    ${pick.length>10?`<button type="button" class="q-add" id="hfMoreBtn">${hfMore?'收合':'看全部 '+pick.length+' 家'}</button>`:''}
+    <div class="hf-act" style="margin-top:14px"><span class="note" style="margin:0">也可以撥 <a href="tel:1966"><strong>1966</strong></a> 請照管專員提供名冊，或用<a href="${MAP}" rel="noopener">衛福部官方地圖</a>看位置</span></div>
+    <p class="note" style="margin:12px 0 0">名單整理自衛福部「長照服務資源地理地圖」中「輔具及居家無障礙環境改善服務」的特約資料（${esc(EF.date)} 擷取），同一家可能和好幾個縣市簽約　「施工類」是依<strong>名稱</strong>判斷，名稱沒寫的單位也可能有做，請打電話問　<strong>施工前請向照管專員確認仍是特約單位</strong>，並等核定後再動工　本站只整理公開資料，不推薦任何廠商</p>`;
+  $$('input[name=hfm]').forEach(r=>r.addEventListener('change',()=>{hfMode=r.value;hfMore=false;hf()}));
+  const mb=$('#hfMoreBtn');if(mb)mb.addEventListener('click',()=>{hfMore=!hfMore;hf()});
 }
 $('#hfCity').innerHTML='<option value="">請選擇縣市</option>'+Object.keys(DIST).map(c=>`<option>${c}</option>`).join('');
-$('#hfCity').addEventListener('change',()=>{hfFill('');hf()});
-$('#hfDist').addEventListener('change',hf);
+$('#hfCity').addEventListener('change',()=>{hfFill('');hfMore=false;hf()});
+$('#hfDist').addEventListener('change',()=>{hfMore=false;hf()});
 {const c=load('city');if(c&&DIST[c]){$('#hfCity').value=c;hfFill(load('dist')||'')}}
 hf();
 
