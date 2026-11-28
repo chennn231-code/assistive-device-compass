@@ -720,7 +720,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
 .say-m{flex-basis:100%;margin:0}
 .say .ls-p:not(.on){background:transparent;color:inherit}
 #flowList .say-l{flex-basis:100%}#flowList .say{gap:6px}#flowList .say .ls-p{flex:1 1 auto;justify-content:center;padding:4px 10px;font-size:15px;min-height:40px}
-@media(max-width:560px){.say-l{flex-basis:100%}.say .ls-p{flex:1;justify-content:center;padding:6px 8px}}
+@media(max-width:560px){.say-l{flex-basis:100%}.say-sp{flex-basis:100%;margin:2px 0 0}.say .ls-p{flex:1;justify-content:center;padding:6px 8px}}
 .alert .say-x .note,.alert .say-x a{color:inherit}
 .fx-h{display:flex;align-items:center;gap:10px;margin:34px 0 14px;font-size:20px}.fx-h span{width:30px;height:30px;border-radius:50%;background:var(--brown);color:var(--bg);display:grid;place-items:center;font-size:16px;flex:none}
 #foreign .sh+.fx-h{margin-top:8px}
@@ -751,6 +751,8 @@ h1,h2,h3,.sh p{text-wrap:balance}
 .fx-buy{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.fx-buy>div{display:flex;gap:12px;align-items:flex-start;padding:16px 18px;border-radius:18px;background:var(--soft)}.fx-buy svg{width:30px!important;height:30px!important;color:var(--brown)}.fx-buy p{margin:0;font-size:15px}.fx-buy b{display:block;font-size:17px;margin-bottom:2px}
 @media(max-width:860px){.fx-help{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.fx-pick{grid-template-columns:1fr}.fx-pick label{flex-direction:row;text-align:left;padding:14px}.fx-pick label b{flex:1}.fx-pick label small{display:none}.fx-pick br{display:none}.fx-cols,.fx-help,.fx-buy{grid-template-columns:1fr}.fx-v{font-size:18px;line-height:1.4}.fx-res{padding:18px}}
+.say-sp{display:inline-flex;align-items:center;gap:6px;font-size:15px;margin-left:2px}.say-sp span{white-space:nowrap}.say-sp select{width:auto;min-height:40px;padding:4px 8px;border-radius:10px;border:1.5px solid currentColor;background:transparent;color:inherit;font:inherit;font-weight:700}.say-sp select option{color:#222;background:#fff}
+.alert .say-sp select{border-color:#fff}
 @media(max-width:560px){.brand .bn{display:none}.ls-btns{grid-template-columns:1fr 1fr}}
 /* EN layout: more air, shorter lines */
 :root{--h1:clamp(36px,5.6vw,60px);--h2:clamp(25px,2.7vw,31px);--h3:19px}
@@ -782,6 +784,10 @@ h1,h2,h3{letter-spacing:-.01em;line-height:1.2}
   <h3>Text size</h3>
   <div class="row" role="group" aria-label="Text size">
     <button data-z="1" aria-pressed="true">Standard</button><button data-z="1.15" aria-pressed="false" style="font-size:18px">Large</button><button data-z="1.3" aria-pressed="false" style="font-size:20px">Extra large</button>
+  </div>
+  <h3>Audio speed</h3>
+  <div class="row" role="group" aria-label="Audio speed" id="spRow">
+    <button data-sp="0.75" aria-pressed="false">Slow</button><button data-sp="1" aria-pressed="true">Normal</button><button data-sp="1.25" aria-pressed="false">Fast</button><button data-sp="1.5" aria-pressed="false">Faster</button>
   </div>
   <h3>Color</h3>
   <div class="row"><button id="hc" aria-pressed="false">High contrast (black & white)</button></div>
@@ -2384,22 +2390,25 @@ $('#mailCopy')?.addEventListener('click',()=>{const t='chennn231@gmail.com',ok=(
 /* 用聽的: 放在相關步驟旁邊 */
 window.SAY_EN=["Apply first, wait for government approval, then buy or rent the device", "To apply for long-term care, call 1966", "People with a Disability Certificate can apply for device subsidies at the district office where their household is registered", "After disability device approval, buy the device and claim the subsidy within 6 months", "LTC devices and home accessibility share one allowance every 3 years; once it is used up, you pay yourself", "For the same device, you can apply under LTC or disability, not both", "Questions? Call 1966 or ask an assistive technology center"];const LSN={zh:'Mandarin',tw:'Taiwanese',hk:'Hakka'},LSM={err:'The audio could not be played; please try again later',nozh:'No Mandarin voice on this device'},LSBASE='../audio/',LSZH=false;
 const SAY=[["s1", "先申請，等政府核定，再買或租輔具", "先申請，等政府核定了後，才去買抑是稅輔具", "Seng sin-chhéng, tán chèng-hú ha̍k-tēng liáu-āu, chiah khì bé ia̍h-sī sòe hū-kū", "先申請，等政府核定以後，正去買抑係租輔具", "xien24 siin24 qiang31, den31 ziin55 fu31 hed2 tin55 i24 heu55, zang55 hi55 mai24 ia55 he55 zu24 pu31 ki24"], ["s2", "要申請長照，請打 1966", "欲申請長照，請敲 1966", "Beh sin-chhéng tn̂g-chiàu, chhiáⁿ khà it-kiú-la̍k-la̍k", "愛申請長照，請打一九六六", "oi55 siin24 qiang31 cong11 zeu55, qiang31 da31 id2 giu31 liug2 liug2"], ["s3", "有身心障礙證明的人，可以到戶籍地的區公所申請輔具補助", "有身心障礙證明的人，會使去戶籍所在的區公所申請輔具補助", "Ū sin-sim chiòng-gāi chèng-bêng ê lâng, ē-sái khì hō͘-che̍k só͘-chāi ê khu-kong-só͘ sin-chhéng hū-kū pó͘-chō͘", "有身心障礙證明个人，做得到戶籍所在个區公所申請輔具補助", "iu24 siin24 xim24 zong55 ngoi55 ziin55 min11 ge55 ngin11, zo55 ded2 do55 fu55 xid5 so31 cai55 ge55 ki24 gung24 so31 siin24 qiang31 pu31 ki24 bu31 cu55"], ["s4", "身障輔具核定後，6 個月內要買好並請款", "身障輔具核定了後，六個月內就愛買好，閣去請款", "Sin-chiòng hū-kū ha̍k-tēng liáu-āu, la̍k kò goe̍h lāi tō ài bé hó, koh khì chhéng-khoán", "身障輔具核定以後，六個月以內愛買好，還愛去請款", "siin24 zong55 pu31 ki24 hed2 tin55 i24 heu55, liug2 ge55 ngied5 i24 nui55 oi55 mai24 ho31, han11 oi55 hi55 qiang31 kuan31"], ["s5", "長照的輔具和居家無障礙改善，3 年一筆額度，用完就要自己付", "長照的輔具佮居家無障礙改善，三年一筆額度，用了就愛家己出", "Tn̂g-chiàu ê hū-kū kap ki-ka bô chiòng-gāi kái-siān, saⁿ nî chi̍t pit gia̍h-tō͘, iōng liáu tō ài ka-kī chhut", "長照个輔具同居家無障礙改善，三年一筆額度，用忒就愛自家出", "cong11 zeu55 ge55 pu31 ki24 tung11 gi24 ga24 mo11 zong55 ngoi55 goi31 san55, sam24 ngien11 id2 bid2 ngiag2 tu55, iung55 ted2 qiu55 oi55 cii55 ga24 cud2"], ["s6", "同一樣輔具，長照和身障只能選一邊申請", "仝一項輔具，長照佮身障干焦會當揀一爿申請", "Kāng chi̍t hāng hū-kū, tn̂g-chiàu kap sin-chiòng kan-na ē-tàng kéng chi̍t pêng sin-chhéng", "共樣个輔具，長照同身障淨做得揀一片申請", "kiung55 iong55 ge55 pu31 ki24, cong11 zeu55 tung11 siin24 zong55 qiang55 zo55 ded2 gien31 id2 pien31 siin24 qiang31"], ["s7", "有問題，請打 1966，或問輔具中心", "有問題，請敲 1966，抑是問輔具中心", "Ū būn-tê, chhiáⁿ khà it-kiú-la̍k-la̍k, ia̍h-sī mn̄g hū-kū tiong-sim", "有問題，請打一九六六，抑係問輔具中心", "iu24 mun55 ti11, qiang31 da31 id2 giu31 liug2 liug2, ia55 he55 mun55 pu31 ki24 zung24 xim24"]];
+const SPD=[['0.75','Slow 0.75×'],['1','Normal 1×'],['1.25','Fast 1.25×'],['1.5','Faster 1.5×']];let sayRate=+(load('sayRate')||1);if(!SPD.some(s=>+s[0]===sayRate))sayRate=1;
+const setRate=v=>{sayRate=+v;save('sayRate',String(sayRate));sayAu.playbackRate=sayRate;$$('.say-sp select').forEach(s=>s.value=String(sayRate));$$('#spRow [data-sp]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.sp===sayRate)))};
 const sayAu=new Audio();sayAu.preload='none';let sayCur=null;
 const sayReset=()=>{if(sayCur){sayCur.classList.remove('on');sayCur.querySelector('.ls-ic').textContent='▶'}sayCur=null};
 const sayStop=()=>{sayAu.pause();try{speechSynthesis.cancel()}catch(e){}sayReset()};
 sayAu.addEventListener('ended',sayReset);
 const sayFill=()=>$$('.say[data-s]:not(.done)').forEach(el=>{const i=SAY.findIndex(s=>s[0]===el.dataset.s);if(i<0)return;const s=SAY[i];el.classList.add('done');
- el.innerHTML=`<span class="say-l"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>Listen </span>${['zh','tw','hk'].map(l=>`<button type="button" class="ls-p" data-i="${i}" data-l="${l}" aria-label="${LSN[l]} reading: ${esc(s[1])}"><span class="ls-ic" aria-hidden="true">▶</span>${LSN[l]}</button>`).join('')}<details class="say-x"><summary>What it says</summary><p>${s[1]}</p><p><b>Taiwanese </b>${s[2]}<br><small>Pe̍h-ōe-jī: ${s[3]}</small></p><p><b>Hakka </b>${s[4]}<br><small>Hakka romanization: ${s[5]}</small></p><p class="note">Taiwanese and Hakka audio is AI-generated and being checked by native speakers. Hear a mistake? Please <a href="#contact">email me</a></p></details>`});
+ el.innerHTML=`<span class="say-l"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>Listen </span>${['zh','tw','hk'].map(l=>`<button type="button" class="ls-p" data-i="${i}" data-l="${l}" aria-label="${LSN[l]} reading: ${esc(s[1])}"><span class="ls-ic" aria-hidden="true">▶</span>${LSN[l]}</button>`).join('')}<label class="say-sp"><span>Speed</span><select aria-label="Audio speed">${SPD.map(([v,n])=>`<option value="${v}"${v==sayRate?' selected':''}>${n}</option>`).join('')}</select></label><details class="say-x"><summary>What it says</summary><p>${s[1]}</p><p><b>Taiwanese </b>${s[2]}<br><small>Pe̍h-ōe-jī: ${s[3]}</small></p><p><b>Hakka </b>${s[4]}<br><small>Hakka romanization: ${s[5]}</small></p><p class="note">Taiwanese and Hakka audio is AI-generated and being checked by native speakers. Hear a mistake? Please <a href="#contact">email me</a></p></details>`});
 document.addEventListener('click',e=>{const b=e.target.closest('.ls-p');if(!b)return;const was=sayCur===b;sayStop();if(was)return;
  const i=+b.dataset.i,l=b.dataset.l;sayCur=b;b.classList.add('on');b.querySelector('.ls-ic').textContent='■';
  if(l==='zh'&&!LSZH){if(!('speechSynthesis' in window)){alertSay(b,LSM.nozh);sayReset();return}
-  const u=new SpeechSynthesisUtterance(SAY[i][1].replace(/1966/g,'一九六六'));u.lang='en-US';u.rate=.85;
+  const u=new SpeechSynthesisUtterance(SAY[i][1].replace(/1966/g,'一九六六'));u.lang='en-US';u.rate=.85*sayRate;
   const vs=speechSynthesis.getVoices(),v=vs.find(v=>/zh[-_]TW/i.test(v.lang))||vs.find(v=>/^zh/i.test(v.lang));if(v)u.voice=v;
   u.onend=u.onerror=sayReset;speechSynthesis.speak(u);return}
- sayAu.src=LSBASE+l+'_'+SAY[i][0]+'.mp3';sayAu.play().catch(()=>{alertSay(b,LSM.err);sayReset()})});
+ sayAu.src=LSBASE+l+'_'+SAY[i][0]+'.mp3';sayAu.playbackRate=sayRate;sayAu.preservesPitch=true;sayAu.play().catch(()=>{alertSay(b,LSM.err);sayReset()})});
 const alertSay=(b,m)=>{const x=b.closest('.say');let n=x.querySelector('.say-m');if(!n){n=document.createElement('p');n.className='say-m note';n.setAttribute('aria-live','polite');x.appendChild(n)}n.textContent=m;setTimeout(()=>{n.textContent=''},5000)};
 sayAu.addEventListener('error',()=>{if(sayCur){alertSay(sayCur,LSM.err);sayReset()}});
-sayFill();$$('input[name=route]').forEach(x=>x.addEventListener('change',()=>{sayStop();sayFill()}));
+document.addEventListener('change',e=>{if(e.target.closest('.say-sp'))setRate(e.target.value)});$$('#spRow [data-sp]').forEach(b=>b.addEventListener('click',()=>setRate(b.dataset.sp)));sayAu.addEventListener('loadedmetadata',()=>{sayAu.playbackRate=sayRate});
+sayFill();setRate(sayRate);$$('input[name=route]').forEach(x=>x.addEventListener('change',()=>{sayStop();sayFill()}));
 
 /* 外籍人士專區: 選身分 */
 $$('input[name=fx]').forEach(r=>r.addEventListener('change',()=>{const v=document.querySelector('input[name=fx]:checked').value;$$('.fx-res').forEach(x=>x.hidden=x.dataset.fx!==v)}));

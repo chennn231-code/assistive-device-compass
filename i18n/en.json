@@ -1880,5 +1880,15 @@
 "查詢": "",
 "網路買要找合格賣家": "Buy online from licensed sellers",
 "只有公告開放的醫療器材能在網路賣，賣家要有藥商許可執照和實體店面": "Only listed medical devices may be sold online, by licensed dealers with a physical store",
-"整理自衛福部、食藥署、健保署、移民署公開資料　依據《外國專業人才及其眷屬長期照顧服務申請及給付辦法》、《外國專業人才延攬及僱用法》第 28 條　規定以主管機關最新公告為準": "From MOHW, TFDA, NHIA and NIA public information. Based on the LTC Regulations for Foreign Professionals and Their Dependents and Article 28 of the Act for the Recruitment and Employment of Foreign Professionals; latest official notices prevail"
+"整理自衛福部、食藥署、健保署、移民署公開資料　依據《外國專業人才及其眷屬長期照顧服務申請及給付辦法》、《外國專業人才延攬及僱用法》第 28 條　規定以主管機關最新公告為準": "From MOHW, TFDA, NHIA and NIA public information. Based on the LTC Regulations for Foreign Professionals and Their Dependents and Article 28 of the Act for the Recruitment and Employment of Foreign Professionals; latest official notices prevail",
+"語音速度": "Audio speed",
+"慢": "Slow",
+"正常": "Normal",
+"快": "Fast",
+"更快": "Faster",
+"慢 0.75 倍": "Slow 0.75×",
+"正常 1 倍": "Normal 1×",
+"快 1.25 倍": "Fast 1.25×",
+"更快 1.5 倍": "Faster 1.5×",
+"速度": "Speed"
 }
