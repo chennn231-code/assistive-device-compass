@@ -418,6 +418,28 @@ body[data-mode] .sec.mhide{display:none}
 .famMsg{min-height:1.4em;margin:6px 0 0}
 .price-live{margin:0 0 8px;font-weight:700;color:var(--brown);min-height:1.5em}
 @media(max-width:520px){.modebar .wrap{flex-wrap:wrap}.mb-btns{width:100%;justify-content:stretch}.mb-btns .btn{flex:1 1 0}}
+.eras{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+.eras span{font-size:14px;font-weight:700;padding:4px 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--card)}
+.eras .e1,.tl .x1 .tl-era{border-color:#b9a184}.eras .e2,.tl .x2 .tl-era{border-color:#8a6a4c}.eras .e3,.tl .x3 .tl-era{background:var(--brown);color:var(--bg);border-color:var(--brown)}
+.tl{list-style:none;margin:0;padding:0 0 0 22px;border-left:3px solid var(--line);display:grid;gap:14px}
+.tl li{position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+.tl li::before{content:"";position:absolute;left:-32px;top:22px;width:15px;height:15px;border-radius:50%;background:var(--bg);border:3px solid var(--brown)}
+.tl .x3::before{background:var(--brown)}
+.tl-h{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;margin-bottom:4px}
+.tl-y{font:900 22px/1.2 "Noto Serif TC",serif;color:var(--brown)}
+.tl-r{font-size:14px;color:var(--mute)}
+.tl-era{font-size:13px;font-weight:700;padding:1px 10px;border-radius:999px;border:1.5px solid var(--line)}
+.tl h3{margin:2px 0 6px;font-size:19px}
+.tl p{margin:0;line-height:1.75}
+.tl .ae{margin-top:8px;padding:8px 12px;border-radius:12px;background:var(--soft);font-size:var(--sm)}
+.tl .ae b{color:var(--brown)}
+.tl .src{display:inline-block;margin-top:8px;font-size:14px}
+.usebars{margin:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:end;height:220px;padding:12px 14px 0;background:var(--card);border:1px solid var(--line);border-radius:18px}
+.ub{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px;font-size:13px}
+.ub i{display:block;width:100%;max-width:46px;background:var(--brown);border-radius:8px 8px 0 0}
+.ub b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.ub span{color:var(--mute);padding-bottom:8px}
+@media(max-width:560px){.ub b{font-size:11px}.usebars{gap:4px;padding:10px 8px 0}}
 .links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .lk{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
 .lk strong{display:block;color:var(--brown);font-size:18px}.lk span{font-size:var(--sm);color:var(--mute)}
@@ -668,7 +690,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
 </div>
 <nav class="card pop" id="tocPop" hidden aria-label="網站目錄">
   <ul class="toc-list">
-    <li><a href="#check">我能申請嗎</a></li><li><a href="#warn">先申請，再購買</a></li><li><a href="#flow">申請四步驟</a></li><li><a href="#online">不用出門也能辦</a></li><li><a href="#calc">能補多少錢</a></li><li><a href="#all">全部輔具查詢</a></li><li><a href="#v3">智慧輔具專區（長照 3.0）</a></li><li><a href="#home">居家無障礙改善</a></li><li><a href="#county">找輔具中心和輔具店</a></li><li><a href="#dict">公文名詞翻譯</a></li><li><a href="#news">最新消息</a></li><li><a href="#links">官方連結</a></li>
+    <li><a href="#check">我能申請嗎</a></li><li><a href="#warn">先申請，再購買</a></li><li><a href="#flow">申請四步驟</a></li><li><a href="#online">不用出門也能辦</a></li><li><a href="#calc">能補多少錢</a></li><li><a href="#all">全部輔具查詢</a></li><li><a href="#v3">智慧輔具專區（長照 3.0）</a></li><li><a href="#home">居家無障礙改善</a></li><li><a href="#county">找輔具中心和輔具店</a></li><li><a href="#dict">公文名詞翻譯</a></li><li><a href="#history">小知識：長照 1.0 到 3.0</a></li><li><a href="#news">最新消息</a></li><li><a href="#links">官方連結</a></li>
   </ul>
 </nav>
 </header>
@@ -1197,12 +1219,24 @@ h1,h2,h3,.sh p{text-wrap:balance}
   </div></details>
 </div></section>
 
-<section class="sec soft" id="news"><div class="wrap">
+<section class="sec soft" id="history"><div class="wrap">
+  <div class="sh"><p class="k">小知識庫</p><h2>從長照 1.0 到 3.0，輔具和無障礙怎麼變</h2><p>一條時間軸看懂補助是怎麼一路改到今天，每一則都附政府原始資料</p></div>
+  <div class="eras" aria-hidden="true"><span class="e0">起步</span><span class="e1">長照 1.0</span><span class="e2">長照 2.0</span><span class="e3">長照 3.0</span></div>
+  <ol class="tl" id="tl"></ol>
+  <h3 class="sm-h" style="margin-top:36px">用輔具和無障礙服務的人，6 年內變成約 6.6 倍</h3>
+  <figure class="usebars" id="useBars" role="img" aria-label="長照輔具及居家無障礙環境改善服務人數：2018 年 20,841 人，2024 年 138,600 人"></figure>
+  <p class="note">資料：行政院核定《長期照顧十年計畫 3.0》表 2.8，輔具及居家無障礙環境改善服務人數</p>
+  <h3 class="sm-h" style="margin-top:32px">小知識</h3>
+  <div class="dict faq" id="kb"></div>
+  <p class="note" style="margin-top:14px">本區整理自行政院、衛生福利部、社會及家庭署公開資料，日期以公告或施行日為準</p>
+</div></section>
+
+<section class="sec" id="news"><div class="wrap">
   <div class="sh"><h2>最新消息</h2><p>每週整理衛福部等政府機關和輔具、長照有關的公告，詳細內容請看原始來源</p></div>
   <ul class="news" id="newsList"></ul>
 </div></section>
 
-<section class="sec" id="links"><div class="wrap">
+<section class="sec soft" id="links"><div class="wrap">
   <div class="sh"><h2>官方連結</h2><p>申請、查證都以這些官方管道為準</p></div>
   <div class="links">
     <a class="lk" href="tel:1966"><strong>長照專線 1966</strong><span>手機、市話直撥，詢問長照申請與進度</span></a>
@@ -1799,7 +1833,7 @@ if('IntersectionObserver' in window){const bo=new IntersectionObserver(es=>{if(e
 setTimeout(growBars,3000);
 
 /* 讀到哪裡：進度條、目前章節、目錄標示 */
-const SECS=[['check','我能申請嗎'],['warn','先申請再購買'],['flow','申請四步驟'],['calc','能補多少錢'],['all','全部輔具查詢'],['v3','智慧輔具專區'],['home','居家無障礙'],['county','找輔具中心和店'],['dict','公文名詞翻譯'],['news','最新消息'],['links','官方連結']];
+const SECS=[['check','我能申請嗎'],['warn','先申請再購買'],['flow','申請四步驟'],['calc','能補多少錢'],['all','全部輔具查詢'],['v3','智慧輔具專區'],['home','居家無障礙'],['county','找輔具中心和店'],['dict','公文名詞翻譯'],['history','小知識庫'],['news','最新消息'],['links','官方連結']];
 const secEls=SECS.map(([id])=>document.getElementById(id));
 let ticking=false;
 const onScroll=()=>{
@@ -1826,7 +1860,7 @@ if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduc
 cats();find(true);quiz();calc();pick();rent();city();shops();
 
 /* ===== 情境任務 ===== */
-const MODES={guide:['從頭帶我走',['check','warn','flow','calc','county','links']],have:['直接算錢、找店家',['calc','flow','county','home','links']],item:['查某一種輔具',['all','v3','home','dict','links']]};
+const MODES={guide:['從頭帶我走',['check','warn','flow','calc','county','links']],have:['直接算錢、找店家',['calc','flow','county','home','links']],item:['查某一種輔具',['all','v3','home','dict','history','links']]};
 function setMode(m){
   if(!MODES[m]){document.body.removeAttribute('data-mode');$$('.sec.mhide').forEach(x=>x.classList.remove('mhide'));$('#modeBar').hidden=true;$('#modeEnd').hidden=true;onScroll();return}
   const keep=MODES[m][1];document.body.setAttribute('data-mode',m);
@@ -1906,6 +1940,33 @@ $('#packCopy').addEventListener('click',async()=>{const t=packText();try{await n
 $('#packShare').addEventListener('click',()=>{navigator.share({title:'輔具補助懶人包',text:packText()}).catch(()=>{})});
 function updBar(){const s=$('#barPackSub');if(!s)return;s.textContent=CALC&&CALC.typed?'自付 '+fmt(CALC.best==='d'?CALC.dpay:CALC.lpay):'整理重點'}
 updBar();
+
+/* ===== 小知識庫 ===== */
+const TL=[
+ ['1992','民國 81 年','x0','起步','身障者的居家無障礙補助開始','內政部用「獎助辦理殘障者生活輔助器具補助作業要點」，開始補助身障者（當時叫殘障者）改善家裡的無障礙環境，符合身障資格的長輩也包含在內','補助只給有身障資格的人','社家署《社區發展季刊》153 期','https://cdj.sfaa.gov.tw/Journal/FileLoad?no=179911'],
+ ['2007–2016','民國 96–105 年','x1','長照 1.0','長期照顧十年計畫（長照 1.0）','以居家、社區服務為主　輔具購買、租借和居家無障礙改善是服務項目之一，但由各縣市自己訂補助要點，「大綱相同，細部規定不同」','金額、項目、流程每個縣市不一樣','社家署《社區發展季刊》153 期','https://cdj.sfaa.gov.tw/Journal/FileLoad?no=179911'],
+ ['2015','民國 104 年 6 月 3 日','x1','法律','《長期照顧服務法》公布','把原本分散在衛政、社政、退輔體系的長照服務整合到同一部法律，公布後兩年、106 年 6 月 3 日施行　這一天後來訂為「臺灣長照日」','長照有了正式的法律依據','衛福部長服法懶人包','https://mohw.gov.tw/dl-78306-0ca69c80-d0c5-4923-822a-42966e070d98.html'],
+ ['2017','民國 106 年 1 月','x2','長照 2.0','長照 2.0 上路','擴大服務對象、增加服務項目，往前延伸到預防和延緩失能','更多人可以申請','衛福部立法院專案報告（107 年 4 月）','https://mohw.gov.tw/dl-45332-fee59642-e85e-412c-9108-b18c577c63a6.html'],
+ ['2018','民國 107 年','x2','長照 2.0','給付及支付新制：輔具和無障礙有自己的額度','「輔具及居家無障礙環境改善服務」成為獨立的一類額度，每 3 年 4 萬元，和照顧服務、交通接送分開，不能互相流用　在特約單位只要付自己負擔的部分，其餘由單位向政府請款','全國統一標準，不用先墊全額','衛福部長照給付及支付基準','https://mohw.gov.tw/dl-61442-d7cfd414-aa71-474a-a5de-23882f0f25ed.html'],
+ ['2023','民國 112 年 1 月 1 日','x2','身障','身障輔具補助新辦法施行','一般戶補助 50%、中低收入戶 75%、低收入戶全額，每人每 2 年以補助 4 項為原則','身障輔具的補助比例與項目全面更新','全國法規資料庫','https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0050060'],
+ ['2025','民國 114 年 6 月 19 日','x3','長照 3.0','給付辦法修正，為長照 3.0 鋪路','衛福部公告修正《長期照顧服務申請及給付辦法》，分階段施行：放寬失智症申請年齡、新增智慧科技輔具','新制分三個時間點上路','衛福部新聞稿','https://mohw.gov.tw/cp-2704-82811-1.html'],
+ ['2025','民國 114 年 12 月 31 日','x3','長照 3.0','行政院核定長照 3.0（115–124 年）','方向從 2.0 的「擴充服務量」，轉向醫養結合、導入智慧照顧和提升品質　八大目標之一是「導入智慧照顧，善用科技輔具」','智慧輔具正式成為十年政策目標','《長期照顧十年計畫 3.0》核定本','https://www.mohw.gov.tw/dl-98526-31ea7422-1b07-414b-a2a4-51e38c070ee4.html'],
+ ['2026','民國 115 年 1 月 1 日','x3','長照 3.0','失智症不限年齡','未滿 50 歲的失智症且失能者也能申請長照，包含輔具和居家無障礙','年輕型失智症家庭也能用','衛福部新聞稿','https://mohw.gov.tw/cp-2704-82811-1.html'],
+ ['2026','民國 115 年 7 月 1 日','x3','長照 3.0','智慧科技輔具全租賃上路','第一組傳統輔具每 3 年 4 萬元維持不變，新增第二組每 3 年 6 萬元（居家無障礙最多 2 萬元），兩組選一組　居家無障礙項目也參考身障補助辦法增修，首批 17 件智慧輔具通過審議','可以用租的方式，隨身體狀況換輔具','衛福部新聞稿','https://www.mohw.gov.tw/cp-16-87062-1.html']
+];
+$('#tl').innerHTML=TL.map(([y,r,x,era,t,d,ae,sn,su])=>`<li class="${x}"><div class="tl-h"><span class="tl-y">${y}</span><span class="tl-r">${r}</span><span class="tl-era">${era}</span></div><h3>${t}</h3><p>${d}</p><p class="ae"><b>對民眾的改變：</b>${ae}</p><a class="src" href="${su}" rel="noopener">資料：${sn}</a></li>`).join('');
+const USE=[[2018,20841],[2019,52270],[2020,43960],[2021,80013],[2022,110081],[2023,128330],[2024,138600]];
+$('#useBars').innerHTML=USE.map(([y,v])=>`<div class="ub"><b>${(v/10000).toFixed(1)} 萬</b><i style="height:${Math.round(v/138600*150)}px"></i><span>${y}</span></div>`).join('');
+const KB=[
+ ['長照 1.0、2.0、3.0 是什麼？','都是行政院核定的「長期照顧十年計畫」　1.0 是 2007 到 2016 年，2.0 從 2017 年開始，3.0 是 115 到 124 年（2026 到 2035 年）'],
+ ['核定公文上的 E 碼、F 碼是什麼？','是長照「照顧組合」的代碼　E 開頭是輔具，例如 EA01 是馬桶增高器、便盆椅或沐浴椅；F 開頭是居家無障礙改善，例如 FA22 是固定式扶手'],
+ ['為什麼額度是「3 年」？','長照規定輔具及居家無障礙環境改善服務的額度，有效期限是 3 年　3 年內用完就要自己付，期滿再重新計算'],
+ ['給付項目變多了多少？','長照 3.0 計畫書統計，長照 2.0 的給付項目共 68 項，是長照 1.0 時期 34 項的 2 倍'],
+ ['為什麼智慧輔具只能租？','衛福部說明，身體狀況會隨復健改變，用租的可以依需求更換、減輕一次買斷的負擔，也能循環利用'],
+ ['6 月 3 日「臺灣長照日」是怎麼來的？','6 月 3 日是《長期照顧服務法》公布的日子，衛福部 115 年 11 月宣布每年這一天為臺灣長照日'],
+ ['長照和身障補助，可以兩邊一起用嗎？','同一樣輔具只能選一邊申請，兩邊都符合時可以比較哪邊划算　可以用本站的「能補多少錢」試算']
+];
+$('#kb').innerHTML=KB.map(([q,a])=>`<details><summary><span>${q}</span></summary><p>${a}</p></details>`).join('');
 
 /* ===== 原住民族地區、離島 ===== */
 /* 行政院核定 55 個原住民族地區，加上澎湖縣、金門縣、連江縣、屏東縣琉球鄉、臺東縣綠島鄉 */
