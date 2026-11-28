@@ -796,6 +796,7 @@ h1,h2,h3{letter-spacing:-.01em;line-height:1.2}
 .tabs label,.btn,.chip{letter-spacing:0}
 .toc-list a,.callbar a,.callbar button{line-height:1.25}
 </style>
+<script>const CEN={"臺北市": "Taipei City", "新北市": "New Taipei City", "桃園市": "Taoyuan City", "臺中市": "Taichung City", "臺南市": "Tainan City", "高雄市": "Kaohsiung City", "基隆市": "Keelung City", "新竹市": "Hsinchu City", "嘉義市": "Chiayi City", "新竹縣": "Hsinchu County", "苗栗縣": "Miaoli County", "彰化縣": "Changhua County", "南投縣": "Nantou County", "雲林縣": "Yunlin County", "嘉義縣": "Chiayi County", "屏東縣": "Pingtung County", "宜蘭縣": "Yilan County", "花蓮縣": "Hualien County", "臺東縣": "Taitung County", "澎湖縣": "Penghu County", "金門縣": "Kinmen County", "連江縣": "Lienchiang County (Matsu)"};const cen=c=>CEN[c]?CEN[c]+' '+c:c;try{var t=localStorage.getItem('th');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 </head>
 <body>
 <a class="skip" href="#check">Skip to eligibility check</a>
@@ -821,6 +822,7 @@ h1,h2,h3{letter-spacing:-.01em;line-height:1.2}
     <button data-sp="0.75" aria-pressed="false">Slow</button><button data-sp="1" aria-pressed="true">Normal</button><button data-sp="1.25" aria-pressed="false">Fast</button><button data-sp="1.5" aria-pressed="false">Faster</button>
   </div>
   <h3>Color</h3>
+  <div class="row" role="group" aria-label="Light or dark" id="thRow"><button data-th="auto" aria-pressed="true">Match device</button><button data-th="light" aria-pressed="false">Light</button><button data-th="dark" aria-pressed="false">Dark</button></div>
   <div class="row"><button id="hc" aria-pressed="false">High contrast (black & white)</button></div>
   <p class="note" style="margin:0">Settings are saved on this device</p>
 </div>
@@ -1532,7 +1534,7 @@ h1,h2,h3{letter-spacing:-.01em;line-height:1.2}
   <p class="note" id="packMsg" aria-live="polite" style="margin:8px 0 0;text-align:center">Or screenshot this card and send it to family</p>
 </dialog>
 
-<script>const CEN={"臺北市": "Taipei City", "新北市": "New Taipei City", "桃園市": "Taoyuan City", "臺中市": "Taichung City", "臺南市": "Tainan City", "高雄市": "Kaohsiung City", "基隆市": "Keelung City", "新竹市": "Hsinchu City", "嘉義市": "Chiayi City", "新竹縣": "Hsinchu County", "苗栗縣": "Miaoli County", "彰化縣": "Changhua County", "南投縣": "Nantou County", "雲林縣": "Yunlin County", "嘉義縣": "Chiayi County", "屏東縣": "Pingtung County", "宜蘭縣": "Yilan County", "花蓮縣": "Hualien County", "臺東縣": "Taitung County", "澎湖縣": "Penghu County", "金門縣": "Kinmen County", "連江縣": "Lienchiang County (Matsu)"};const cen=c=>CEN[c]?CEN[c]+' '+c:c;
+<script>
 {
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],R=document.documentElement;
 let CALC=null,QUIZ=null,QUOTA=null;
@@ -1556,7 +1558,9 @@ const setZ=z=>{R.style.setProperty('--z',z);$$('#setPop [data-z]').forEach(b=>b.
 const setC=on=>{on?R.setAttribute('data-contrast','on'):R.removeAttribute('data-contrast');$('#hc').setAttribute('aria-pressed',on);save('hc',on?'1':'0')};
 $$('#setPop [data-z]').forEach(b=>b.addEventListener('click',()=>setZ(b.dataset.z)));
 $('#hc').addEventListener('click',()=>setC(!R.hasAttribute('data-contrast')));
-{const z=load('fz');setZ(['1','1.15','1.3'].includes(z)?z:'1');setC(load('hc')==='1');}
+const setTh=t=>{t==='light'||t==='dark'?R.setAttribute('data-theme',t):R.removeAttribute('data-theme');$$('#thRow [data-th]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.th===(t||'auto'))));save('th',t||'auto')};
+$$('#thRow [data-th]').forEach(b=>b.addEventListener('click',()=>setTh(b.dataset.th)));
+{const z=load('fz');setZ(['1','1.15','1.3'].includes(z)?z:'1');setC(load('hc')==='1');setTh(load('th')||'auto');}
 
 /* 圖片延遲載入 */
 const loadImg=el=>{const src='../img/'+el.dataset.img+'.jpg',im=new Image();im.onload=()=>{el.style.backgroundImage=`url(${src})`};im.src=src};

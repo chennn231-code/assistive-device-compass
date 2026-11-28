@@ -783,6 +783,7 @@ dialog[open]{animation:dlgIn .28s var(--ease)}dialog[open]::backdrop{animation:f
 @media(prefers-reduced-motion:reduce){details::details-content{transition:none}dialog[open],dialog[open]::backdrop,.ls-p.on .ls-ic{animation:none}.it:hover,.lk:hover{transform:none}}
 @media(max-width:600px){.notice .wrap{display:grid;grid-template-columns:1fr auto;grid-template-areas:"lb ctl" "msg msg";align-items:center;row-gap:0;padding-block:6px 10px}.notice .lb{grid-area:lb;justify-self:start}.notice .ctl{grid-area:ctl}.notice .ctl button{min-height:40px}.notice .msg{grid-area:msg;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.45;font-size:15px}}
 </style>
+<script>try{var t=localStorage.getItem('th');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 </head>
 <body>
 <a class="skip" href="#check">跳到資格快篩</a>
@@ -808,6 +809,7 @@ dialog[open]{animation:dlgIn .28s var(--ease)}dialog[open]::backdrop{animation:f
     <button data-sp="0.75" aria-pressed="false">慢</button><button data-sp="1" aria-pressed="true">正常</button><button data-sp="1.25" aria-pressed="false">快</button><button data-sp="1.5" aria-pressed="false">更快</button>
   </div>
   <h3>顏色</h3>
+  <div class="row" role="group" aria-label="淺色或深色" id="thRow"><button data-th="auto" aria-pressed="true">跟手機一樣</button><button data-th="light" aria-pressed="false">淺色</button><button data-th="dark" aria-pressed="false">深色</button></div>
   <div class="row"><button id="hc" aria-pressed="false">高對比（黑白）</button></div>
   <p class="note" style="margin:0">設定會記在這台裝置上</p>
 </div>
@@ -1543,7 +1545,9 @@ const setZ=z=>{R.style.setProperty('--z',z);$$('#setPop [data-z]').forEach(b=>b.
 const setC=on=>{on?R.setAttribute('data-contrast','on'):R.removeAttribute('data-contrast');$('#hc').setAttribute('aria-pressed',on);save('hc',on?'1':'0')};
 $$('#setPop [data-z]').forEach(b=>b.addEventListener('click',()=>setZ(b.dataset.z)));
 $('#hc').addEventListener('click',()=>setC(!R.hasAttribute('data-contrast')));
-{const z=load('fz');setZ(['1','1.15','1.3'].includes(z)?z:'1');setC(load('hc')==='1');}
+const setTh=t=>{t==='light'||t==='dark'?R.setAttribute('data-theme',t):R.removeAttribute('data-theme');$$('#thRow [data-th]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.th===(t||'auto'))));save('th',t||'auto')};
+$$('#thRow [data-th]').forEach(b=>b.addEventListener('click',()=>setTh(b.dataset.th)));
+{const z=load('fz');setZ(['1','1.15','1.3'].includes(z)?z:'1');setC(load('hc')==='1');setTh(load('th')||'auto');}
 
 /* 圖片延遲載入 */
 const loadImg=el=>{const src='img/'+el.dataset.img+'.jpg',im=new Image();im.onload=()=>{el.style.backgroundImage=`url(${src})`};im.src=src};
