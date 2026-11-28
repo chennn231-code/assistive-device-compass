@@ -722,6 +722,35 @@ h1,h2,h3,.sh p{text-wrap:balance}
 #flowList .say-l{flex-basis:100%}#flowList .say{gap:6px}#flowList .say .ls-p{flex:1 1 auto;justify-content:center;padding:4px 10px;font-size:15px;min-height:40px}
 @media(max-width:560px){.say-l{flex-basis:100%}.say .ls-p{flex:1;justify-content:center;padding:6px 8px}}
 .alert .say-x .note,.alert .say-x a{color:inherit}
+.fx-h{display:flex;align-items:center;gap:10px;margin:34px 0 14px;font-size:20px}.fx-h span{width:30px;height:30px;border-radius:50%;background:var(--brown);color:var(--bg);display:grid;place-items:center;font-size:16px;flex:none}
+#foreign .sh+.fx-h{margin-top:8px}
+#foreign svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.fx-pick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.fx-pick label{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:20px 14px;border:2px solid var(--line);border-radius:20px;background:var(--card);cursor:pointer;line-height:1.35}
+.fx-pick input{position:absolute;opacity:0}.fx-pick label:has(input:checked){border-color:var(--brown);background:var(--soft);box-shadow:0 0 0 2px var(--brown) inset}
+.fx-pick label:has(input:focus-visible){outline:3px solid var(--brown);outline-offset:3px}
+.fx-pick small{color:var(--mute);font-size:14px}
+.fx-ic{width:52px;height:52px;border-radius:50%;background:var(--soft);display:grid;place-items:center;color:var(--brown)}.fx-ic svg{width:28px!important;height:28px!important}
+.fx-pick label:has(input:checked) .fx-ic{background:var(--brown);color:var(--bg)}
+.fx-res{margin-top:14px;background:var(--card);border:1.5px solid var(--line);border-radius:22px;padding:22px 24px}
+.fx-v{display:flex;align-items:center;gap:14px;font-size:21px;font-weight:700;margin:0 0 16px}.fx-v small{display:block;font-size:15px;font-weight:400;color:var(--mute)}
+.fx-v>svg{width:44px!important;height:44px!important;padding:9px;border-radius:50%;background:var(--soft);color:var(--brown);stroke-width:2.4!important}
+.fx-v.ok>svg{background:light-dark(#e3eadb,#2f3a2a);color:light-dark(#3d5a2c,#c9dcb8)}.fx-v.no>svg{background:light-dark(#f3d9d2,#4a2a24);color:light-dark(#8a2f1d,#f2c3b6)}
+.fx-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px}
+.fx-res h4{font-size:16px;margin:0 0 8px}
+.fx-ck{list-style:none;margin:0;padding:0;display:grid;gap:6px}.fx-ck li{display:flex;gap:8px;align-items:flex-start}.fx-ck svg{color:light-dark(#3d5a2c,#9fd0ad);margin-top:2px;width:20px!important;height:20px!important;stroke-width:2.6!important}
+.fx-tags{list-style:none;margin:0 0 6px;padding:0;display:flex;flex-wrap:wrap;gap:8px}.fx-tags li{padding:6px 14px;border-radius:999px;background:var(--soft);font-weight:700;font-size:15px}
+.fx-act{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.fx-act .btn{display:inline-flex;align-items:center;gap:8px}
+.fx-mini{margin:16px 0 0;padding-top:14px;border-top:1px dashed var(--line);font-size:15px}.fx-mini b:first-child{margin-right:6px}
+.fx-steps{margin:0;padding:0;list-style:none;counter-reset:fx;display:grid;gap:10px}.fx-steps li{counter-increment:fx;display:grid;grid-template-columns:30px 1fr;column-gap:10px}.fx-steps li::before{content:counter(fx);grid-row:span 2;width:28px;height:28px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-weight:700}.fx-steps b{display:block}
+.fx-help{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.fx-help>*{display:grid;grid-template-columns:52px 1fr;column-gap:12px;align-items:center;padding:16px 18px;border:1.5px solid var(--line);border-radius:18px;background:var(--card);color:var(--ink);text-decoration:none}
+.fx-help .fx-ic{grid-row:span 3}.fx-help b{font-size:17px;line-height:1.3}.fx-help span:not(.fx-ic){font-size:14px;color:var(--mute);line-height:1.4}
+.fx-help em{font-style:normal;font-weight:700;color:var(--brown);font-size:17px}
+.fx-help a:hover{border-color:var(--brown)}
+.fx-buy{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.fx-buy>div{display:flex;gap:12px;align-items:flex-start;padding:16px 18px;border-radius:18px;background:var(--soft)}.fx-buy svg{width:30px!important;height:30px!important;color:var(--brown)}.fx-buy p{margin:0;font-size:15px}.fx-buy b{display:block;font-size:17px;margin-bottom:2px}
+@media(max-width:860px){.fx-help{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.fx-pick{grid-template-columns:1fr}.fx-pick label{flex-direction:row;text-align:left;padding:14px}.fx-pick label b{flex:1}.fx-pick label small{display:none}.fx-pick br{display:none}.fx-cols,.fx-help,.fx-buy{grid-template-columns:1fr}.fx-v{font-size:18px;line-height:1.4}.fx-res{padding:18px}}
 @media(max-width:560px){.brand .bn{display:none}.ls-btns{grid-template-columns:1fr 1fr}}
 /* EN layout: more air, shorter lines */
 :root{--h1:clamp(36px,5.6vw,60px);--h2:clamp(25px,2.7vw,31px);--h3:19px}
@@ -760,7 +789,7 @@ h1,h2,h3{letter-spacing:-.01em;line-height:1.2}
 </div>
 <nav class="card pop" id="tocPop" hidden aria-label="Site contents">
   <ul class="toc-list">
-    <li><a href="#check">Am I eligible?</a></li><li><a href="#warn">Apply first, buy later</a></li><li><a href="#flow">4 steps to apply</a></li><li><a href="#online">Apply without leaving home</a></li><li><a href="#calc">How much is covered?</a></li><li><a href="#all">All assistive devices</a></li><li><a href="#v3">Smart assistive technology (LTC 3.0)</a></li><li><a href="#home">Home accessibility modification</a></li><li><a href="#county">Find assistive technology centers & suppliers</a></li><li><a href="#dict">Official terms explained</a></li><li><a href="#history">Knowledge base: LTC 1.0 to 3.0</a></li><li><a href="#foreign">For foreign residents</a></li><li><a href="#news">News</a></li><li><a href="#links">Official links</a></li><li><a href="#contact">Report an error</a></li>
+    <li><a href="#check">Am I eligible?</a></li><li><a href="#warn">Apply first, buy later</a></li><li><a href="#flow">4 steps to apply</a></li><li><a href="#online">Apply without leaving home</a></li><li><a href="#calc">How much is covered?</a></li><li><a href="#all">All assistive devices</a></li><li><a href="#v3">Smart assistive technology (LTC 3.0)</a></li><li><a href="#home">Home accessibility modification</a></li><li><a href="#county">Find assistive technology centers & suppliers</a></li><li><a href="#dict">Official terms explained</a></li><li><a href="#history">Knowledge base: LTC 1.0 to 3.0</a></li><li><a href="#foreign">For foreign residents</a></li><li><a href="#news">News</a></li><li><a href="#links">Official links</a></li><li><a href="#contact">Feedback</a></li>
   </ul>
 </nav>
 </header>
@@ -1310,48 +1339,63 @@ h1,h2,h3{letter-spacing:-.01em;line-height:1.2}
 </div></section>
 
 <section class="sec" id="foreign"><div class="wrap">
-  <div class="sh"><p class="k">For foreign residents</p><h2>No Taiwan ID card? Assistive devices for foreign residents</h2><p>For foreign residents, spouses and families: who qualifies for subsidies and what to check when buying yourself</p></div>
-  <div class="fg-intro"><p>Taiwan’s LTC and disability device subsidies are, <strong>in principle, for ROC nationals with household registration</strong>; foreign nationals qualify only where a law says so. Find your group below</p></div>
-  <div class="fg">
-    <article class="fg-c ok">
-      <span class="fg-t">Eligible for LTC</span>
-      <h3>Foreign professionals and their dependents</h3>
-      <p class="fg-who">Foreign professionals (including special and senior professionals), their spouses, minor children, and adult children who cannot live independently due to disability</p>
-      <ul class="fg-l">
-        <li><b>Effective from </b>From June 30, 2026</li>
-        <li><b>Conditions </b>NIA-approved permanent residence, 10 years’ cumulative legal residence, 183+ days in Taiwan each year, and aged 65+ or meeting disability criteria — confirmed by assessment</li>
-        <li><b>Services available </b>Care and professional services, transport, <strong>assistive devices and home accessibility modification</strong>, respite care</li>
-        <li><b>Benefit level </b>Same LTC need levels, caps and co-payment as nationals</li>
-        <li><b>How to apply </b>Apply at your Long-term Care Management Center or call 1966</li>
-      </ul>
-      <p class="fg-src">Legal basis: LTC Service Application and Benefit Regulations for Foreign Professionals and Their Dependents <a href="https://www.mohw.gov.tw/cp-16-86932-1.html" rel="noopener">MOHW announcement</a></p>
-    </article>
-    <article class="fg-c">
-      <span class="fg-t">Disability assessment</span>
-      <h3>Disability assessment for foreign professionals</h3>
-      <p>Under Article 28 of the Act for the Recruitment and Employment of Foreign Professionals, eligible professionals, spouses and children may apply to local government for disability assessment</p>
-      <p>Without household registration or a national ID, the MOHW is revising how they apply. <strong>Ask your local Department of Social Welfare how to apply and which benefits follow</strong></p>
-      <p class="fg-src">Source: MOHW note on the draft amendment to Article 5, Regulations for Disability Assessment <a href="https://www.mohw.gov.tw/dl-99299-113fb98c-de8d-4832-8f48-f5600de894d4.html" rel="noopener">Original document</a></p>
-    </article>
-    <article class="fg-c no">
-      <span class="fg-t">Generally not eligible at present</span>
-      <h3>Other people without a Taiwan ID card</h3>
-      <p class="fg-who">e.g. spouses without an ID card, migrant workers, students, short-term visitors</p>
-      <p>Generally not eligible for LTC or disability device subsidies. The MOHW says those facing care difficulties can seek help from local government via social welfare; foreign spouses may consider naturalization</p>
-      <p>This is still under discussion; <strong>the rules may change</strong>— follow the latest official announcements</p>
-    </article>
+  <div class="sh"><p class="k">For foreign residents</p><h2>No Taiwan ID? Help is still available</h2><p>Pick your status, then see who can help</p></div>
+
+  <h3 class="fx-h"><span>1 </span>Which describes you?</h3>
+  <div class="fx-pick" role="radiogroup" aria-label="Choose your status">
+    <label><input type="radio" name="fx" value="pro" checked><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2.5"/><path d="M14 10h4M14 14h4M5.5 16.5c.6-1.6 1.9-2.5 3.5-2.5s2.9.9 3.5 2.5"/></svg></span><b>Foreign professional <br>or their family </b><small>With permanent residence</small></label>
+    <label><input type="radio" name="fx" value="oth"><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c2.8 0 5 2.2 5 5"/></svg></span><b>Foreign spouse, migrant worker, <br>student or short-term visitor </b><small>No Taiwan ID card yet</small></label>
+    <label><input type="radio" name="fx" value="dk"><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg></span><b>Not sure </b><small>Ask first</small></label>
   </div>
 
-  <h3 class="sm-h" style="margin-top:32px">Buying or renting yourself: for everyone</h3>
-  <div class="fg2">
-    <div><b>Check the license number </b><span>Most devices are general goods, but manual wheelchairs, medical canes, walkers and hearing aids are medical devices. Check the license or registration number on the package in the database on the <a href="https://www.fda.gov.tw/" rel="noopener">TFDA website</a></span></div>
-    <div><b>Be careful buying online </b><span>Only listed medical devices may be sold online, by licensed dealers with a physical store</span></div>
-    <div><b>Problem with a product </b><span>Report to your Department of Health; adverse reactions: 02-2396-0100</span></div>
-    <div><b>National Health Insurance </b><span>ARC holders join NHI after 6 months’ residence; employees from day one. You’ll need it for doctor visits and certificates</span></div>
-    <div><b>Need help in another language </b><span>National Immigration Agency “Foreigners in Taiwan Hotline” <a href="tel:1990"><strong>1990 </strong></a>offers multilingual assistance</span></div>
-    <div><b>Ask before buying </b><span>Not sure what to buy? Call your local <a href="#county">Assistive technology centers </a>to see if they can advise — service eligibility varies by area</span></div>
+  <div class="fx-res" data-fx="pro">
+    <p class="fx-v ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><span>If eligible, you can apply for LTC <small>From June 30, 2026</small></span></p>
+    <div class="fx-cols">
+      <div><h4>You need all 4</h4><ul class="fx-ck">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>NIA-approved permanent residence</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>10 years of legal residence in total</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>183+ days in Taiwan each year</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>65 or older, or meet disability assessment criteria</li>
+      </ul><p class="note">An LTC needs assessment is also required</p></div>
+      <div><h4>Same services as nationals</h4><ul class="fx-tags"><li>devices</li><li>Home accessibility modification</li><li>Care & professional services</li><li>Transport</li><li>Respite care</li></ul>
+      <p class="note">Same LTC need levels, caps and co-payment as nationals</p></div>
+    </div>
+    <div class="fx-act"><a class="btn dark" href="tel:1966"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Call 1966 to apply for LTC </a><a class="btn ghost" href="https://www.mohw.gov.tw/cp-16-86932-1.html" rel="noopener">MOHW announcement</a></div>
+    <p class="fx-mini"><b>Disability assessment? </b>Allowed by law, but the procedure is still being revised — ask your local <b>Department of Social Welfare</b> <a href="https://www.mohw.gov.tw/dl-99299-113fb98c-de8d-4832-8f48-f5600de894d4.html" rel="noopener">Draft amendment note</a></p>
   </div>
-  <p class="note" style="margin-top:14px">From MOHW, TFDA, NHIA and NIA public information; latest official rules prevail</p>
+
+  <div class="fx-res" data-fx="oth" hidden>
+    <p class="fx-v no"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span>Generally not eligible for LTC or disability device subsidies <small>Rules may change — check the latest notices</small></span></p>
+    <h4>What you can do</h4>
+    <ol class="fx-steps">
+      <li><b>Facing care difficulties </b>Ask your local Department of Social Welfare to connect you with resources</li>
+      <li><b>Foreign spouses </b>May consider naturalization; with an ID card the usual rules apply</li>
+      <li><b>Buying or renting yourself </b>See the buying tips below</li>
+    </ol>
+    <div class="fx-act"><a class="btn dark" href="tel:1990"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h8M8 3v2M6 5c0 4 2 7 5 8M10 5c-.5 3-2.5 6-6 8M13 21l4-9 4 9M14.5 18h5"/></svg>Call 1990 (multilingual)</a></div>
+  </div>
+
+  <div class="fx-res" data-fx="dk" hidden>
+    <p class="fx-v"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg><span>Call to check first <small>Explain your residence status and your family member’s needs</small></span></p>
+    <div class="fx-act"><a class="btn dark" href="tel:1990"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h8M8 3v2M6 5c0 4 2 7 5 8M10 5c-.5 3-2.5 6-6 8M13 21l4-9 4 9M14.5 18h5"/></svg>Call 1990 (multilingual)</a><a class="btn ghost" href="tel:1966"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Call 1966 LTC hotline</a></div>
+  </div>
+
+  <h3 class="fx-h"><span>2 </span>Who to contact</h3>
+  <div class="fx-help">
+    <a href="tel:1966"><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><b>Apply for LTC </b><span>LTC hotline </span><em>1966</em></a>
+    <a href="tel:1990"><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h8M8 3v2M6 5c0 4 2 7 5 8M10 5c-.5 3-2.5 6-6 8M13 21l4-9 4 9M14.5 18h5"/></svg></span><b>Need help in another language </b><span>NIA hotline for foreign residents </span><em>1990</em></a>
+    <a href="#county"><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="18" r="3"/><path d="M8 4h2v8h6l2 6M10 12l-1 3"/></svg></span><b>Not sure which device </b><span>Ask your local assistive technology center </span><em>Find a center</em></a>
+    <a href="tel:0223960100"><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/></svg></span><b>Adverse reaction to a device </b><span>TFDA reporting line </span><em>02-2396-0100</em></a>
+    <div><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg></span><b>Problem with a product </b><span>Report to your local Department of Health </span><em>Department of Health</em></div>
+    <div><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6z"/><path d="M9 8h6M12 5v6M9 15h6"/></svg></span><b>Doctor visits & certificates </b><span>ARC holders join NHI after 6 months; employees from day one </span><em>National Health Insurance</em></div>
+  </div>
+
+  <h3 class="fx-h"><span>3 </span>Buying a device yourself: 2 tips</h3>
+  <div class="fx-buy">
+    <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg><p><b>Check the license number </b>Manual wheelchairs, medical canes, walkers and hearing aids are medical devices — look them up on the <a href="https://www.fda.gov.tw/" rel="noopener">TFDA website</a></p></div>
+    <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.5 11h10L20 8H7"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg><p><b>Buy online from licensed sellers </b>Only listed medical devices may be sold online, by licensed dealers with a physical store</p></div>
+  </div>
+  <p class="note" style="margin-top:14px">From MOHW, TFDA, NHIA and NIA public information. Based on the LTC Regulations for Foreign Professionals and Their Dependents and Article 28 of the Act for the Recruitment and Employment of Foreign Professionals; latest official notices prevail</p>
 </div></section>
 
 <section class="sec soft" id="news"><div class="wrap">
@@ -1373,12 +1417,12 @@ h1,h2,h3{letter-spacing:-.01em;line-height:1.2}
 
   <div class="contact card" id="contact">
     <div class="ct-t">
-      <h3>Found a mistake? Please let me know</h3>
-      <p>This site is run by one person, so mistakes can happen. Spot an error, broken link or anything unclear? Email me and I’ll check and fix it</p>
-      <p class="note">Please include the section, the problem and a source link (e.g. a government notice) <br>Please don’t include ID numbers or medical records. For your own application, call 1966 or your district office</p>
+      <h3>Found a mistake or have an idea? Tell me</h3>
+      <p>This site is run by one person who hopes it helps as many people as possible. Errors, broken links, anything unclear, or ideas for what to add and how to make it more useful — all are very welcome. Thank you!</p>
+      <p class="note">When reporting an error, please include the section, the problem and a source link (e.g. a government notice) <br>Please don’t include ID numbers or medical records. For your own application, call 1966 or your district office</p>
     </div>
     <div class="ct-a">
-      <a class="btn" href="mailto:chennn231@gmail.com?subject=Assistive%20Device%20Subsidy%20Compass%3A%20correction&body=Section%3A%0A%0AWhat%20is%20wrong%3A%0A%0ASource%20of%20the%20correct%20information%20%28link%20or%20announcement%29%3A%0A%0A%28Please%20do%20not%20include%20ID%20numbers%2C%20medical%20records%20or%20other%20personal%20data%29%0A">Email me</a>
+      <a class="btn" href="mailto:chennn231@gmail.com?subject=Assistive%20Device%20Subsidy%20Compass%3A%20feedback&body=Your%20feedback%20%28errors%2C%20suggestions%20or%20content%20you%20would%20like%20to%20see%29%3A%0A%0ARelated%20section%20%28if%20any%29%3A%0A%0ASource%20link%20%28if%20any%29%3A%0A%0A%28Please%20do%20not%20include%20ID%20numbers%2C%20medical%20records%20or%20other%20personal%20data%29%0A">Email me</a>
       <p class="ct-mail"><span>chennn231@gmail.com</span> <button type="button" class="link-btn" id="mailCopy">Copy address</button></p>
       <p class="note" id="mailMsg" aria-live="polite"></p>
     </div>
@@ -2356,6 +2400,9 @@ document.addEventListener('click',e=>{const b=e.target.closest('.ls-p');if(!b)re
 const alertSay=(b,m)=>{const x=b.closest('.say');let n=x.querySelector('.say-m');if(!n){n=document.createElement('p');n.className='say-m note';n.setAttribute('aria-live','polite');x.appendChild(n)}n.textContent=m;setTimeout(()=>{n.textContent=''},5000)};
 sayAu.addEventListener('error',()=>{if(sayCur){alertSay(sayCur,LSM.err);sayReset()}});
 sayFill();$$('input[name=route]').forEach(x=>x.addEventListener('change',()=>{sayStop();sayFill()}));
+
+/* 外籍人士專區: 選身分 */
+$$('input[name=fx]').forEach(r=>r.addEventListener('change',()=>{const v=document.querySelector('input[name=fx]:checked').value;$$('.fx-res').forEach(x=>x.hidden=x.dataset.fx!==v)}));
 }
 </script>
 <script>/* EN: capitalize short labels (display text only) */

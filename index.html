@@ -720,6 +720,35 @@ h1,h2,h3,.sh p{text-wrap:balance}
 #flowList .say-l{flex-basis:100%}#flowList .say{gap:6px}#flowList .say .ls-p{flex:1 1 auto;justify-content:center;padding:4px 10px;font-size:15px;min-height:40px}
 @media(max-width:560px){.say-l{flex-basis:100%}.say .ls-p{flex:1;justify-content:center;padding:6px 8px}}
 .alert .say-x .note,.alert .say-x a{color:inherit}
+.fx-h{display:flex;align-items:center;gap:10px;margin:34px 0 14px;font-size:20px}.fx-h span{width:30px;height:30px;border-radius:50%;background:var(--brown);color:var(--bg);display:grid;place-items:center;font-size:16px;flex:none}
+#foreign .sh+.fx-h{margin-top:8px}
+#foreign svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.fx-pick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.fx-pick label{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:20px 14px;border:2px solid var(--line);border-radius:20px;background:var(--card);cursor:pointer;line-height:1.35}
+.fx-pick input{position:absolute;opacity:0}.fx-pick label:has(input:checked){border-color:var(--brown);background:var(--soft);box-shadow:0 0 0 2px var(--brown) inset}
+.fx-pick label:has(input:focus-visible){outline:3px solid var(--brown);outline-offset:3px}
+.fx-pick small{color:var(--mute);font-size:14px}
+.fx-ic{width:52px;height:52px;border-radius:50%;background:var(--soft);display:grid;place-items:center;color:var(--brown)}.fx-ic svg{width:28px!important;height:28px!important}
+.fx-pick label:has(input:checked) .fx-ic{background:var(--brown);color:var(--bg)}
+.fx-res{margin-top:14px;background:var(--card);border:1.5px solid var(--line);border-radius:22px;padding:22px 24px}
+.fx-v{display:flex;align-items:center;gap:14px;font-size:21px;font-weight:700;margin:0 0 16px}.fx-v small{display:block;font-size:15px;font-weight:400;color:var(--mute)}
+.fx-v>svg{width:44px!important;height:44px!important;padding:9px;border-radius:50%;background:var(--soft);color:var(--brown);stroke-width:2.4!important}
+.fx-v.ok>svg{background:light-dark(#e3eadb,#2f3a2a);color:light-dark(#3d5a2c,#c9dcb8)}.fx-v.no>svg{background:light-dark(#f3d9d2,#4a2a24);color:light-dark(#8a2f1d,#f2c3b6)}
+.fx-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px}
+.fx-res h4{font-size:16px;margin:0 0 8px}
+.fx-ck{list-style:none;margin:0;padding:0;display:grid;gap:6px}.fx-ck li{display:flex;gap:8px;align-items:flex-start}.fx-ck svg{color:light-dark(#3d5a2c,#9fd0ad);margin-top:2px;width:20px!important;height:20px!important;stroke-width:2.6!important}
+.fx-tags{list-style:none;margin:0 0 6px;padding:0;display:flex;flex-wrap:wrap;gap:8px}.fx-tags li{padding:6px 14px;border-radius:999px;background:var(--soft);font-weight:700;font-size:15px}
+.fx-act{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.fx-act .btn{display:inline-flex;align-items:center;gap:8px}
+.fx-mini{margin:16px 0 0;padding-top:14px;border-top:1px dashed var(--line);font-size:15px}.fx-mini b:first-child{margin-right:6px}
+.fx-steps{margin:0;padding:0;list-style:none;counter-reset:fx;display:grid;gap:10px}.fx-steps li{counter-increment:fx;display:grid;grid-template-columns:30px 1fr;column-gap:10px}.fx-steps li::before{content:counter(fx);grid-row:span 2;width:28px;height:28px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-weight:700}.fx-steps b{display:block}
+.fx-help{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.fx-help>*{display:grid;grid-template-columns:52px 1fr;column-gap:12px;align-items:center;padding:16px 18px;border:1.5px solid var(--line);border-radius:18px;background:var(--card);color:var(--ink);text-decoration:none}
+.fx-help .fx-ic{grid-row:span 3}.fx-help b{font-size:17px;line-height:1.3}.fx-help span:not(.fx-ic){font-size:14px;color:var(--mute);line-height:1.4}
+.fx-help em{font-style:normal;font-weight:700;color:var(--brown);font-size:17px}
+.fx-help a:hover{border-color:var(--brown)}
+.fx-buy{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.fx-buy>div{display:flex;gap:12px;align-items:flex-start;padding:16px 18px;border-radius:18px;background:var(--soft)}.fx-buy svg{width:30px!important;height:30px!important;color:var(--brown)}.fx-buy p{margin:0;font-size:15px}.fx-buy b{display:block;font-size:17px;margin-bottom:2px}
+@media(max-width:860px){.fx-help{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.fx-pick{grid-template-columns:1fr}.fx-pick label{flex-direction:row;text-align:left;padding:14px}.fx-pick label b{flex:1}.fx-pick label small{display:none}.fx-pick br{display:none}.fx-cols,.fx-help,.fx-buy{grid-template-columns:1fr}.fx-v{font-size:18px;line-height:1.4}.fx-res{padding:18px}}
 </style>
 </head>
 <body>
@@ -747,7 +776,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
 </div>
 <nav class="card pop" id="tocPop" hidden aria-label="網站目錄">
   <ul class="toc-list">
-    <li><a href="#check">我能申請嗎</a></li><li><a href="#warn">先申請，再購買</a></li><li><a href="#flow">申請四步驟</a></li><li><a href="#online">不用出門也能辦</a></li><li><a href="#calc">能補多少錢</a></li><li><a href="#all">全部輔具查詢</a></li><li><a href="#v3">智慧輔具專區（長照 3.0）</a></li><li><a href="#home">居家無障礙改善</a></li><li><a href="#county">找輔具中心和輔具店</a></li><li><a href="#dict">公文名詞翻譯</a></li><li><a href="#history">小知識：長照 1.0 到 3.0</a></li><li><a href="#foreign">外籍人士專區</a></li><li><a href="#news">最新消息</a></li><li><a href="#links">官方連結</a></li><li><a href="#contact">回報錯誤</a></li>
+    <li><a href="#check">我能申請嗎</a></li><li><a href="#warn">先申請，再購買</a></li><li><a href="#flow">申請四步驟</a></li><li><a href="#online">不用出門也能辦</a></li><li><a href="#calc">能補多少錢</a></li><li><a href="#all">全部輔具查詢</a></li><li><a href="#v3">智慧輔具專區（長照 3.0）</a></li><li><a href="#home">居家無障礙改善</a></li><li><a href="#county">找輔具中心和輔具店</a></li><li><a href="#dict">公文名詞翻譯</a></li><li><a href="#history">小知識：長照 1.0 到 3.0</a></li><li><a href="#foreign">外籍人士專區</a></li><li><a href="#news">最新消息</a></li><li><a href="#links">官方連結</a></li><li><a href="#contact">意見回饋</a></li>
   </ul>
 </nav>
 </header>
@@ -1297,48 +1326,63 @@ h1,h2,h3,.sh p{text-wrap:balance}
 </div></section>
 
 <section class="sec" id="foreign"><div class="wrap">
-  <div class="sh"><p class="k">外籍人士專區</p><h2>沒有台灣身分證，也想在台灣使用輔具</h2><p>給在台灣生活的外國朋友、外籍配偶和他們的家人：哪些人可以申請補助、自費購買要注意什麼</p></div>
-  <div class="fg-intro"><p>台灣的長照和身障輔具補助，<strong>原則上以具我國國籍、在台灣設有戶籍的國民為對象</strong>，部分外國人是因為法律另有規定才納入　先看看自己屬於哪一種身分</p></div>
-  <div class="fg">
-    <article class="fg-c ok">
-      <span class="fg-t">可以申請長照</span>
-      <h3>外國專業人才及其眷屬</h3>
-      <p class="fg-who">外國專業人才、外國特定專業人才、外國高級專業人才，以及他們的配偶、未成年子女、因身心障礙無法自理生活的成年子女</p>
-      <ul class="fg-l">
-        <li><b>什麼時候開始</b>115 年 6 月 30 日起</li>
-        <li><b>條件</b>經移民署許可永久居留、合法累計居留 10 年、每年在台居住 183 日以上，並且 65 歲以上或符合身心障礙鑑定資格，經失能評估符合長照資格</li>
-        <li><b>可以用什麼</b>照顧及專業服務、交通接送、<strong>輔具及居家無障礙改善</strong>、喘息服務</li>
-        <li><b>補助多少</b>長照需要等級、給付額度、自付比例都和國人相同</li>
-        <li><b>怎麼申請</b>向縣市長期照顧管理中心申請，或撥 1966</li>
-      </ul>
-      <p class="fg-src">依據：《外國專業人才及其眷屬長期照顧服務申請及給付辦法》　<a href="https://www.mohw.gov.tw/cp-16-86932-1.html" rel="noopener">衛福部說明</a></p>
-    </article>
-    <article class="fg-c">
-      <span class="fg-t">身障鑑定</span>
-      <h3>外國專業人才的身心障礙鑑定</h3>
-      <p>《外國專業人才延攬及僱用法》第 28 條規定，符合永久居留和居留年限條件的外國專業人才及其配偶、子女，可以向縣市政府申請身心障礙鑑定及需求評估</p>
-      <p>因為沒有戶籍和國民身分證，衛福部正在配合修正鑑定的申請程序，<strong>實際怎麼受理、鑑定後能用哪些身障福利，請先問居住地的縣市政府社會局</strong></p>
-      <p class="fg-src">依據：衛福部《身心障礙者鑑定作業辦法》第五條修正草案說明　<a href="https://www.mohw.gov.tw/dl-99299-113fb98c-de8d-4832-8f48-f5600de894d4.html" rel="noopener">原文</a></p>
-    </article>
-    <article class="fg-c no">
-      <span class="fg-t">目前一般不在補助對象內</span>
-      <h3>其他沒有身分證的人</h3>
-      <p class="fg-who">例如尚未取得身分證的外籍配偶、移工、留學生、短期來台的人</p>
-      <p>目前一般不能使用長照和身障輔具補助　衛福部表示，無法取得我國國籍、遇到照顧困難的人，可以向地方政府求助，由社政系統協助連結資源；外籍配偶也可以考慮申請歸化，取得身分證後就能依一般規定申請</p>
-      <p>政府和民間團體對這個議題仍在討論，<strong>規定可能改變</strong>，請以最新公告為準</p>
-    </article>
+  <div class="sh"><p class="k">外籍人士專區</p><h2>沒有台灣身分證，也找得到協助</h2><p>先選身分，再看遇到問題可以找誰</p></div>
+
+  <h3 class="fx-h"><span>1</span>你是哪一種身分？</h3>
+  <div class="fx-pick" role="radiogroup" aria-label="選擇身分">
+    <label><input type="radio" name="fx" value="pro" checked><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2.5"/><path d="M14 10h4M14 14h4M5.5 16.5c.6-1.6 1.9-2.5 3.5-2.5s2.9.9 3.5 2.5"/></svg></span><b>外國專業人才<br>或他的家屬</b><small>已經拿到永久居留</small></label>
+    <label><input type="radio" name="fx" value="oth"><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c2.8 0 5 2.2 5 5"/></svg></span><b>外籍配偶、移工<br>留學生、短期來台</b><small>還沒有台灣身分證</small></label>
+    <label><input type="radio" name="fx" value="dk"><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg></span><b>我不確定</b><small>先問清楚再說</small></label>
   </div>
 
-  <h3 class="sm-h" style="margin-top:32px">自費購買或租用輔具：每個人都適用</h3>
-  <div class="fg2">
-    <div><b>認明許可證字號</b><span>多數輔具是一般商品，但機械式輪椅、醫療用手杖、助行器、助聽器等屬於醫療器材　購買時要看包裝上的醫療器材許可證字號或登錄字號，可以到<a href="https://www.fda.gov.tw/" rel="noopener">食藥署網站</a>的許可證資料庫查詢</span></div>
-    <div><b>網路購買要小心</b><span>只有公告開放的醫療器材可以在網路賣，而且賣家要是領有藥商許可執照、有實體店面的業者</span></div>
-    <div><b>買到有問題的產品</b><span>可以向居住地的衛生局檢舉，使用時發生不良反應，撥 02-2396-0100 通報</span></div>
-    <div><b>健保</b><span>持有居留證、在台居留滿 6 個月要參加健保；受僱者從受僱日起加保　看醫生、開診斷證明都會用到</span></div>
-    <div><b>需要外語協助</b><span>移民署「外來人士在臺生活諮詢服務熱線」<a href="tel:1990"><strong>1990</strong></a>，提供多國語言諮詢</span></div>
-    <div><b>先問再買</b><span>不確定買哪一種，可以先打電話問居住地的<a href="#county">輔具中心</a>能不能提供諮詢，各縣市服務對象不同</span></div>
+  <div class="fx-res" data-fx="pro">
+    <p class="fx-v ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><span>符合條件，可以申請長照<small>115 年 6 月 30 日起</small></span></p>
+    <div class="fx-cols">
+      <div><h4>要符合這 4 項</h4><ul class="fx-ck">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>移民署許可永久居留</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>合法累計居留 10 年</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>每年在台住 183 天以上</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>65 歲以上，或符合身心障礙鑑定資格</li>
+      </ul><p class="note">還要經過失能評估，符合長照資格</p></div>
+      <div><h4>可以用的服務，和國人一樣</h4><ul class="fx-tags"><li>輔具</li><li>居家無障礙改善</li><li>照顧及專業服務</li><li>交通接送</li><li>喘息服務</li></ul>
+      <p class="note">長照需要等級、給付額度、自付比例都和國人相同</p></div>
+    </div>
+    <div class="fx-act"><a class="btn dark" href="tel:1966"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>撥 1966 申請長照</a><a class="btn ghost" href="https://www.mohw.gov.tw/cp-16-86932-1.html" rel="noopener">衛福部說明</a></div>
+    <p class="fx-mini"><b>想做身障鑑定？</b>法律已經開放，但申請程序還在修正中，請先問居住地的<b>縣市政府社會局</b>　<a href="https://www.mohw.gov.tw/dl-99299-113fb98c-de8d-4832-8f48-f5600de894d4.html" rel="noopener">修正草案說明</a></p>
   </div>
-  <p class="note" style="margin-top:14px">本區整理自衛福部、食藥署、健保署、移民署公開資料，以及衛福部對外說明　規定以主管機關最新公告為準</p>
+
+  <div class="fx-res" data-fx="oth" hidden>
+    <p class="fx-v no"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span>目前一般不能申請長照和身障輔具補助<small>規定可能改變，請以最新公告為準</small></span></p>
+    <h4>但你可以這樣做</h4>
+    <ol class="fx-steps">
+      <li><b>遇到照顧困難</b>向居住地的縣市政府社會局求助，由社政系統幫忙連結資源</li>
+      <li><b>外籍配偶</b>可以考慮申請歸化，拿到身分證後就能依一般規定申請</li>
+      <li><b>自己買或租輔具</b>看下面「自己買輔具」的提醒，買得安心</li>
+    </ol>
+    <div class="fx-act"><a class="btn dark" href="tel:1990"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h8M8 3v2M6 5c0 4 2 7 5 8M10 5c-.5 3-2.5 6-6 8M13 21l4-9 4 9M14.5 18h5"/></svg>撥 1990 多國語言諮詢</a></div>
+  </div>
+
+  <div class="fx-res" data-fx="dk" hidden>
+    <p class="fx-v"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg><span>先打電話問清楚<small>說明你的居留身分和家人的狀況</small></span></p>
+    <div class="fx-act"><a class="btn dark" href="tel:1990"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h8M8 3v2M6 5c0 4 2 7 5 8M10 5c-.5 3-2.5 6-6 8M13 21l4-9 4 9M14.5 18h5"/></svg>撥 1990 多國語言諮詢</a><a class="btn ghost" href="tel:1966"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>撥 1966 長照專線</a></div>
+  </div>
+
+  <h3 class="fx-h"><span>2</span>遇到這些問題，可以找這裡</h3>
+  <div class="fx-help">
+    <a href="tel:1966"><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><b>想申請長照</b><span>長照專線</span><em>1966</em></a>
+    <a href="tel:1990"><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h8M8 3v2M6 5c0 4 2 7 5 8M10 5c-.5 3-2.5 6-6 8M13 21l4-9 4 9M14.5 18h5"/></svg></span><b>需要外語協助</b><span>移民署外來人士生活諮詢</span><em>1990</em></a>
+    <a href="#county"><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="18" r="3"/><path d="M8 4h2v8h6l2 6M10 12l-1 3"/></svg></span><b>不知道買哪種輔具</b><span>先問居住地的輔具中心</span><em>找輔具中心</em></a>
+    <a href="tel:0223960100"><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/></svg></span><b>用了輔具不舒服、有不良反應</b><span>食藥署通報專線</span><em>02-2396-0100</em></a>
+    <div><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg></span><b>買到有問題的產品</b><span>向居住地的衛生局檢舉</span><em>衛生局</em></div>
+    <div><span class="fx-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6z"/><path d="M9 8h6M12 5v6M9 15h6"/></svg></span><b>看醫生、開診斷證明</b><span>有居留證、住滿 6 個月要加健保；受僱者從受僱日起加保</span><em>健保</em></div>
+  </div>
+
+  <h3 class="fx-h"><span>3</span>自己買輔具，記得這 2 件事</h3>
+  <div class="fx-buy">
+    <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg><p><b>看包裝上的許可證字號</b>機械式輪椅、醫療用手杖、助行器、助聽器等是醫療器材，可到<a href="https://www.fda.gov.tw/" rel="noopener">食藥署網站</a>查詢</p></div>
+    <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.5 11h10L20 8H7"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg><p><b>網路買要找合格賣家</b>只有公告開放的醫療器材能在網路賣，賣家要有藥商許可執照和實體店面</p></div>
+  </div>
+  <p class="note" style="margin-top:14px">整理自衛福部、食藥署、健保署、移民署公開資料　依據《外國專業人才及其眷屬長期照顧服務申請及給付辦法》、《外國專業人才延攬及僱用法》第 28 條　規定以主管機關最新公告為準</p>
 </div></section>
 
 <section class="sec soft" id="news"><div class="wrap">
@@ -1360,12 +1404,12 @@ h1,h2,h3,.sh p{text-wrap:balance}
 
   <div class="contact card" id="contact">
     <div class="ct-t">
-      <h3>發現錯誤？歡迎告訴我</h3>
-      <p>這個網站由個人整理，難免有疏漏　如果你發現資料有錯、連結失效，或有看不懂的地方，歡迎寫信給我，我會查證後修正</p>
-      <p class="note">來信時可以附上：哪一個區塊、哪裡有問題、正確資料的來源網址（例如政府公告）<br>請不要在信裡寫身分證字號、病歷等個人資料　個人申請問題請直接撥 1966 或洽區公所</p>
+      <h3>有錯誤、有建議，都歡迎告訴我</h3>
+      <p>這個網站由個人整理，希望能幫到更多需要的人　不論是發現資料有錯、連結失效、哪裡看不懂，或是你覺得還可以整理哪些內容、怎麼做會更好用，都非常歡迎寫信給我，謝謝你</p>
+      <p class="note">回報錯誤時，可以附上：哪一個區塊、哪裡有問題、正確資料的來源網址（例如政府公告）<br>請不要在信裡寫身分證字號、病歷等個人資料　個人申請問題請直接撥 1966 或洽區公所</p>
     </div>
     <div class="ct-a">
-      <a class="btn" href="mailto:chennn231@gmail.com?subject=%E8%BC%94%E5%85%B7%E8%A3%9C%E5%8A%A9%E6%8C%87%E5%8D%97%E9%87%9D%EF%BC%9A%E8%B3%87%E6%96%99%E6%9B%B4%E6%AD%A3%E5%BB%BA%E8%AD%B0&body=%E5%93%AA%E4%B8%80%E5%80%8B%E5%8D%80%E5%A1%8A%EF%BC%9A%0A%0A%E5%93%AA%E8%A3%A1%E6%9C%89%E5%95%8F%E9%A1%8C%EF%BC%9A%0A%0A%E6%AD%A3%E7%A2%BA%E8%B3%87%E6%96%99%E7%9A%84%E4%BE%86%E6%BA%90%EF%BC%88%E7%B6%B2%E5%9D%80%E6%88%96%E5%85%AC%E5%91%8A%EF%BC%89%EF%BC%9A%0A%0A%EF%BC%88%E8%AB%8B%E4%B8%8D%E8%A6%81%E5%AF%AB%E8%BA%AB%E5%88%86%E8%AD%89%E5%AD%97%E8%99%9F%E3%80%81%E7%97%85%E6%AD%B7%E7%AD%89%E5%80%8B%E4%BA%BA%E8%B3%87%E6%96%99%EF%BC%89%0A">寫信給我</a>
+      <a class="btn" href="mailto:chennn231@gmail.com?subject=%E8%BC%94%E5%85%B7%E8%A3%9C%E5%8A%A9%E6%8C%87%E5%8D%97%E9%87%9D%EF%BC%9A%E6%84%8F%E8%A6%8B%E5%9B%9E%E9%A5%8B&body=%E6%83%B3%E8%AA%AA%E7%9A%84%E4%BA%8B%EF%BC%88%E9%8C%AF%E8%AA%A4%E3%80%81%E5%BB%BA%E8%AD%B0%E3%80%81%E6%83%B3%E7%9C%8B%E5%88%B0%E7%9A%84%E5%85%A7%E5%AE%B9%E9%83%BD%E5%8F%AF%E4%BB%A5%EF%BC%89%EF%BC%9A%0A%0A%E7%9B%B8%E9%97%9C%E7%9A%84%E5%8D%80%E5%A1%8A%EF%BC%88%E5%A6%82%E6%9E%9C%E6%9C%89%EF%BC%89%EF%BC%9A%0A%0A%E8%B3%87%E6%96%99%E4%BE%86%E6%BA%90%E7%B6%B2%E5%9D%80%EF%BC%88%E5%A6%82%E6%9E%9C%E6%9C%89%EF%BC%89%EF%BC%9A%0A%0A%EF%BC%88%E8%AB%8B%E4%B8%8D%E8%A6%81%E5%AF%AB%E8%BA%AB%E5%88%86%E8%AD%89%E5%AD%97%E8%99%9F%E3%80%81%E7%97%85%E6%AD%B7%E7%AD%89%E5%80%8B%E4%BA%BA%E8%B3%87%E6%96%99%EF%BC%89%0A">寫信給我</a>
       <p class="ct-mail"><span>chennn231@gmail.com</span> <button type="button" class="link-btn" id="mailCopy">複製信箱</button></p>
       <p class="note" id="mailMsg" aria-live="polite"></p>
     </div>
@@ -2343,6 +2387,9 @@ document.addEventListener('click',e=>{const b=e.target.closest('.ls-p');if(!b)re
 const alertSay=(b,m)=>{const x=b.closest('.say');let n=x.querySelector('.say-m');if(!n){n=document.createElement('p');n.className='say-m note';n.setAttribute('aria-live','polite');x.appendChild(n)}n.textContent=m;setTimeout(()=>{n.textContent=''},5000)};
 sayAu.addEventListener('error',()=>{if(sayCur){alertSay(sayCur,LSM.err);sayReset()}});
 sayFill();$$('input[name=route]').forEach(x=>x.addEventListener('change',()=>{sayStop();sayFill()}));
+
+/* 外籍人士專區：選身分 */
+$$('input[name=fx]').forEach(r=>r.addEventListener('change',()=>{const v=document.querySelector('input[name=fx]:checked').value;$$('.fx-res').forEach(x=>x.hidden=x.dataset.fx!==v)}));
 }
 </script>
 </body>
