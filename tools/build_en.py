@@ -46,7 +46,7 @@ PRE = [
     ('裝扶手<br>8 千', 'Grab bars<br>NT$8,000'),
     ('還剩 2 萬 2 千', 'NT$22,000 left'),
     ('3 年內選定後不能換　115 年 6 月 30 日前已經用過 4 萬元那一種的人，要滿 3 年才能改選智慧輔具',
-     'Once chosen, the group cannot be changed for 3 years. If you already used the NT$40,000 group before June 30, 2026, you can switch to smart assistive technology only after those 3 years are up'),
+     'The choice is fixed for 3 years. If you used the NT$40,000 group before June 30, 2026, you can switch only after that period ends'),
     ('6 萬元裡，家裡無障礙改善最多用 2 萬元', 'Of the NT$60,000, at most NT$20,000 can go to home accessibility'),
     ('115 年 6 月 30 日起', 'From June 30, 2026'),
     ("s:'6 月 3 日是《長期照顧服務法》公布施行的日子，明年起會辦理相關活動，肯定第一線長照人員'",
@@ -60,7 +60,7 @@ PRE = [
     ("' 3 年總數'", "' the 3-year total'"),
     ("其中 ${fmt(over)} 超過", "Of this, ${fmt(over)} exceeds "),
     ("用滿 ${it.y} 年才能再申請・", "Can reapply after ${it.y} years · "),
-    ("　未輸入報價時以 ${fmt(it.p)} 示範", "　No quote entered, so ${fmt(it.p)} is used as an example"),
+    ("　未輸入報價時以 ${fmt(it.p)} 示範", " · Example price ${fmt(it.p)} (no quote entered)"),
     ("y>0?`${y} 年`", "y>0?`${y} years`"),
     ("用滿 ${y} 才能再申請", "Can reapply after ${y}"),
     ("`項次 ${o.c}`", "`Item no. ${o.c}`"),
@@ -186,8 +186,8 @@ POST = [
     ("subject=%E8%BC%94%E5%85%B7%E8%A3%9C%E5%8A%A9%E6%8C%87%E5%8D%97%E9%87%9D%EF%BC%9A%E8%B3%87%E6%96%99%E6%9B%B4%E6%AD%A3%E5%BB%BA%E8%AD%B0&body=%E5%93%AA%E4%B8%80%E5%80%8B%E5%8D%80%E5%A1%8A%EF%BC%9A%0A%0A%E5%93%AA%E8%A3%A1%E6%9C%89%E5%95%8F%E9%A1%8C%EF%BC%9A%0A%0A%E6%AD%A3%E7%A2%BA%E8%B3%87%E6%96%99%E7%9A%84%E4%BE%86%E6%BA%90%EF%BC%88%E7%B6%B2%E5%9D%80%E6%88%96%E5%85%AC%E5%91%8A%EF%BC%89%EF%BC%9A%0A%0A%EF%BC%88%E8%AB%8B%E4%B8%8D%E8%A6%81%E5%AF%AB%E8%BA%AB%E5%88%86%E8%AD%89%E5%AD%97%E8%99%9F%E3%80%81%E7%97%85%E6%AD%B7%E7%AD%89%E5%80%8B%E4%BA%BA%E8%B3%87%E6%96%99%EF%BC%89%0A", "subject=Assistive%20Device%20Subsidy%20Compass%3A%20correction&body=Section%3A%0A%0AWhat%20is%20wrong%3A%0A%0ASource%20of%20the%20correct%20information%20%28link%20or%20announcement%29%3A%0A%0A%28Please%20do%20not%20include%20ID%20numbers%2C%20medical%20records%20or%20other%20personal%20data%29%0A"),
     ("data-modeall-soft>Assistive technology centers<small>& suppliers</small>", "data-modeall-soft>Centers<small>& suppliers</small>"),
     ("</style>", "@media(max-width:560px){.brand .bn{display:none}.ls-btns{grid-template-columns:1fr 1fr}}</style>"),
-    ("Choose where you live to see nearby assistive technology centers and LTC-contracted suppliers",
-     "Choose where you live to see nearby assistive technology centers and LTC-contracted suppliers. Names and addresses are shown in Chinese as officially registered, so you can paste them into a map app or show them to a taxi driver"),
+    ("Find assistive technology centers and LTC-contracted suppliers near you",
+     "Find assistive technology centers and LTC-contracted suppliers near you. Names and addresses stay in Chinese, as registered — handy for map apps or taxi drivers"),
 ]
 for a, b in POST:
     if a not in h:
@@ -230,6 +230,24 @@ COUNTY = {'臺北市': 'Taipei City', '新北市': 'New Taipei City', '桃園市
 cmap = 'const CEN=' + json.dumps(COUNTY, ensure_ascii=False) + ';const cen=c=>CEN[c]?CEN[c]+\' \'+c:c;'
 h = h.replace('<script>', '<script>' + cmap, 1) if '<script>' in h else h
 h = h.replace("map(c=>`<option>${c}</option>`)", "map(c=>`<option value=\"${c}\">${cen(c)}</option>`)")
+
+# 8b. 英文字型與排版：拉丁字先用 Source Sans 3 / Source Serif 4，避免中文字型把引號排成全形
+h = h.replace('family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@700;900',
+              'family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@700;900')
+h = h.replace('"Noto Sans TC"', '"Source Sans 3","Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC"').replace('"Noto Serif TC"', '"Source Serif 4",Georgia,"Times New Roman","Noto Serif TC"')
+EN_CSS = """
+/* EN layout: more air, shorter lines */
+:root{--h1:clamp(36px,5.6vw,60px);--h2:clamp(25px,2.7vw,31px);--h3:19px}
+body{line-height:1.6;font-size:17px}
+p,li{text-wrap:pretty}
+.sh p,.lead,.note,.sec p{max-width:68ch}
+h1,h2,h3{letter-spacing:-.01em;line-height:1.2}
+.hero h1{max-width:13ch}
+.note,small{line-height:1.5}
+.tabs label,.btn,.chip{letter-spacing:0}
+.toc-list a,.callbar a,.callbar button{line-height:1.25}
+"""
+h = h.replace('</style>', EN_CSS + '</style>', 1)
 
 # 9. 中英切換
 SW = '<a class="tb langsw" href="en/" hreflang="en" lang="en" aria-label="English version">EN</a>'

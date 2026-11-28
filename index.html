@@ -286,7 +286,7 @@ select:focus,input:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3
 .hf .where{margin-bottom:16px}
 .hf-steps{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:10px;counter-reset:hf}
 .hf-steps li{counter-increment:hf;display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start;background:var(--soft);border-radius:14px;padding:12px 14px}
-.hf-steps li::before{content:counter(hf);width:32px;height:32px;border-radius:50%;background:var(--brown);color:#fff;display:grid;place-items:center;font-weight:700}
+.hf-steps li::before{content:counter(hf);width:32px;height:32px;border-radius:50%;background:var(--brown);color:var(--bg);display:grid;place-items:center;font-weight:700}
 .hf-steps b{color:var(--brown)}
 .hf-act{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .hf-act .btn{min-height:48px}
@@ -643,7 +643,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
 .q-why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:8px}
 .q-why div{background:var(--soft);border-radius:16px;padding:14px 16px;font-size:var(--sm)}
 .q-why b{display:block;font-size:17px;color:var(--brown);margin:6px 0 2px}
-.qi{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--brown);color:#fff;font-weight:700;font-size:15px}
+.qi{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--brown);color:var(--bg);font-weight:700;font-size:15px}
 .q-step{font-weight:700;font-size:18px;margin:22px 0 10px}
 .q-list{display:grid;gap:8px}
 .q-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 48px;gap:8px;align-items:center}
@@ -706,17 +706,20 @@ h1,h2,h3,.sh p{text-wrap:balance}
 .contact h3{margin-bottom:8px}.contact p{margin:0 0 8px}.ct-a{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
 .ct-mail{font-weight:700;word-break:break-all}
 @media(max-width:720px){.contact{grid-template-columns:1fr}}
-.ls-warn{display:flex;flex-direction:column;gap:4px;background:#f6e7c8;border:1.5px solid #b88a3c;border-radius:14px;padding:14px 18px;margin-bottom:18px}
-.ls-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
-.ls-it{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
-.ls-n{flex:none;width:36px;height:36px;border-radius:50%;background:var(--brown);color:var(--bg);display:grid;place-items:center;font:700 18px "Noto Serif TC",serif}
-.ls-b{flex:1;min-width:0}.ls-zh{font-size:1.12em;font-weight:700;margin:4px 0 10px;line-height:1.5}.ls-en{margin:-6px 0 10px;color:var(--mute,#6b5f55)}
-.ls-btns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.ls-p{min-height:48px;padding:8px 6px;justify-content:center;border-radius:999px;border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);font:700 17px "Noto Sans TC",sans-serif;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
-.ls-p.on{background:var(--ink);color:var(--bg)}.ls-ic{font-size:.8em}
-.ls-txt{margin-top:10px}.ls-txt summary{cursor:pointer;color:var(--brown);font-size:.95em}.ls-txt p{margin:8px 0 0;font-size:.95em}.ls-txt b{margin-right:8px}.ls-txt small{word-break:break-word}
-.ls-src{margin-top:18px}.ls-src ul{margin:10px 0 0;padding-left:1.2em}
-@media(max-width:400px){.ls-list{grid-template-columns:1fr}.ls-it{padding:14px;gap:10px}}
+.say{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
+.say-l{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:15px;margin-right:2px}
+.say-l svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.say-l svg path:first-child{fill:currentColor}
+.ls-p{min-height:44px;padding:6px 14px;border-radius:999px;border:1.5px solid currentColor;background:transparent;color:inherit;font:700 16px "Noto Sans TC",sans-serif;display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.ls-p:hover{background:color-mix(in srgb,currentColor 10%,transparent)}
+.ls-p.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}.ls-ic{font-size:.75em}
+.alert .say,.alert .say .ls-p:not(.on){color:#fff;border-color:#fff}.say .say-l,.say .ls-ic,.alert .say span{color:inherit}
+.alert .ls-p.on{background:#fff;color:var(--red);border-color:#fff}
+.say-x{flex-basis:100%;font-size:15px}.say-x summary{cursor:pointer;opacity:.85;min-height:32px;display:inline-flex;align-items:center}.say-x p{margin:6px 0 0}.say-x b{margin-right:8px}.say-x small{word-break:break-word}
+.say-m{flex-basis:100%;margin:0}
+.say .ls-p:not(.on){background:transparent;color:inherit}
+#flowList .say-l{flex-basis:100%}#flowList .say{gap:6px}#flowList .say .ls-p{flex:1 1 auto;justify-content:center;padding:4px 10px;font-size:15px;min-height:40px}
+@media(max-width:560px){.say-l{flex-basis:100%}.say .ls-p{flex:1;justify-content:center;padding:6px 8px}}
+.alert .say-x .note,.alert .say-x a{color:inherit}
 </style>
 </head>
 <body>
@@ -744,7 +747,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
 </div>
 <nav class="card pop" id="tocPop" hidden aria-label="網站目錄">
   <ul class="toc-list">
-    <li><a href="#check">我能申請嗎</a></li><li><a href="#warn">先申請，再購買</a></li><li><a href="#listen">用聽的（國台客語）</a></li><li><a href="#flow">申請四步驟</a></li><li><a href="#online">不用出門也能辦</a></li><li><a href="#calc">能補多少錢</a></li><li><a href="#all">全部輔具查詢</a></li><li><a href="#v3">智慧輔具專區（長照 3.0）</a></li><li><a href="#home">居家無障礙改善</a></li><li><a href="#county">找輔具中心和輔具店</a></li><li><a href="#dict">公文名詞翻譯</a></li><li><a href="#history">小知識：長照 1.0 到 3.0</a></li><li><a href="#foreign">外籍人士專區</a></li><li><a href="#news">最新消息</a></li><li><a href="#links">官方連結</a></li><li><a href="#contact">回報錯誤</a></li>
+    <li><a href="#check">我能申請嗎</a></li><li><a href="#warn">先申請，再購買</a></li><li><a href="#flow">申請四步驟</a></li><li><a href="#online">不用出門也能辦</a></li><li><a href="#calc">能補多少錢</a></li><li><a href="#all">全部輔具查詢</a></li><li><a href="#v3">智慧輔具專區（長照 3.0）</a></li><li><a href="#home">居家無障礙改善</a></li><li><a href="#county">找輔具中心和輔具店</a></li><li><a href="#dict">公文名詞翻譯</a></li><li><a href="#history">小知識：長照 1.0 到 3.0</a></li><li><a href="#foreign">外籍人士專區</a></li><li><a href="#news">最新消息</a></li><li><a href="#links">官方連結</a></li><li><a href="#contact">回報錯誤</a></li>
   </ul>
 </nav>
 </header>
@@ -769,10 +772,10 @@ h1,h2,h3,.sh p{text-wrap:balance}
 </section>
 
 <div class="viewsw" id="viewSw"><div class="wrap">
-  <span class="vs-l">怎麼看比較舒服？</span>
+  <span class="vs-l">瀏覽方式</span>
   <div class="tabs" role="radiogroup" aria-label="瀏覽方式">
-    <label><input type="radio" name="view" value="step">新手引導：一次只看一步</label>
-    <label><input type="radio" name="view" value="all" checked>全覽：看全部內容</label>
+    <label><input type="radio" name="view" value="step">一步一步看</label>
+    <label><input type="radio" name="view" value="all" checked>全部一起看</label>
   </div>
 </div></div>
 <div class="sharebar" id="shareBar" hidden role="status"><div class="wrap"><b>這是家人分享給你的試算結果</b><span>內容只存在網址裡，本站沒有保存任何資料</span></div></div>
@@ -787,6 +790,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <div><b>身障輔具</b><span>戶籍地區公所、縣市輔具資源中心</span></div>
       <div><b>醫療輔具</b><span>縣市政府衛生局</span></div>
     </div>
+    <div class="say" data-s="s7"></div>
   </div>
 </div></section>
 
@@ -840,6 +844,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
       <h3>初步參考結果</h3>
       <p class="x-msg" id="ckMsg" aria-live="polite"></p>
       <div id="out"></div>
+      <div class="say" data-s="s6"></div>
       <div class="fam-acts"><button type="button" class="btn shareOpen">分享給家人</button><span class="note" style="margin:0">可以選文字摘要或流程圖圖片</span></div>
       <div class="check-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg><span>這只是依你勾選的內容做的初步整理，實際資格要由<strong>照管中心、區公所或衛生局審核</strong></span></div>
     </div>
@@ -858,24 +863,11 @@ h1,h2,h3,.sh p{text-wrap:balance}
         <li><span class="tg">身障</span><span>核定公文發文後 <strong>6 個月內</strong>要買好並辦理請款</span></li>
         <li><span class="tg">住院中</span><span>請醫院的出院準備小組或社工先幫你聯絡長照</span></li>
       </ul>
+      <div class="say" data-s="s1"></div>
     </div>
   </div>
 </div></section>
 
-<section class="sec" id="listen"><div class="wrap">
-  <div class="sh"><p class="k">用聽的</p><h2>七句重點，國語、台語、客語都能聽</h2><p>看字比較吃力的長輩，可以按播放鍵聽重點</p></div>
-  <div class="ls-warn" role="note"><b>台語、客語是 AI 合成語音，正在請會說的人確認</b><span>可能有發音或聲調不準確的地方　聽到念錯，歡迎<a href="#contact">寫信告訴我</a>，我會盡快修正</span></div>
-  <ol class="ls-list" id="lsList"></ol>
-  <p class="note" id="lsMsg" aria-live="polite"></p>
-  <details class="fold ls-src"><summary><span class="ft">語音是怎麼產生的</span></summary>
-    <ul>
-      <li>國語：使用你手機或電腦內建的語音朗讀，不需要下載</li>
-      <li>台語：Meta 開放的 MMS 語音模型（Hugging Face：facebook/mms-tts-nan，授權 CC BY-NC 4.0），透過 Hugging Face Space「toothless-11/Hokkien-tts」以白話字產生</li>
-      <li>客語：「臺灣客語語音合成系統」（研發團隊李鴻欣、陳力瑋，合作單位國立聯合大學智慧客家實驗室；Hugging Face Space：united-link/taiwanese-hakka-tts），四縣腔</li>
-      <li>文字內容依本站整理的規定撰寫，產生日期 2026 年 11 月 28 日</li>
-    </ul>
-  </details>
-</div></section>
 
 <section class="sec" id="flow"><div class="wrap">
   <div class="sh"><p class="k">第二步</p><h2>申請四步驟</h2><p>先選你要走<strong>哪一條路</strong>，步驟會跟著換</p></div>
@@ -948,6 +940,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
   <details class="fold" id="quota"><summary><span class="ft">我的輔具補助還能用多少錢？</span><small>長照的輔具補助是 3 年一筆總數，用一個例子看懂，再算算自己的</small></summary><div class="fold-body">
     <div class="q-intro">
       <p class="q-one">長照的輔具補助<strong>不是每買一樣就補一次</strong>，而是<strong>每 3 年給一筆總數</strong>　買輔具、裝扶手、改浴室，都從這筆裡面扣，扣完就沒有了</p>
+      <div class="say" data-s="s5"></div>
       <figure class="q-ex">
         <figcaption>舉例：一般戶，3 年總數 4 萬元（金額只是舉例）</figcaption>
         <div class="q-exbar" role="img" aria-label="4 萬元裡，買輔具用了 1 萬，裝扶手用了 8 千，還剩 2 萬 2 千">
@@ -1389,6 +1382,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
     <li>資格與金額以主管機關核定為準；快篩與試算只是初步參考，不構成法律、醫療或財務建議</li>
     <li>不代辦申請、不收取費用，也未與任何輔具廠商合作或推薦特定品牌</li>
     <li>本站不蒐集個人資料，勾選與設定只存在你自己的瀏覽器裡；網頁字型由 Google Fonts 載入，連到外部網站時以該網站的規定為準</li>
+    <li>網頁中的語音：國語由你的裝置內建語音朗讀；台語使用 Meta MMS 模型（Hugging Face：facebook/mms-tts-nan，CC BY-NC 4.0），客語使用「臺灣客語語音合成系統」（研發團隊李鴻欣、陳力瑋，合作單位國立聯合大學智慧客家實驗室，四縣腔），皆為 AI 合成，正在請會說的人確認</li>
     <li>文中提到的醫院、基金會、機構名稱，只用來說明服務地點，資料取自政府公告，不代表推薦或合作</li>
   </ul>
   <p class="small">資料依據：《長期照顧服務申請及給付辦法》附表四與附表四之一（115 年 7 月 1 日施行）、《身心障礙者輔具費用補助辦法》附表（112 年 1 月 1 日施行）、《身心障礙者醫療復健費用及醫療輔具補助辦法》附表（111 年 1 月 1 日施行）、衛福部及各縣市政府公告　整理日期：<span class="dateTxt">2026 年 11 月 28 日</span>　網站圖片為情境示意，不代表特定個人、個案或產品</p>
@@ -1515,7 +1509,7 @@ const WHO_I={you:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path
 const WHO_N={you:'你',gov:'政府單位',shop:'輔具店',doc:'醫師或評估人員'};
 const WHO={L:[['you','gov'],['gov'],['you','shop'],['shop']],D:[['you','doc'],['you','gov'],['you','shop'],['you','gov']],M:[['doc'],['you','gov'],['you','shop'],['you','gov']]};
 const WHO_T={L:[['你打電話','照管專員到家'],['照管中心核定'],['你去買或租','店家提供'],['店家向政府請款']],D:[['你預約','評估人員評估'],['你送件','公所核定'],['你去買','店家提供'],['你送發票','公所撥款']],M:[['醫師開證明'],['你送件','衛生局核定'],['你去買或租','合法醫療器材商'],['你送發票','衛生局撥款']]};
-const flow=()=>{const r=document.querySelector('input[name=route]:checked').value;$('#flowList').innerHTML=FLOW[r].map(([t,o,p],i)=>`<li><div class="who">${WHO[r][i].map((w,j)=>`<span class="wh w-${w}">${WHO_I[w]}${WHO_T[r][i][j]}</span>`).join('')}</div><h3>${t}</h3><p class="off">公文寫法：${o}</p><p>${p}</p></li>`).join('')};
+const flow=()=>{const r=document.querySelector('input[name=route]:checked').value;$('#flowList').innerHTML=FLOW[r].map(([t,o,p],i)=>`<li><div class="who">${WHO[r][i].map((w,j)=>`<span class="wh w-${w}">${WHO_I[w]}${WHO_T[r][i][j]}</span>`).join('')}</div><h3>${t}</h3><p class="off">公文寫法：${o}</p><p>${p}</p>${({L0:'s2',D1:'s3',D2:'s4'})[r+i]?`<div class="say" data-s="${({L0:'s2',D1:'s3',D2:'s4'})[r+i]}"></div>`:''}</li>`).join('')};
 $$('input[name=route]').forEach(x=>x.addEventListener('change',flow));flow();
 
 /* 試算 */
@@ -1998,7 +1992,7 @@ if('IntersectionObserver' in window){const bo=new IntersectionObserver(es=>{if(e
 setTimeout(growBars,3000);
 
 /* 讀到哪裡：進度條、目前章節、目錄標示 */
-const SECS=[['check','我能申請嗎'],['warn','先申請再購買'],['listen','用聽的'],['flow','申請四步驟'],['calc','能補多少錢'],['all','全部輔具查詢'],['v3','智慧輔具專區'],['home','居家無障礙'],['county','找輔具中心和店'],['dict','公文名詞翻譯'],['history','小知識庫'],['foreign','外籍人士專區'],['news','最新消息'],['links','官方連結']];
+const SECS=[['check','我能申請嗎'],['warn','先申請再購買'],['flow','申請四步驟'],['calc','能補多少錢'],['all','全部輔具查詢'],['v3','智慧輔具專區'],['home','居家無障礙'],['county','找輔具中心和店'],['dict','公文名詞翻譯'],['history','小知識庫'],['foreign','外籍人士專區'],['news','最新消息'],['links','官方連結']];
 const secEls=SECS.map(([id])=>document.getElementById(id));
 let ticking=false;
 const onScroll=()=>{
@@ -2025,7 +2019,7 @@ if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduc
 cats();find(true);quiz();calc();pick();rent();city();shops();
 
 /* ===== 情境任務 ===== */
-const MODES={guide:['從頭帶我走',['check','warn','listen','flow','calc','county','links']],have:['直接算錢、找店家',['calc','flow','county','home','links']],item:['查某一種輔具',['all','v3','home','dict','history','links']]};
+const MODES={guide:['從頭帶我走',['check','warn','flow','calc','county','links']],have:['直接算錢、找店家',['calc','flow','county','home','links']],item:['查某一種輔具',['all','v3','home','dict','history','links']]};
 function setMode(m){
   if(!MODES[m]){document.body.removeAttribute('data-mode');$$('.sec.mhide').forEach(x=>x.classList.remove('mhide'));$('#modeBar').hidden=true;$('#modeEnd').hidden=true;onScroll();return}
   const keep=MODES[m][1];document.body.setAttribute('data-mode',m);
@@ -2330,24 +2324,25 @@ if(load('view')==='step'&&!location.search){document.querySelector('input[name=v
 /* 聯絡信箱：複製 */
 $('#mailCopy')?.addEventListener('click',()=>{const t='chennn231@gmail.com',ok=()=>{$('#mailMsg').textContent='已複製信箱'},bad=()=>{$('#mailMsg').textContent='無法自動複製，請長按信箱文字複製'};navigator.clipboard?navigator.clipboard.writeText(t).then(ok,bad):bad()});
 
-/* 用聽的：國語用裝置語音，台語客語用音檔 */
-const LSN={zh:'國語',tw:'台語',hk:'客語'},LSM={err:'音檔無法播放，請稍後再試',nozh:'這台裝置沒有國語語音，請改聽台語或客語，或看文字'},LSBASE='audio/';
+/* 用聽的：放在相關步驟旁邊 */
+const LSN={zh:'國語',tw:'台語',hk:'客語'},LSM={err:'音檔無法播放，請稍後再試',nozh:'這台裝置沒有國語語音'},LSBASE='audio/',LSZH=false;
 const SAY=[["s1", "先申請，等政府核定，再買或租輔具", "先申請，等政府核定了後，才去買抑是稅輔具", "Seng sin-chhéng, tán chèng-hú ha̍k-tēng liáu-āu, chiah khì bé ia̍h-sī sòe hū-kū", "先申請，等政府核定以後，正去買抑係租輔具", "xien24 siin24 qiang31, den31 ziin55 fu31 hed2 tin55 i24 heu55, zang55 hi55 mai24 ia55 he55 zu24 pu31 ki24"], ["s2", "要申請長照，請打 1966", "欲申請長照，請敲 1966", "Beh sin-chhéng tn̂g-chiàu, chhiáⁿ khà it-kiú-la̍k-la̍k", "愛申請長照，請打一九六六", "oi55 siin24 qiang31 cong11 zeu55, qiang31 da31 id2 giu31 liug2 liug2"], ["s3", "有身心障礙證明的人，可以到戶籍地的區公所申請輔具補助", "有身心障礙證明的人，會使去戶籍所在的區公所申請輔具補助", "Ū sin-sim chiòng-gāi chèng-bêng ê lâng, ē-sái khì hō͘-che̍k só͘-chāi ê khu-kong-só͘ sin-chhéng hū-kū pó͘-chō͘", "有身心障礙證明个人，做得到戶籍所在个區公所申請輔具補助", "iu24 siin24 xim24 zong55 ngoi55 ziin55 min11 ge55 ngin11, zo55 ded2 do55 fu55 xid5 so31 cai55 ge55 ki24 gung24 so31 siin24 qiang31 pu31 ki24 bu31 cu55"], ["s4", "身障輔具核定後，6 個月內要買好並請款", "身障輔具核定了後，六個月內就愛買好，閣去請款", "Sin-chiòng hū-kū ha̍k-tēng liáu-āu, la̍k kò goe̍h lāi tō ài bé hó, koh khì chhéng-khoán", "身障輔具核定以後，六個月以內愛買好，還愛去請款", "siin24 zong55 pu31 ki24 hed2 tin55 i24 heu55, liug2 ge55 ngied5 i24 nui55 oi55 mai24 ho31, han11 oi55 hi55 qiang31 kuan31"], ["s5", "長照的輔具和居家無障礙改善，3 年一筆額度，用完就要自己付", "長照的輔具佮居家無障礙改善，三年一筆額度，用了就愛家己出", "Tn̂g-chiàu ê hū-kū kap ki-ka bô chiòng-gāi kái-siān, saⁿ nî chi̍t pit gia̍h-tō͘, iōng liáu tō ài ka-kī chhut", "長照个輔具同居家無障礙改善，三年一筆額度，用忒就愛自家出", "cong11 zeu55 ge55 pu31 ki24 tung11 gi24 ga24 mo11 zong55 ngoi55 goi31 san55, sam24 ngien11 id2 bid2 ngiag2 tu55, iung55 ted2 qiu55 oi55 cii55 ga24 cud2"], ["s6", "同一樣輔具，長照和身障只能選一邊申請", "仝一項輔具，長照佮身障干焦會當揀一爿申請", "Kāng chi̍t hāng hū-kū, tn̂g-chiàu kap sin-chiòng kan-na ē-tàng kéng chi̍t pêng sin-chhéng", "共樣个輔具，長照同身障淨做得揀一片申請", "kiung55 iong55 ge55 pu31 ki24, cong11 zeu55 tung11 siin24 zong55 qiang55 zo55 ded2 gien31 id2 pien31 siin24 qiang31"], ["s7", "有問題，請打 1966，或問輔具中心", "有問題，請敲 1966，抑是問輔具中心", "Ū būn-tê, chhiáⁿ khà it-kiú-la̍k-la̍k, ia̍h-sī mn̄g hū-kū tiong-sim", "有問題，請打一九六六，抑係問輔具中心", "iu24 mun55 ti11, qiang31 da31 id2 giu31 liug2 liug2, ia55 he55 mun55 pu31 ki24 zung24 xim24"]];
-{const lst=$('#lsList');if(lst){
- const L=[['zh','國語'],['tw','台語'],['hk','客語']];
- lst.innerHTML=SAY.map((s,i)=>`<li class="ls-it"><div class="ls-n">${i+1}</div><div class="ls-b"><p class="ls-zh">${s[1]}</p>${window.SAY_EN?`<p class="ls-en">${SAY_EN[i]}</p>`:''}<div class="ls-btns">${L.map(([k,n])=>`<button type="button" class="ls-p" data-i="${i}" data-l="${k}" aria-label="${LSN[k]}：${esc(s[1])}"><span class="ls-ic" aria-hidden="true">▶</span>${n}</button>`).join('')}</div><details class="ls-txt"><summary>看台語、客語怎麼寫</summary><p><b>台語</b>${s[2]}<br><small>白話字：${s[3]}</small></p><p><b>客語</b>${s[4]}<br><small>客語拼音：${s[5]}</small></p></details></div></li>`).join('');
- const au=new Audio();au.preload='none';let cur=null;
- const reset=()=>{if(cur){cur.classList.remove('on');cur.querySelector('.ls-ic').textContent='▶'}cur=null};
- const stop=()=>{au.pause();try{speechSynthesis.cancel()}catch(e){}reset()};
- au.addEventListener('ended',reset);au.addEventListener('error',()=>{if(cur)$('#lsMsg').textContent=LSM.err;reset()});
- lst.addEventListener('click',e=>{const b=e.target.closest('.ls-p');if(!b)return;const was=cur===b;stop();if(was)return;
-  const i=+b.dataset.i,l=b.dataset.l;$('#lsMsg').textContent='';cur=b;b.classList.add('on');b.querySelector('.ls-ic').textContent='■';
-  if(l==='zh'){if(!('speechSynthesis' in window)){$('#lsMsg').textContent=LSM.nozh;reset();return}
-   const u=new SpeechSynthesisUtterance(SAY[i][1].replace(/1966/g,'一九六六'));u.lang='zh-TW';u.rate=.85;
-   const v=speechSynthesis.getVoices().find(v=>/zh[-_]TW/i.test(v.lang))||speechSynthesis.getVoices().find(v=>/^zh/i.test(v.lang));if(v)u.voice=v;else if(speechSynthesis.getVoices().length)$('#lsMsg').textContent=LSM.nozh;
-   u.onend=u.onerror=reset;speechSynthesis.speak(u)}
-  else{au.src=LSBASE+l+'_'+SAY[i][0]+'.mp3';au.play().catch(()=>{$('#lsMsg').textContent=LSM.err;reset()})}});
-}}
+const sayAu=new Audio();sayAu.preload='none';let sayCur=null;
+const sayReset=()=>{if(sayCur){sayCur.classList.remove('on');sayCur.querySelector('.ls-ic').textContent='▶'}sayCur=null};
+const sayStop=()=>{sayAu.pause();try{speechSynthesis.cancel()}catch(e){}sayReset()};
+sayAu.addEventListener('ended',sayReset);
+const sayFill=()=>$$('.say[data-s]:not(.done)').forEach(el=>{const i=SAY.findIndex(s=>s[0]===el.dataset.s);if(i<0)return;const s=SAY[i];el.classList.add('done');
+ el.innerHTML=`<span class="say-l"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>聽這段</span>${['zh','tw','hk'].map(l=>`<button type="button" class="ls-p" data-i="${i}" data-l="${l}" aria-label="${LSN[l]}朗讀：${esc(s[1])}"><span class="ls-ic" aria-hidden="true">▶</span>${LSN[l]}</button>`).join('')}<details class="say-x"><summary>念的內容</summary><p>${s[1]}</p><p><b>台語</b>${s[2]}<br><small>白話字：${s[3]}</small></p><p><b>客語</b>${s[4]}<br><small>客語拼音：${s[5]}</small></p><p class="note">台語、客語是 AI 合成語音，正在請會說的人確認，念錯歡迎<a href="#contact">寫信告訴我</a></p></details>`});
+document.addEventListener('click',e=>{const b=e.target.closest('.ls-p');if(!b)return;const was=sayCur===b;sayStop();if(was)return;
+ const i=+b.dataset.i,l=b.dataset.l;sayCur=b;b.classList.add('on');b.querySelector('.ls-ic').textContent='■';
+ if(l==='zh'&&!LSZH){if(!('speechSynthesis' in window)){alertSay(b,LSM.nozh);sayReset();return}
+  const u=new SpeechSynthesisUtterance(SAY[i][1].replace(/1966/g,'一九六六'));u.lang='zh-TW';u.rate=.85;
+  const vs=speechSynthesis.getVoices(),v=vs.find(v=>/zh[-_]TW/i.test(v.lang))||vs.find(v=>/^zh/i.test(v.lang));if(v)u.voice=v;
+  u.onend=u.onerror=sayReset;speechSynthesis.speak(u);return}
+ sayAu.src=LSBASE+l+'_'+SAY[i][0]+'.mp3';sayAu.play().catch(()=>{alertSay(b,LSM.err);sayReset()})});
+const alertSay=(b,m)=>{const x=b.closest('.say');let n=x.querySelector('.say-m');if(!n){n=document.createElement('p');n.className='say-m note';n.setAttribute('aria-live','polite');x.appendChild(n)}n.textContent=m;setTimeout(()=>{n.textContent=''},5000)};
+sayAu.addEventListener('error',()=>{if(sayCur){alertSay(sayCur,LSM.err);sayReset()}});
+sayFill();$$('input[name=route]').forEach(x=>x.addEventListener('change',()=>{sayStop();sayFill()}));
 }
 </script>
 </body>
