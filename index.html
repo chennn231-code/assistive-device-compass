@@ -371,6 +371,15 @@ select:focus,input:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3
 .news .src{font-size:var(--sm)}
 
 /* 連結與頁尾 */
+.easy{margin-top:28px}
+.easy-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.easy-c{display:flex;flex-direction:column;gap:10px}
+.easy-k{margin:0;font-weight:700;color:var(--mute);font-size:var(--sm)}
+.easy-i{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;transition:border-color .2s}
+.easy-i:hover{border-color:var(--brown)}
+.easy-i b{display:block;color:var(--brown);font-size:17px;margin-bottom:4px}
+.easy-i>span{font-size:var(--sm);color:var(--mute);line-height:1.6}
+@media(max-width:860px){.easy-g{grid-template-columns:minmax(0,1fr)}}
 .links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .lk{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
 .lk strong{display:block;color:var(--brown);font-size:18px}.lk span{font-size:var(--sm);color:var(--mute)}
@@ -610,7 +619,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
 </div>
 <nav class="card pop" id="tocPop" hidden aria-label="網站目錄">
   <ul class="toc-list">
-    <li><a href="#check">我能申請嗎</a></li><li><a href="#warn">先申請，再購買</a></li><li><a href="#flow">申請四步驟</a></li><li><a href="#calc">能補多少錢</a></li><li><a href="#all">全部輔具查詢</a></li><li><a href="#v3">智慧輔具專區（長照 3.0）</a></li><li><a href="#home">居家無障礙改善</a></li><li><a href="#county">找輔具中心和輔具店</a></li><li><a href="#dict">公文名詞翻譯</a></li><li><a href="#news">最新消息</a></li><li><a href="#links">官方連結</a></li>
+    <li><a href="#check">我能申請嗎</a></li><li><a href="#warn">先申請，再購買</a></li><li><a href="#flow">申請四步驟</a></li><li><a href="#online">不用出門也能辦</a></li><li><a href="#calc">能補多少錢</a></li><li><a href="#all">全部輔具查詢</a></li><li><a href="#v3">智慧輔具專區（長照 3.0）</a></li><li><a href="#home">居家無障礙改善</a></li><li><a href="#county">找輔具中心和輔具店</a></li><li><a href="#dict">公文名詞翻譯</a></li><li><a href="#news">最新消息</a></li><li><a href="#links">官方連結</a></li>
   </ul>
 </nav>
 </header>
@@ -731,6 +740,29 @@ h1,h2,h3,.sh p{text-wrap:balance}
     <div class="doc-acts"><button type="button" class="btn" id="docPrint">列印這張清單</button><button type="button" class="btn ghost" id="docClear">清除勾選</button></div>
     <p class="note" style="margin-top:10px">依臺中市、桃園市等縣市公告的「應備文件」整理，各縣市略有不同，<strong>出門前請先打電話確認</strong></p>
   </div></details>
+  <div class="easy" id="online">
+    <h3 class="sm-h">不用出門也能辦</h3>
+    <p class="note" style="margin:-4px 0 16px">行動不方便、家人住外縣市，可以先用電話或網路辦，省下跑公所的時間</p>
+    <div class="easy-g">
+      <div class="easy-c">
+        <p class="easy-k">長照（輔具、居家無障礙）</p>
+        <a class="easy-i" href="tel:1966"><b>撥 1966 申請長照</b><span>手機、市話都能打，<strong>前 5 分鐘免費</strong>　可以替住在別的縣市的長輩申請，電話會轉到當地照管中心</span></a>
+      </div>
+      <div class="easy-c">
+        <p class="easy-k">身障輔具、醫療輔具（有身障證明）</p>
+        <a class="easy-i" href="https://atonline.sfaa.gov.tw/" rel="noopener"><b>社家署「輔具線上申辦」</b><span>網路送件、查案件進度、看以前申請過的紀錄　用手機輸入身分證、身障證明和健保卡資料就能登入，也可以用健保卡或自然人憑證加讀卡機</span></a>
+        <a class="easy-i" href="https://welfare.gov.taipei/Assistive/" rel="noopener"><b>住臺北市：臺北市輔具資源整合資訊網</b><span>臺北市的身障生活輔具要用這個系統，用「台北通」登入</span></a>
+        <a class="easy-i" href="https://atrc.aihsin.ntpc.gov.tw/NewsInfo/76" rel="noopener"><b>住新北市：新北輔具 Easy Go</b><span>網頁或手機 APP 都能線上申請、預約評估，要用障礙者本人的身分註冊</span></a>
+      </div>
+      <div class="easy-c">
+        <p class="easy-k">查進度、問問題</p>
+        <a class="easy-i" href="https://dpws.sfaa.gov.tw/hdcp-apply-status.jsp" rel="noopener"><b>身障證明辦到哪裡了</b><span>輸入身分證字號和出生日期就能查</span></a>
+        <a class="easy-i" href="https://newrepat.sfaa.gov.tw/home/online-refer" rel="noopener"><b>輔具資源入口網線上諮詢</b><span>填表留言問輔具補助、租借的問題　也可以打 <span class="nb">02-2874-3415</span>（週一到週五 9:00–12:00、13:30–17:00）</span></a>
+        <a class="easy-i" href="https://dep.mohw.gov.tw/DONAHC/cp-1039-5221-104.html" rel="noopener"><b>各縣市醫療輔具補助窗口</b><span>衛福部整理的各縣市承辦單位和電話</span></a>
+      </div>
+    </div>
+    <p class="note" style="margin-top:12px">線上送件要上傳的文件（診斷證明、評估報告等）先拍清楚或掃描成 JPG、PDF　需要評估的品項，還是要先預約輔具中心評估　網址取自衛福部、社家署及臺北市、新北市政府網站</p>
+  </div>
   <p class="note" style="margin-top:16px">各縣市作業方式可能略有不同，送件前請先打電話確認要帶的文件</p>
 </div></section>
 
@@ -1105,7 +1137,7 @@ h1,h2,h3,.sh p{text-wrap:balance}
   <div class="links">
     <a class="lk" href="tel:1966"><strong>長照專線 1966</strong><span>手機、市話直撥，詢問長照申請與進度</span></a>
     <a class="lk" href="https://newrepat.sfaa.gov.tw/" rel="noopener"><strong>輔具資源入口網</strong><span>各縣市輔具中心、申請表單</span></a>
-    <a class="lk" href="https://atonline.sfaa.gov.tw/" rel="noopener"><strong>身障輔具線上申請</strong><span>可以線上送件，不方便的話也可到區公所辦</span></a>
+    <a class="lk" href="https://atonline.sfaa.gov.tw/" rel="noopener"><strong>身障輔具線上申請</strong><span>生活輔具、醫療輔具都能線上送件（臺北市、新北市生活輔具用各自的系統）</span></a>
     <a class="lk" href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0050060" rel="noopener"><strong>身障輔具補助規定原文</strong><span>全國法規資料庫，含補助基準表</span></a>
     <a class="lk" href="https://www.mohw.gov.tw/cp-16-87062-1.html" rel="noopener"><strong>長照 3.0 智慧輔具新制</strong><span>衛生福利部公告</span></a>
     <a class="lk" href="https://www.mohw.gov.tw/dl-101314-a5590920-5f8d-4ead-b508-fe4b204fcd36.html" rel="noopener"><strong>智慧輔具規定問答集</strong><span>衛福部 115 年 7 月 22 日版</span></a>
