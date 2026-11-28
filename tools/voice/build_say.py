@@ -3,7 +3,8 @@ import json, os, re
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 S = json.load(open(os.path.join(ROOT, 'tools/voice/scripts.json'), encoding='utf8'))
 ORDER = ['about','check','warn','flow','calc','all','v3','home','county','dict','history','foreign','news','links']
-rows = [[k, S['zh'][k], S['tw'][k], S['hk'][k], S.get('hkpy', {}).get(k, '')] for k in ORDER]
+np = lambda t: re.sub(r'。(?=$)', '', t).replace('。', '　')
+rows = [[k, np(S['zh'][k]), np(S['tw'][k]), np(S['hk'][k]), np(S.get('hkpy', {}).get(k, ''))] for k in ORDER]
 av = {l: [k for k in ORDER if os.path.exists(os.path.join(ROOT, f'audio/{l}_{k}.mp3'))] for l in ['zh','tw','hk']}
 data = 'const SAY=' + json.dumps(rows, ensure_ascii=False) + ',SAYAV=' + json.dumps(av) + ';'
 p = os.path.join(ROOT, 'index.html'); h = open(p, encoding='utf8').read()
